@@ -1,0 +1,272 @@
+/* People Page - Mobile-First Responsive Styles */
+/* Base styles for 320px mobile screens */
+
+/* === PAGE CONTAINER === */
+.people-page {
+  padding: 12px !important;
+}
+
+.people-page h1 {
+  font-size: 26px !important;
+  line-height: 34px !important;
+}
+
+/* === HEADER === */
+.people-page .people-header {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+}
+
+/* Hide quick access link on mobile */
+.people-page .people-quick-access {
+  display: none !important;
+}
+
+/* === ACTIONS BAR - Hidden on mobile === */
+.people-page .people-actions-bar {
+  display: none !important;
+}
+
+/* === TABS - Hidden on mobile === */
+.people-page .people-tabs-desktop {
+  display: none !important;
+}
+
+.people-page .people-tabs-container {
+  display: none !important;
+}
+
+/* === FILTERS === */
+.people-page .people-filters {
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+.people-page .people-search {
+  width: 100% !important;
+}
+
+.people-page .people-search-wrapper {
+  height: 40px !important;
+}
+
+.people-page .people-search-input {
+  font-size: 14px !important;
+}
+
+.people-page .people-filter-group {
+  width: 100% !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+}
+
+.people-page .people-filter-label {
+  font-size: 12px !important;
+}
+
+.people-page .people-filter-group .people-dropdown {
+  width: 100% !important;
+}
+
+/* === EMPLOYEE LIST === */
+.people-page .people-employee-list {
+  margin: 0 -12px !important;
+}
+
+.people-page .people-group-card {
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.people-page .people-group-header {
+  padding: 12px !important;
+}
+
+.people-page .people-group-header h2 {
+  font-size: 16px !important;
+}
+
+.people-page .people-no-results {
+  padding: 24px 12px !important;
+  font-size: 14px !important;
+}
+
+/* === ORG CHART === */
+.people-page .people-org-chart {
+  height: calc(100vh - 180px) !important;
+  margin: 0 -12px !important;
+}
+
+/* ============================================
+   TABLET STYLES - 481px and up
+   ============================================ */
+@media (min-width: 481px) {
+  .people-page {
+    padding: 16px !important;
+  }
+
+  .people-page h1 {
+    font-size: 32px !important;
+    line-height: 40px !important;
+  }
+
+  .people-page .people-actions-bar {
+    margin-bottom: 16px !important;
+  }
+
+  .people-page .people-tabs {
+    gap: 16px !important;
+  }
+
+  .people-page .people-tab {
+    font-size: 14px !important;
+  }
+
+  .people-page .people-filter-label {
+    font-size: 13px !important;
+  }
+
+  .people-page .people-group-header h2 {
+    font-size: 18px !important;
+  }
+
+  .people-page .people-org-chart {
+    height: calc(100vh - 200px) !important;
+  }
+}
+
+/* ============================================
+   DESKTOP STYLES - 769px and up
+   ============================================ */
+@media (min-width: 769px) {
+  .people-page {
+    padding: 32px !important;
+  }
+
+  .people-page h1 {
+    font-size: 48px !important;
+    line-height: 56px !important;
+  }
+
+  .people-page .people-header {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+  }
+
+  /* Show quick access link on desktop */
+  .people-page .people-quick-access {
+    display: inline !important;
+  }
+
+  /* Show actions bar on desktop */
+  .people-page .people-actions-bar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+    border-bottom: 1px solid var(--border-neutral-x-weak) !important;
+    padding-bottom: 16px !important;
+  }
+
+  .people-page .people-new-button {
+    width: auto !important;
+    height: auto !important;
+  }
+
+  /* Show tabs on desktop */
+  .people-page .people-tabs-desktop {
+    display: flex !important;
+  }
+
+  .people-page .people-tabs-container {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-bottom: none !important;
+  }
+
+  .people-page .people-tabs {
+    overflow-x: visible !important;
+    gap: 24px !important;
+    padding-bottom: 0 !important;
+  }
+
+  .people-page .people-tab {
+    font-size: 15px !important;
+    padding-bottom: 12px !important;
+    gap: 8px !important;
+  }
+
+  .people-page .people-tab-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .people-page .people-filters {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+    margin-bottom: 32px !important;
+  }
+
+  .people-page .people-search {
+    flex: 1 !important;
+  }
+
+  .people-page .people-search-wrapper {
+    height: 40px !important;
+  }
+
+  .people-page .people-search-input {
+    font-size: 15px !important;
+  }
+
+  .people-page .people-filter-group {
+    width: auto !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  .people-page .people-filter-label {
+    font-size: 14px !important;
+  }
+
+  .people-page .people-filter-group .people-dropdown {
+    width: 180px !important;
+  }
+
+  .people-page .people-employee-list {
+    margin: 0 !important;
+  }
+
+  .people-page .people-group-card {
+    border-radius: var(--radius-small) !important;
+    border: 1px solid var(--border-neutral-x-weak) !important;
+  }
+
+  .people-page .people-group-header {
+    padding: 16px 24px !important;
+  }
+
+  .people-page .people-group-header h2 {
+    font-size: 22px !important;
+  }
+
+  .people-page .people-no-results {
+    padding: 48px !important;
+    font-size: 15px !important;
+  }
+
+  .people-page .people-org-chart {
+    height: calc(100vh - 280px) !important;
+    margin: 0 !important;
+  }
+}

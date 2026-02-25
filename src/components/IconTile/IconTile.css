@@ -1,0 +1,39 @@
+.icon-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  background: var(--surface-neutral-white);
+  border: 1px solid var(--border-neutral-x-weak);
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.icon-tile:hover {
+  border-color: var(--color-primary-strong);
+}
+
+.icon-tile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--surface-neutral-x-weak, #f0f0f0);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.icon-tile-icon svg {
+  color: var(--color-primary-strong);
+}
+
+.icon-tile-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-neutral-xx-strong);
+  line-height: 20px;
+}

@@ -1,0 +1,382 @@
+/* MyInfo Page - Mobile-First Responsive Styles */
+/* Base styles for 320px mobile screens */
+
+/* === HEADER === */
+.myinfo-page .myinfo-header {
+  padding: 12px !important;
+  padding-bottom: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  border-radius: 8px !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Avatar - mobile: relative positioning, centered at top */
+.myinfo-page .myinfo-avatar {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: 72px !important;
+  height: 72px !important;
+  margin: 0 auto 8px !important;
+  order: -2 !important;
+  z-index: 1;
+  border-radius: 12px !important;
+}
+
+/* Header content wrapper */
+.myinfo-page .myinfo-header-content {
+  position: relative !important;
+  padding-left: 0 !important;
+  padding-top: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  order: -1 !important;
+}
+
+/* Top row with name and actions */
+.myinfo-page .myinfo-header-content > div:first-child {
+  padding-left: 0 !important;
+  width: 100% !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Name section */
+.myinfo-page .myinfo-name-section {
+  width: 100% !important;
+  text-align: center !important;
+  padding-left: 0 !important;
+}
+
+.myinfo-page .myinfo-name {
+  font-size: 18px !important;
+  line-height: 24px !important;
+  text-align: center !important;
+}
+
+.myinfo-page .myinfo-subtitle {
+  font-size: 12px !important;
+  text-align: center !important;
+}
+
+/* Hide action buttons on mobile */
+.myinfo-page .myinfo-actions {
+  display: none !important;
+}
+
+/* === TABS === */
+.myinfo-page .myinfo-tabs-container {
+  padding-left: 0 !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+  order: 1 !important;
+}
+
+.myinfo-page .myinfo-tabs {
+  justify-content: flex-start !important;
+  overflow-x: auto !important;
+  gap: 0 !important;
+  scrollbar-width: none;
+}
+
+.myinfo-page .myinfo-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.myinfo-page .myinfo-tabs button {
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* === CONTENT AREA === */
+.myinfo-page .myinfo-content {
+  flex-direction: column !important;
+  padding: 8px !important;
+  gap: 16px !important;
+}
+
+/* Hide sidebar on mobile */
+.myinfo-page .myinfo-sidebar {
+  display: none !important;
+}
+
+.myinfo-page .myinfo-main {
+  width: 100% !important;
+}
+
+/* === CARDS === */
+.myinfo-page .myinfo-card {
+  padding: 12px !important;
+}
+
+.myinfo-page .myinfo-section-header {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+}
+
+.myinfo-page .myinfo-section-title {
+  font-size: 18px !important;
+}
+
+.myinfo-page .myinfo-card-header {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+}
+
+.myinfo-page .myinfo-card-title {
+  font-size: 16px !important;
+}
+
+/* === FORMS - Full width on mobile === */
+.myinfo-page .myinfo-form-grid-4,
+.myinfo-page .myinfo-form-grid-3 {
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+}
+
+.myinfo-page .myinfo-card > div,
+.myinfo-page div[class*="max-w-"],
+.myinfo-page .max-w-\[200px\],
+.myinfo-page .max-w-\[224px\],
+.myinfo-page .max-w-\[288px\],
+.myinfo-page [class*="max-w-"] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* === TABLE === */
+.myinfo-page table {
+  display: block !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide floating header on mobile */
+.myinfo-page .myinfo-floating-header {
+  display: none !important;
+}
+
+/* ============================================
+   TABLET STYLES - 481px and up
+   ============================================ */
+@media (min-width: 481px) {
+  .myinfo-page .myinfo-header {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .myinfo-page .myinfo-avatar {
+    width: 80px !important;
+    height: 80px !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .myinfo-page .myinfo-header-content {
+    gap: 16px !important;
+  }
+
+  .myinfo-page .myinfo-name {
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+
+  .myinfo-page .myinfo-subtitle {
+    font-size: 13px !important;
+  }
+
+  .myinfo-page .myinfo-tabs-container {
+    margin-top: 12px !important;
+  }
+
+  .myinfo-page .myinfo-tabs button {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+
+  .myinfo-page .myinfo-content {
+    padding: 12px !important;
+  }
+
+  .myinfo-page .myinfo-card {
+    padding: 16px !important;
+  }
+
+  .myinfo-page .myinfo-card-title {
+    font-size: 18px !important;
+  }
+}
+
+/* ============================================
+   DESKTOP STYLES - 769px and up
+   ============================================ */
+@media (min-width: 769px) {
+  .myinfo-page .myinfo-header {
+    padding: unset !important;
+    padding-bottom: 0 !important;
+    display: block !important;
+    border-radius: var(--radius-large) !important;
+  }
+
+  /* Avatar - desktop: absolute positioning */
+  .myinfo-page .myinfo-avatar {
+    position: absolute !important;
+    left: 24px !important;
+    top: 24px !important;
+    width: 224px !important;
+    height: 224px !important;
+    margin: 8px 0 0 0 !important;
+    order: unset !important;
+    border-radius: var(--radius-large) !important;
+  }
+
+  .myinfo-page .myinfo-header-content {
+    position: relative !important;
+    padding-left: 256px !important;
+    padding-top: 34px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 50px !important;
+    width: auto !important;
+    order: unset !important;
+  }
+
+  .myinfo-page .myinfo-header-content > div:first-child {
+    padding-left: 0 !important;
+    width: auto !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+  }
+
+  .myinfo-page .myinfo-name-section {
+    width: 512px !important;
+    text-align: left !important;
+  }
+
+  .myinfo-page .myinfo-name {
+    font-size: 44px !important;
+    line-height: 52px !important;
+    text-align: left !important;
+  }
+
+  .myinfo-page .myinfo-subtitle {
+    font-size: 15px !important;
+    text-align: left !important;
+  }
+
+  /* Show action buttons on desktop */
+  .myinfo-page .myinfo-actions {
+    display: flex !important;
+  }
+
+  .myinfo-page .myinfo-tabs-container {
+    padding-left: 256px !important;
+    margin-top: 0 !important;
+    order: unset !important;
+    overflow-x: visible !important;
+  }
+
+  .myinfo-page .myinfo-tabs {
+    overflow-x: visible !important;
+    gap: 4px !important;
+  }
+
+  .myinfo-page .myinfo-tabs button {
+    padding: 16px !important;
+    font-size: 15px !important;
+    border-radius: var(--radius-xx-small) var(--radius-xx-small) 0 0 !important;
+  }
+
+  .myinfo-page .myinfo-content {
+    flex-direction: row !important;
+    padding: 32px 40px !important;
+    gap: 32px !important;
+  }
+
+  /* Show sidebar on desktop */
+  .myinfo-page .myinfo-sidebar {
+    display: block !important;
+    width: 200px !important;
+  }
+
+  .myinfo-page .myinfo-card {
+    padding: 24px !important;
+  }
+
+  .myinfo-page .myinfo-section-header {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .myinfo-page .myinfo-section-title {
+    font-size: 26px !important;
+  }
+
+  .myinfo-page .myinfo-card-header {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  .myinfo-page .myinfo-card-title {
+    font-size: 22px !important;
+  }
+
+  /* Form grids - multi-column on desktop */
+  .myinfo-page .myinfo-form-grid-4 {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .myinfo-page .myinfo-form-grid-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Restore max-width constraints on desktop */
+  .myinfo-page .myinfo-card > div,
+  .myinfo-page div[class*="max-w-"] {
+    max-width: unset !important;
+    width: unset !important;
+  }
+
+  .myinfo-page .max-w-\[200px\] {
+    max-width: 200px !important;
+    width: auto !important;
+  }
+
+  .myinfo-page .max-w-\[224px\] {
+    max-width: 224px !important;
+    width: auto !important;
+  }
+
+  .myinfo-page .max-w-\[288px\] {
+    max-width: 288px !important;
+    width: auto !important;
+  }
+
+  /* Table - normal display */
+  .myinfo-page table {
+    display: table !important;
+    overflow-x: visible !important;
+  }
+
+  /* Show floating header on desktop */
+  .myinfo-page .myinfo-floating-header {
+    display: flex !important;
+  }
+}

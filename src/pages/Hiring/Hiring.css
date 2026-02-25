@@ -1,0 +1,169 @@
+/* Hiring Page - Mobile-First Responsive Styles */
+/* Base styles for 320px mobile screens */
+
+/* === PAGE CONTAINER === */
+.hiring-page {
+  padding: 12px !important;
+}
+
+/* === HEADER === */
+.hiring-page h1 {
+  font-size: 24px !important;
+  line-height: 32px !important;
+}
+
+.hiring-page .hiring-header {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+}
+
+/* Hide header links on mobile */
+.hiring-page .hiring-header-links {
+  display: none !important;
+}
+
+/* === TABS - Hidden on mobile === */
+.hiring-page .hiring-tabs-row {
+  display: none !important;
+}
+
+/* === ACTIONS BAR === */
+.hiring-page .hiring-actions-bar {
+  flex-direction: column !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+  padding: 12px !important;
+}
+
+/* === FILTERS === */
+.hiring-page .hiring-filter-section {
+  flex-direction: column !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+}
+
+.hiring-page .hiring-filter-text {
+  font-size: 13px !important;
+}
+
+/* === CARD === */
+.hiring-page .hiring-card {
+  border-radius: 8px !important;
+}
+
+/* === TABLE === */
+.hiring-page .hiring-table-wrapper {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -12px !important;
+  padding: 0 12px !important;
+}
+
+.hiring-page .hiring-table {
+  min-width: 600px !important;
+}
+
+/* ============================================
+   TABLET STYLES - 481px and up
+   ============================================ */
+@media (min-width: 481px) {
+  .hiring-page {
+    padding: 16px !important;
+  }
+
+  .hiring-page h1 {
+    font-size: 28px !important;
+    line-height: 36px !important;
+  }
+
+  .hiring-page .hiring-tabs {
+    gap: 16px !important;
+  }
+
+  .hiring-page .hiring-tabs button {
+    font-size: 14px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .hiring-page .hiring-table-wrapper {
+    margin: 0 -16px !important;
+    padding: 0 16px !important;
+  }
+}
+
+/* ============================================
+   DESKTOP STYLES - 769px and up
+   ============================================ */
+@media (min-width: 769px) {
+  .hiring-page {
+    padding: 32px !important;
+  }
+
+  .hiring-page h1 {
+    font-size: 48px !important;
+    line-height: 56px !important;
+  }
+
+  .hiring-page .hiring-header {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+  }
+
+  /* Show header links on desktop */
+  .hiring-page .hiring-header-links {
+    display: flex !important;
+  }
+
+  /* Show tabs on desktop */
+  .hiring-page .hiring-tabs-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+  }
+
+  .hiring-page .hiring-tabs {
+    overflow-x: visible !important;
+    gap: 24px !important;
+  }
+
+  .hiring-page .hiring-tabs button {
+    font-size: 15px !important;
+    padding: 0 0 12px 0 !important;
+  }
+
+  .hiring-page .hiring-actions-bar {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px !important;
+  }
+
+  .hiring-page .hiring-filter-section {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  .hiring-page .hiring-filter-text {
+    font-size: 14px !important;
+  }
+
+  .hiring-page .hiring-card {
+    border-radius: var(--radius-small) !important;
+  }
+
+  .hiring-page .hiring-table-wrapper {
+    overflow-x: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hiring-page .hiring-table {
+    min-width: unset !important;
+  }
+}

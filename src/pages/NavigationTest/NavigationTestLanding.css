@@ -1,0 +1,265 @@
+/* Navigation Test Landing Page - BambooHR Branded */
+
+.nav-test-landing {
+  min-height: 100vh;
+  background: var(--surface-neutral-xx-weak, #f5f5f5);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Header */
+.nav-test-header {
+  background: white;
+  border-bottom: 1px solid var(--border-neutral-weak, #e0e0e0);
+  padding: 48px 24px;
+}
+
+.nav-test-header-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nav-test-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.nav-test-logo-img {
+  height: 28px;
+  width: auto;
+}
+
+.nav-test-title {
+  font-family: 'Fields', system-ui, -apple-system, sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--color-neutral-strong, #222222);
+  margin-bottom: 12px;
+}
+
+.nav-test-subtitle {
+  font-size: 18px;
+  color: var(--color-neutral-medium, #666666);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Main Content */
+.nav-test-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.nav-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+/* Experience Card */
+.experience-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border-neutral-weak, #e0e0e0);
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.experience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-primary-strong, #2e7918);
+}
+
+.experience-card-header {
+  padding: 24px;
+  background: linear-gradient(135deg, var(--color-primary-strong, #2e7918) 0%, #1e5710 100%);
+  color: white;
+}
+
+.experience-card-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.experience-card-title {
+  font-family: 'Fields', system-ui, -apple-system, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.experience-card-subtitle {
+  font-size: 14px;
+  opacity: 0.9;
+  color: white;
+}
+
+.experience-card-body {
+  padding: 24px;
+  flex: 1;
+}
+
+.experience-card-description {
+  font-size: 14px;
+  color: var(--color-neutral-medium, #666666);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.experience-card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.experience-card-features li {
+  font-size: 13px;
+  color: var(--color-neutral-strong, #222222);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--surface-neutral-x-weak, #f0f0f0);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.experience-card-features li .feature-check-icon {
+  color: var(--color-primary-strong, #2e7918);
+  flex-shrink: 0;
+}
+
+.experience-card-features li:last-child {
+  border-bottom: none;
+}
+
+.experience-card-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--surface-neutral-x-weak, #f0f0f0);
+}
+
+.experience-card-cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary-strong, #2e7918);
+}
+
+.experience-card:hover .experience-card-cta {
+  gap: 12px;
+}
+
+/* Instructions */
+.nav-test-instructions {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border-neutral-weak, #e0e0e0);
+  padding: 32px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.nav-test-instructions h2 {
+  font-family: 'Fields', system-ui, -apple-system, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-neutral-strong, #222222);
+  margin-bottom: 20px;
+}
+
+.nav-test-instructions ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: instruction-counter;
+}
+
+.nav-test-instructions li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--color-neutral-medium, #666666);
+  padding: 12px 0;
+  line-height: 1.5;
+  border-bottom: 1px solid var(--surface-neutral-x-weak, #f0f0f0);
+  counter-increment: instruction-counter;
+}
+
+.nav-test-instructions li:last-child {
+  border-bottom: none;
+}
+
+.nav-test-instructions li .instruction-icon {
+  color: var(--color-primary-strong, #2e7918);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.nav-test-instructions li span {
+  flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .nav-test-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-test-header {
+    padding: 32px 16px;
+  }
+
+  .nav-test-logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-test-logo-text {
+    font-size: 20px;
+  }
+
+  .nav-test-title {
+    font-size: 28px;
+  }
+
+  .nav-test-subtitle {
+    font-size: 16px;
+  }
+
+  .nav-test-main {
+    padding: 24px 16px;
+  }
+
+  .nav-test-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .experience-card-title {
+    font-size: 24px;
+  }
+
+  .nav-test-instructions {
+    padding: 24px;
+  }
+}
