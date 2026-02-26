@@ -101,6 +101,20 @@
   margin: 0 -12px !important;
 }
 
+/* Org Chart Controls - Mobile Horizontal Scroll */
+.people-page .org-chart-controls {
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  margin: 0 !important;
+  padding: 0 0 12px !important;
+  flex-wrap: nowrap !important;
+}
+
+.people-page .org-chart-controls::-webkit-scrollbar {
+  display: none !important;
+}
+
 /* ============================================
    TABLET STYLES - 481px and up
    ============================================ */
@@ -268,5 +282,12 @@
   .people-page .people-org-chart {
     height: calc(100vh - 280px) !important;
     margin: 0 !important;
+  }
+
+  /* Org Chart Controls - Desktop */
+  .people-page .org-chart-controls {
+    overflow-x: visible !important;
+    margin: 0 !important;
+    padding: 0 0 16px !important;
   }
 }

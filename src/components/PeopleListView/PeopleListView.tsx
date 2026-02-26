@@ -49,118 +49,122 @@ export function PeopleListView({ employees }: PeopleListViewProps) {
 
   return (
     <div>
-      {/* Filter Bar */}
-      <div className="flex items-center justify-between mb-6">
-        {/* Left Group: Filter + Dropdown + Icon + Count */}
-        <div className="flex items-center gap-2">
-          {/* Filter Button */}
-          <button
-            className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
-            style={{ boxShadow: 'var(--shadow-100)' }}
-            aria-label="Filter"
-          >
-            <Icon name="sliders" size={16} className="text-[var(--icon-neutral-x-strong)]" />
-          </button>
+      {/* Filter Bar - independent scroll container */}
+      <div className="overflow-x-auto mb-6 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className="flex items-center justify-between min-w-[800px]">
+          {/* Left Group: Filter + Dropdown + Icon + Count */}
+          <div className="flex items-center gap-2">
+            {/* Filter Button */}
+            <button
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+              style={{ boxShadow: 'var(--shadow-100)' }}
+              aria-label="Filter"
+            >
+              <Icon name="sliders" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+            </button>
 
-          {/* All Employees Dropdown */}
-          <Dropdown
-            options={statusOptions}
-            value={filterStatus}
-            onChange={setFilterStatus}
-            className="w-[248px]"
-          />
-
-          {/* User Group Icon + Count */}
-          <div className="flex items-center gap-2" style={{ marginLeft: '16px' }}>
-            <Icon
-              name="user-group"
-              size={16}
-              className="text-[var(--icon-neutral-strong)]"
+            {/* All Employees Dropdown */}
+            <Dropdown
+              options={statusOptions}
+              value={filterStatus}
+              onChange={setFilterStatus}
+              className="w-[248px]"
             />
+
+            {/* User Group Icon + Count */}
+            <div className="flex items-center gap-2" style={{ marginLeft: '16px' }}>
+              <Icon
+                name="user-group"
+                size={16}
+                className="text-[var(--icon-neutral-strong)]"
+              />
+              <span
+                style={{
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  lineHeight: '20px',
+                  color: 'var(--text-neutral-weak)',
+                }}
+              >
+                {totalItems}
+              </span>
+            </div>
+          </div>
+
+          {/* Right Group: Showing + Active + Ellipsis */}
+          <div className="flex items-center gap-3">
+            {/* Showing Label */}
             <span
               style={{
                 fontFamily: 'Inter, system-ui, sans-serif',
                 fontSize: '14px',
-                fontWeight: 400,
+                fontWeight: 500,
                 lineHeight: '20px',
-                color: 'var(--text-neutral-weak)',
+                color: 'var(--text-neutral-x-strong)',
               }}
             >
-              {totalItems}
+              Showing
             </span>
-          </div>
-        </div>
 
-        {/* Right Group: Showing + Active + Ellipsis */}
-        <div className="flex items-center gap-3">
-          {/* Showing Label */}
-          <span
-            style={{
-              fontFamily: 'Inter, system-ui, sans-serif',
-              fontSize: '14px',
-              fontWeight: 500,
-              lineHeight: '20px',
-              color: 'var(--text-neutral-x-strong)',
-            }}
-          >
-            Showing
-          </span>
+            {/* Status Dropdown */}
+            <Dropdown
+              options={[
+                { value: 'active', label: 'Active' },
+                { value: 'inactive', label: 'Inactive' },
+                { value: 'all', label: 'All' },
+              ]}
+              value="all"
+              onChange={() => {}}
+              className="w-[166px]"
+            />
 
-          {/* Status Dropdown */}
-          <Dropdown
-            options={[
-              { value: 'active', label: 'Active' },
-              { value: 'inactive', label: 'Inactive' },
-              { value: 'all', label: 'All' },
-            ]}
-            value="all"
-            onChange={() => {}}
-            className="w-[166px]"
-          />
-
-          {/* Ellipsis Menu */}
-          <div className="relative" ref={menuRef}>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
-              style={{ boxShadow: 'var(--shadow-100)' }}
-              aria-label="More options"
-            >
-              <Icon name="ellipsis" size={16} className="text-[var(--icon-neutral-x-strong)]" />
-            </button>
-            {isMenuOpen && (
-              <div
-                className="absolute right-0 z-50 mt-2 w-[200px] bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-small)] shadow-lg overflow-hidden"
+            {/* Ellipsis Menu */}
+            <div className="relative" ref={menuRef}>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                style={{ boxShadow: 'var(--shadow-100)' }}
+                aria-label="More options"
               >
-                <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="w-full px-4 py-3 text-left text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                <Icon name="ellipsis" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+              </button>
+              {isMenuOpen && (
+                <div
+                  className="absolute right-0 z-50 mt-2 w-[200px] bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-small)] shadow-lg overflow-hidden"
                 >
-                  Power Edit Employees
-                </button>
-                <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="w-full px-4 py-3 text-left text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
-                >
-                  Download Forms
-                </button>
-                <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="w-full px-4 py-3 text-left text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
-                >
-                  Customize View
-                </button>
-              </div>
-            )}
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full px-4 py-3 text-left text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                  >
+                    Power Edit Employees
+                  </button>
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full px-4 py-3 text-left text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                  >
+                    Download Forms
+                  </button>
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full px-4 py-3 text-left text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                  >
+                    Customize View
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Table Card */}
       <div
-        className="bg-white dark:bg-neutral-800 rounded-2xl border border-gray-200 dark:border-neutral-700 shadow-sm overflow-hidden"
+        className="people-list-card bg-white dark:bg-neutral-800 rounded-2xl border border-gray-200 dark:border-neutral-700 shadow-sm overflow-hidden"
       >
-        <table className="w-full">
+        {/* Table scroll container */}
+        <div className="people-table-scroll-container overflow-x-auto">
+          <table className="w-full min-w-[800px]">
           <thead>
             <tr style={{ backgroundColor: 'var(--surface-neutral-xx-weak)' }}>
               <th
@@ -250,6 +254,7 @@ export function PeopleListView({ employees }: PeopleListViewProps) {
             ))}
           </tbody>
         </table>
+        </div>
 
         {/* Pagination */}
         <div className="px-4 py-4 border-t border-[var(--border-neutral-x-weak)]">

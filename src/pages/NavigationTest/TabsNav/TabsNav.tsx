@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { Icon, Avatar, Button, TextHeadline, Gridlet } from '../../../components';
+import { Icon } from '../../../components';
+import { GlobalHeader } from '../../../components/GlobalHeader';
+import { useBreakpoint, useMazeTracking } from '../../../hooks';
 import { files, fileCategories } from '../../../data/files';
 import {
   settingsNavItems,
@@ -18,6 +20,7 @@ import { People } from '../../People';
 import type { PeopleViewMode } from '../../People';
 import { Reports } from '../../Reports';
 import type { ReportsCategory } from '../../Reports';
+import { HomeContent } from '../shared/HomeContent';
 import './TabsNav.css';
 
 type View = 'home' | 'files' | 'settings' | 'hiring' | 'my-info' | 'people' | 'reports';
@@ -42,9 +45,12 @@ const navItems: { id: string; label: string; icon: 'home' | 'file-lines' | 'wren
 ];
 
 export const TabsNav: React.FC = () => {
+  useMazeTracking();
+  const breakpoint = useBreakpoint();
   const [currentView, setCurrentView] = useState<View>('home');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchExpanded, setSearchExpanded] = useState(false);
 
   // Files state
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -92,7 +98,7 @@ export const TabsNav: React.FC = () => {
   ];
 
   return (
-    <div className="tabs-nav">
+    <div className={`tabs-nav ${breakpoint.isLaptopOrAbove ? 'with-global-header' : ''}`}>
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div className="tabs-mobile-overlay" onClick={() => setMobileMenuOpen(false)}>
@@ -185,27 +191,54 @@ export const TabsNav: React.FC = () => {
 
       {/* Main Content */}
       <main className="tabs-main">
+        {/* GlobalHeader - Only visible on Laptop, Desktop, Monitor (>= 1024px) */}
+        {breakpoint.isLaptopOrAbove && (
+          <GlobalHeader className="tabs-global-header" />
+        )}
+
         {/* Mobile Top Bar */}
         <header className="tabs-topbar">
-          <div className="tabs-topbar-left">
-            <button className="tabs-menu-btn" onClick={() => setMobileMenuOpen(true)}>
-              <Icon name="bars" size={20} />
-            </button>
-            <img src={bamboohrLogo} alt="BambooHR" className="tabs-topbar-logo" />
-          </div>
-          <div className="tabs-topbar-actions">
-            <button className="tabs-icon-btn">
-              <Icon name="magnifying-glass" size={18} />
-            </button>
-            <button className="tabs-icon-btn">
-              <Icon name="bell" size={18} />
-            </button>
-          </div>
+          {searchExpanded ? (
+            /* Expanded Search Bar */
+            <div className="tabs-topbar-search-expanded">
+              <Icon name="magnifying-glass" size={16} className="tabs-search-icon" />
+              <input
+                type="text"
+                placeholder="Search anything..."
+                className="tabs-search-input"
+                autoFocus
+              />
+              <button
+                className="tabs-search-close"
+                onClick={() => setSearchExpanded(false)}
+              >
+                <Icon name="xmark" size={18} />
+              </button>
+            </div>
+          ) : (
+            /* Default Top Bar */
+            <>
+              <div className="tabs-topbar-left">
+                <button className="tabs-menu-btn" onClick={() => setMobileMenuOpen(true)}>
+                  <Icon name="bars" size={20} />
+                </button>
+                <img src={bamboohrLogo} alt="BambooHR" className="tabs-topbar-logo" />
+              </div>
+              <div className="tabs-topbar-actions">
+                <button className="tabs-icon-btn" onClick={() => setSearchExpanded(true)}>
+                  <Icon name="magnifying-glass" size={18} />
+                </button>
+                <button className="tabs-icon-btn">
+                  <Icon name="bell" size={18} />
+                </button>
+              </div>
+            </>
+          )}
         </header>
 
         {/* View Content */}
         <div className="tabs-content">
-          {currentView === 'home' && <HomeView user={user} />}
+          {currentView === 'home' && <HomeContent user={user} />}
           {currentView === 'files' && (
             <FilesView
               selectedCategory={selectedCategory}
@@ -233,7 +266,7 @@ export const TabsNav: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <Hiring controlledTab={hiringTab} onTabChange={setHiringTab} />
+              <Hiring controlledTab={hiringTab} onTabChange={setHiringTab} hideTabs />
             </div>
           )}
           {currentView === 'my-info' && (
@@ -316,39 +349,6 @@ export const TabsNav: React.FC = () => {
     </div>
   );
 };
-
-// Home View Component
-const HomeView: React.FC<{ user: typeof user }> = ({ user }) => (
-  <div className="tabs-view tabs-home-view">
-    {/* Profile Header */}
-    <div className="tabs-profile-header">
-      <div className="tabs-profile-info">
-        <Avatar src={user.avatar} size="large" />
-        <div className="tabs-profile-text">
-          <TextHeadline size="large" color="primary">
-            {`Hi, ${user.name}`}
-          </TextHeadline>
-          <p className="tabs-profile-subtitle">
-            {user.title} in {user.department}
-          </p>
-        </div>
-      </div>
-      <Button icon="pen-to-square" variant="standard">
-        Edit
-      </Button>
-    </div>
-
-    {/* Gridlet Dashboard */}
-    <div className="tabs-dashboard-grid">
-      <Gridlet title="Timesheet" minHeight={200} />
-      <Gridlet title="What's happening at BambooHR" minHeight={200} className="tabs-gridlet-wide" />
-      <Gridlet title="Time off" minHeight={200} />
-      <Gridlet title="Celebrations" minHeight={200} />
-      <Gridlet title="Who's out" minHeight={200} />
-      <Gridlet title="Starting soon" minHeight={200} />
-    </div>
-  </div>
-);
 
 // Files View Component
 const FilesView: React.FC<{

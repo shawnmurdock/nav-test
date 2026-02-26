@@ -2,11 +2,44 @@
 /* Desktop sidebar with stacked dropdown selectors on mobile */
 /* BambooHR Styled Version */
 
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   Monitor: 1655px+
+   Desktop: 1280px+
+   Laptop: 1024px+
+   Tablet: 768px+
+   Mobile: 360px+
+   Minimum: 320px+
+   ======================================== */
+
+/* GlobalHeader - positioned at top of main content area (right of sidebar) */
+.dropdown-global-header {
+  flex-shrink: 0;
+  background: var(--surface-neutral-white);
+}
+
+/* Hide sidebar logo when GlobalHeader is visible (Laptop+) */
+.dropdown-nav.with-global-header .dropdown-logo {
+  display: none;
+}
+
+/* Adjust main content when GlobalHeader is present */
+.dropdown-nav.with-global-header .dropdown-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-nav.with-global-header .dropdown-content {
+  flex: 1;
+}
+
 .dropdown-nav {
   display: flex;
   min-height: 100vh;
   background-color: var(--surface-neutral-xx-weak, #f5f5f5);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* ========================================
@@ -301,6 +334,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden;
+  max-width: calc(100vw - 220px);
 }
 
 .dropdown-sidebar.collapsed + .dropdown-main {
@@ -1095,24 +1130,32 @@
 
   .dropdown-subtabs {
     width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .dropdown-subtabs::-webkit-scrollbar {
+    display: none;
   }
 
   .dropdown-subtabs-nav {
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 4px;
   }
 
   .dropdown-subtab {
     flex: 0 0 auto;
+    white-space: nowrap;
   }
 }
 
 /* ========================================
-   RESPONSIVE - Mobile
+   RESPONSIVE - Tablet & Mobile (below Laptop 1024px)
    ======================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   /* Hide sidebar */
   .dropdown-sidebar {
     display: none;
@@ -1120,6 +1163,7 @@
 
   .dropdown-main {
     margin-left: 0;
+    max-width: 100vw;
   }
 
   /* Show mobile overlay */
@@ -1248,6 +1292,27 @@
     display: none !important;
   }
 
+  /* Remove internal padding from embedded pages and add consistent horizontal padding */
+  .dropdown-embedded-view .hiring-page,
+  .dropdown-embedded-view .people-page,
+  .dropdown-embedded-view .reports-page {
+    padding: 0 16px !important;
+  }
+
+  .dropdown-embedded-view .reports-page .reports-main {
+    padding: 0 !important;
+  }
+
+  /* People page org chart alignment - ensure controls align with title and select */
+  .dropdown-embedded-view .people-page .org-chart-controls {
+    margin: 0 !important;
+    padding: 0 0 12px !important;
+  }
+
+  .dropdown-embedded-view .people-page .people-org-chart {
+    margin: 0 !important;
+  }
+
   /* Show mobile top bar */
   .dropdown-topbar {
     display: flex;
@@ -1280,6 +1345,53 @@
     display: flex;
     align-items: center;
     gap: 4px;
+  }
+
+  /* Expanded Search Bar */
+  .dropdown-topbar-search-expanded {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    height: 40px;
+    padding: 0 12px;
+    background: var(--surface-neutral-xx-weak);
+    border-radius: var(--radius-full);
+  }
+
+  .dropdown-search-icon {
+    color: var(--text-neutral-medium);
+    flex-shrink: 0;
+  }
+
+  .dropdown-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: var(--text-neutral-strong);
+  }
+
+  .dropdown-search-input::placeholder {
+    color: var(--text-neutral-medium);
+  }
+
+  .dropdown-search-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: var(--text-neutral-medium);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .dropdown-search-close:hover {
+    color: var(--text-neutral-strong);
   }
 
   .dropdown-content {
@@ -1480,6 +1592,23 @@
     padding: 16px 12px 12px;
     font-size: 24px;
     line-height: 32px;
+  }
+
+  /* Update embedded page padding for smaller screens */
+  .dropdown-embedded-view .hiring-page,
+  .dropdown-embedded-view .people-page,
+  .dropdown-embedded-view .reports-page {
+    padding: 0 12px !important;
+  }
+
+  /* People page org chart alignment for smaller screens */
+  .dropdown-embedded-view .people-page .org-chart-controls {
+    margin: 0 !important;
+    padding: 0 0 12px !important;
+  }
+
+  .dropdown-embedded-view .people-page .people-org-chart {
+    margin: 0 !important;
   }
 
   /* My Info specific 360px styles */

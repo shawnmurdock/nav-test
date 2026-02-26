@@ -9,7 +9,17 @@
   cursor: pointer;
   transition: border-color 0.15s ease;
   text-align: left;
+  /* Consistent sizing across all breakpoints */
+  min-width: 160px;
+  min-height: 110px;
+  width: 160px;
+  flex-shrink: 0;
+}
+
+/* Default to full width in grid layouts */
+.grid .icon-tile {
   width: 100%;
+  min-width: unset;
 }
 
 .icon-tile:hover {
@@ -36,4 +46,10 @@
   font-weight: 500;
   color: var(--text-neutral-xx-strong);
   line-height: 20px;
+  /* Consistent text handling - allow 2 lines max */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
 }

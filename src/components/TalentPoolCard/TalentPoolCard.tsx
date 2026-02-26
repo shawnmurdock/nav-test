@@ -11,7 +11,7 @@ export function TalentPoolCard({ icon, title, candidatesCount, onClick }: Talent
   return (
     <button
       onClick={onClick}
-      className="bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-x-weak)] rounded-[var(--radius-small)] p-5 flex flex-col gap-4 items-start w-[224px] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors cursor-pointer text-left"
+      className="talent-pool-card bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-x-weak)] rounded-[var(--radius-small)] p-5 flex flex-col gap-4 items-start min-w-[224px] w-[224px] min-h-[140px] flex-shrink-0 hover:bg-[var(--surface-neutral-xx-weak)] transition-colors cursor-pointer text-left"
       style={{ boxShadow: '1px 1px 0px 2px rgba(56, 49, 47, 0.03)' }}
     >
       {/* Icon box */}

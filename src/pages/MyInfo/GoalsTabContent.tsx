@@ -5,7 +5,7 @@ interface GoalsTabContentProps {
   employeeName: string;
 }
 
-export function GoalsTabContent({ employeeName }: GoalsTabContentProps) {
+export function GoalsTabContent(_props: GoalsTabContentProps) {
   const [statusFilter, setStatusFilter] = useState('in-progress');
 
   // Status filter options

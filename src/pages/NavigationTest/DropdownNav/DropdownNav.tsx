@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { Icon, Avatar, Button, TextHeadline, Gridlet, MobilePageSelect } from '../../../components';
+import { Icon, MobilePageSelect } from '../../../components';
+import { GlobalHeader } from '../../../components/GlobalHeader';
+import { useBreakpoint, useMazeTracking } from '../../../hooks';
 import { files, fileCategories } from '../../../data/files';
 import {
   settingsNavItems,
@@ -18,6 +20,7 @@ import { People } from '../../People';
 import type { PeopleViewMode } from '../../People';
 import { Reports } from '../../Reports';
 import type { ReportsCategory } from '../../Reports';
+import { HomeContent } from '../shared/HomeContent';
 import './DropdownNav.css';
 
 type View = 'home' | 'files' | 'settings' | 'hiring' | 'my-info' | 'people' | 'reports';
@@ -42,9 +45,12 @@ const navItems: { id: string; label: string; icon: 'home' | 'file-lines' | 'wren
 ];
 
 export const DropdownNav: React.FC = () => {
+  useMazeTracking();
+  const breakpoint = useBreakpoint();
   const [currentView, setCurrentView] = useState<View>('home');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchExpanded, setSearchExpanded] = useState(false);
 
   // Files state
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -102,7 +108,7 @@ export const DropdownNav: React.FC = () => {
   ];
 
   return (
-    <div className="dropdown-nav">
+    <div className={`dropdown-nav ${breakpoint.isLaptopOrAbove ? 'with-global-header' : ''}`}>
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div className="dropdown-mobile-overlay" onClick={() => setMobileMenuOpen(false)}>
@@ -195,27 +201,54 @@ export const DropdownNav: React.FC = () => {
 
       {/* Main Content */}
       <main className="dropdown-main">
+        {/* GlobalHeader - Only visible on Laptop, Desktop, Monitor (>= 1024px) */}
+        {breakpoint.isLaptopOrAbove && (
+          <GlobalHeader className="dropdown-global-header" />
+        )}
+
         {/* Mobile Top Bar */}
         <header className="dropdown-topbar">
-          <div className="dropdown-topbar-left">
-            <button className="dropdown-menu-btn" onClick={() => setMobileMenuOpen(true)}>
-              <Icon name="bars" size={20} />
-            </button>
-            <img src={bamboohrLogo} alt="BambooHR" className="dropdown-topbar-logo" />
-          </div>
-          <div className="dropdown-topbar-actions">
-            <button className="dropdown-icon-btn">
-              <Icon name="magnifying-glass" size={18} />
-            </button>
-            <button className="dropdown-icon-btn">
-              <Icon name="bell" size={18} />
-            </button>
-          </div>
+          {searchExpanded ? (
+            /* Expanded Search Bar */
+            <div className="dropdown-topbar-search-expanded">
+              <Icon name="magnifying-glass" size={16} className="dropdown-search-icon" />
+              <input
+                type="text"
+                placeholder="Search anything..."
+                className="dropdown-search-input"
+                autoFocus
+              />
+              <button
+                className="dropdown-search-close"
+                onClick={() => setSearchExpanded(false)}
+              >
+                <Icon name="xmark" size={18} />
+              </button>
+            </div>
+          ) : (
+            /* Default Top Bar */
+            <>
+              <div className="dropdown-topbar-left">
+                <button className="dropdown-menu-btn" onClick={() => setMobileMenuOpen(true)}>
+                  <Icon name="bars" size={20} />
+                </button>
+                <img src={bamboohrLogo} alt="BambooHR" className="dropdown-topbar-logo" />
+              </div>
+              <div className="dropdown-topbar-actions">
+                <button className="dropdown-icon-btn" onClick={() => setSearchExpanded(true)}>
+                  <Icon name="magnifying-glass" size={18} />
+                </button>
+                <button className="dropdown-icon-btn">
+                  <Icon name="bell" size={18} />
+                </button>
+              </div>
+            </>
+          )}
         </header>
 
         {/* View Content */}
         <div className="dropdown-content">
-          {currentView === 'home' && <HomeView user={user} />}
+          {currentView === 'home' && <HomeContent user={user} />}
           {currentView === 'files' && (
             <FilesView
               selectedCategory={selectedCategory}
@@ -234,7 +267,7 @@ export const DropdownNav: React.FC = () => {
                   onChange={(value) => setHiringTab(value as HiringTab)}
                 />
               </div>
-              <Hiring controlledTab={hiringTab} onTabChange={setHiringTab} />
+              <Hiring controlledTab={hiringTab} onTabChange={setHiringTab} hideTabs />
             </div>
           )}
           {currentView === 'my-info' && (
@@ -293,39 +326,6 @@ export const DropdownNav: React.FC = () => {
     </div>
   );
 };
-
-// Home View Component
-const HomeView: React.FC<{ user: typeof user }> = ({ user }) => (
-  <div className="dropdown-view dropdown-home-view">
-    {/* Profile Header */}
-    <div className="dropdown-profile-header">
-      <div className="dropdown-profile-info">
-        <Avatar src={user.avatar} size="large" />
-        <div className="dropdown-profile-text">
-          <TextHeadline size="large" color="primary">
-            {`Hi, ${user.name}`}
-          </TextHeadline>
-          <p className="dropdown-profile-subtitle">
-            {user.title} in {user.department}
-          </p>
-        </div>
-      </div>
-      <Button icon="pen-to-square" variant="standard">
-        Edit
-      </Button>
-    </div>
-
-    {/* Gridlet Dashboard */}
-    <div className="dropdown-dashboard-grid">
-      <Gridlet title="Timesheet" minHeight={200} />
-      <Gridlet title="What's happening at BambooHR" minHeight={200} className="dropdown-gridlet-wide" />
-      <Gridlet title="Time off" minHeight={200} />
-      <Gridlet title="Celebrations" minHeight={200} />
-      <Gridlet title="Who's out" minHeight={200} />
-      <Gridlet title="Starting soon" minHeight={200} />
-    </div>
-  </div>
-);
 
 // Files View Component
 const FilesView: React.FC<{
@@ -555,6 +555,76 @@ const SettingsView: React.FC<{
     label: tab.label,
   }));
 
+  // Get current nav item label
+  const currentNavLabel = settingsNavItems.find(item => item.id === activeNav)?.label || 'Account';
+  const currentSubTabLabel = accountSubTabs.find(tab => tab.id === activeSubTab)?.label || 'Account Info';
+
+  // Render content based on activeNav and activeSubTab
+  const renderSettingsContent = () => {
+    // Account section with sub-tabs
+    if (activeNav === 'account') {
+      if (activeSubTab === 'account-info') {
+        return (
+          <>
+            <h3 className="dropdown-form-section-title">Account Info</h3>
+            <div className="dropdown-company-header">
+              <h4 className="dropdown-company-name">{accountInfo.companyName}</h4>
+              <div className="dropdown-company-details">
+                <div className="dropdown-company-meta">
+                  <Icon name="building" size={16} />
+                  <span>{accountInfo.accountNumber}</span>
+                </div>
+                <div className="dropdown-company-meta">
+                  <Icon name="link" size={16} />
+                  <span>{accountInfo.url}</span>
+                </div>
+              </div>
+            </div>
+            <div className="dropdown-subscription">
+              <div className="dropdown-subscription-header">
+                <h4 className="dropdown-subscription-title">My Subscription</h4>
+                <button className="dropdown-btn-manage">Manage Subscription</button>
+              </div>
+              <div className="dropdown-subscription-card">
+                <div className="dropdown-subscription-icon">
+                  <Icon name="shield" size={24} />
+                </div>
+                <div className="dropdown-subscription-info">
+                  <h5 className="dropdown-subscription-plan">{subscription.plan}</h5>
+                  <p className="dropdown-subscription-type">{subscription.packageType}</p>
+                </div>
+                <span className="dropdown-subscription-employees">{subscription.employees} Employees</span>
+              </div>
+            </div>
+          </>
+        );
+      }
+      // Other account sub-tabs
+      return (
+        <>
+          <h3 className="dropdown-form-section-title">{currentSubTabLabel}</h3>
+          <div className="dropdown-company-header">
+            <p style={{ color: 'var(--text-neutral-medium)', fontSize: '15px', marginTop: '8px' }}>
+              Configure your {currentSubTabLabel.toLowerCase()} settings here.
+            </p>
+          </div>
+        </>
+      );
+    }
+
+    // Other settings sections
+    return (
+      <>
+        <h3 className="dropdown-form-section-title">{currentNavLabel} Settings</h3>
+        <div className="dropdown-company-header">
+          <p style={{ color: 'var(--text-neutral-medium)', fontSize: '15px', marginTop: '8px' }}>
+            Configure your {currentNavLabel.toLowerCase()} preferences and options.
+          </p>
+        </div>
+      </>
+    );
+  };
+
   return (
     <div className="dropdown-view dropdown-settings-view dropdown-embedded-view">
       {/* Mobile Page Title */}
@@ -569,14 +639,16 @@ const SettingsView: React.FC<{
         />
       </div>
 
-      {/* Mobile Select - Sub-tab */}
-      <div className="dropdown-mobile-page-select dropdown-mobile-page-select-secondary">
-        <MobilePageSelect
-          options={subTabOptions}
-          value={activeSubTab}
-          onChange={onSubTabChange}
-        />
-      </div>
+      {/* Mobile Select - Sub-tab (only show for Account section) */}
+      {activeNav === 'account' && (
+        <div className="dropdown-mobile-page-select dropdown-mobile-page-select-secondary">
+          <MobilePageSelect
+            options={subTabOptions}
+            value={activeSubTab}
+            onChange={onSubTabChange}
+          />
+        </div>
+      )}
 
       {/* Desktop Page Header */}
       <div className="dropdown-page-header-group dropdown-desktop-only">
@@ -608,62 +680,30 @@ const SettingsView: React.FC<{
         {/* Settings Content Card */}
         <div className="dropdown-settings-content-area">
           <div className="dropdown-settings-card">
-            {/* Account Heading */}
-            <h2 className="dropdown-settings-card-title">Account</h2>
+            {/* Dynamic Heading */}
+            <h2 className="dropdown-settings-card-title">{currentNavLabel}</h2>
 
             <div className="dropdown-settings-inner-layout">
-              {/* Sub-tabs - Desktop */}
-              <div className="dropdown-subtabs">
-                <nav className="dropdown-subtabs-nav">
-                  {accountSubTabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => onSubTabChange(tab.id)}
-                      className={`dropdown-subtab ${activeSubTab === tab.id ? 'active' : ''}`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </nav>
-              </div>
+              {/* Sub-tabs - Desktop (only for Account) */}
+              {activeNav === 'account' && (
+                <div className="dropdown-subtabs">
+                  <nav className="dropdown-subtabs-nav">
+                    {accountSubTabs.map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => onSubTabChange(tab.id)}
+                        className={`dropdown-subtab ${activeSubTab === tab.id ? 'active' : ''}`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              )}
 
-              {/* Account Info Content */}
+              {/* Dynamic Content */}
               <div className="dropdown-settings-form">
-                <h3 className="dropdown-form-section-title">Account Info</h3>
-
-                {/* Company Info */}
-                <div className="dropdown-company-header">
-                  <h4 className="dropdown-company-name">{accountInfo.companyName}</h4>
-                  <div className="dropdown-company-details">
-                    <div className="dropdown-company-meta">
-                      <Icon name="building" size={16} />
-                      <span>{accountInfo.accountNumber}</span>
-                    </div>
-                    <div className="dropdown-company-meta">
-                      <Icon name="link" size={16} />
-                      <span>{accountInfo.url}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Subscription */}
-                <div className="dropdown-subscription">
-                  <div className="dropdown-subscription-header">
-                    <h4 className="dropdown-subscription-title">My Subscription</h4>
-                    <button className="dropdown-btn-manage">Manage Subscription</button>
-                  </div>
-
-                  <div className="dropdown-subscription-card">
-                    <div className="dropdown-subscription-icon">
-                      <Icon name="shield" size={24} />
-                    </div>
-                    <div className="dropdown-subscription-info">
-                      <h5 className="dropdown-subscription-plan">{subscription.plan}</h5>
-                      <p className="dropdown-subscription-type">{subscription.packageType}</p>
-                    </div>
-                    <span className="dropdown-subscription-employees">{subscription.employees} Employees</span>
-                  </div>
-                </div>
+                {renderSettingsContent()}
               </div>
             </div>
           </div>

@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Icon, Avatar, Button, TextHeadline, Gridlet } from '../../../components';
+import { Icon } from '../../../components';
+import { GlobalHeader } from '../../../components/GlobalHeader';
+import { useBreakpoint, useMazeTracking } from '../../../hooks';
 import { files, fileCategories } from '../../../data/files';
 import {
   settingsNavItems,
   accountSubTabs,
-  accountInfo,
-  subscription,
 } from '../../../data/settingsData';
 import avatarLarge from '../../../assets/images/avatar-large.png';
 import avatarSmall from '../../../assets/images/avatar-small.png';
@@ -18,6 +18,7 @@ import { People } from '../../People';
 import type { PeopleViewMode } from '../../People';
 import { Reports } from '../../Reports';
 import type { ReportsCategory } from '../../Reports';
+import { HomeContent } from '../shared/HomeContent';
 import './PanelsNav.css';
 
 type View = 'home' | 'files' | 'settings' | 'hiring' | 'my-info' | 'people' | 'reports';
@@ -116,6 +117,8 @@ const reportsSubItems = [
 ];
 
 export const PanelsNav: React.FC = () => {
+  useMazeTracking();
+  const breakpoint = useBreakpoint();
   const [currentView, setCurrentView] = useState<View>('home');
   const [currentSubView, setCurrentSubView] = useState<string>('overview');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -123,6 +126,7 @@ export const PanelsNav: React.FC = () => {
   const [panelLevel, setPanelLevel] = useState<PanelLevel>('main');
   const [activeSection, setActiveSection] = useState<string>('');
   const [activeSubsection, setActiveSubsection] = useState<string>('');
+  const [searchExpanded, setSearchExpanded] = useState(false);
 
   // Files state
   const [sortBy, setSortBy] = useState<SortOption>('size-largest');
@@ -139,7 +143,7 @@ export const PanelsNav: React.FC = () => {
   const [filesCategory, setFilesCategory] = useState<string>('all');
 
   // Navigation history for breadcrumbs
-  const [navHistory, setNavHistory] = useState<{ view: View; subView: string; label: string }[]>([]);
+  const [, setNavHistory] = useState<{ view: View; subView: string; label: string }[]>([]);
 
   // Get sub-items based on active section
   const getSubItems = (section: string) => {
@@ -177,7 +181,6 @@ export const PanelsNav: React.FC = () => {
     } else {
       // No sub-items, navigate directly
       const sectionLabel = mainNavItems.find(i => i.id === activeSection)?.label || '';
-      const itemLabel = getSubItems(activeSection).find(i => i.id === itemId)?.label || '';
 
       // Track navigation history
       setNavHistory([{ view: activeSection as View, subView: itemId, label: sectionLabel }]);
@@ -304,7 +307,7 @@ export const PanelsNav: React.FC = () => {
   };
 
   return (
-    <div className="panels-nav">
+    <div className={`panels-nav ${breakpoint.isLaptopOrAbove ? 'with-global-header' : ''}`}>
       {/* Main Sidebar - Desktop Only */}
       <aside className={`panels-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
         {/* Logo */}
@@ -452,27 +455,58 @@ export const PanelsNav: React.FC = () => {
 
       {/* Content Area */}
       <main className="panels-main">
+        {/* GlobalHeader - Only visible on Laptop, Desktop, Monitor (>= 1024px) */}
+        {breakpoint.isLaptopOrAbove && (
+          <GlobalHeader className="panels-global-header" />
+        )}
+
         {/* Mobile Top Bar */}
         <header className="panels-topbar">
-          <div className="panels-topbar-left">
-            <button className="panels-menu-btn" onClick={() => setMobileMenuOpen(true)}>
-              <Icon name="bars" size={20} />
-            </button>
-            <div className="panels-topbar-search">
-              <Icon name="magnifying-glass" size={16} />
-              <span>Search anything...</span>
+          {searchExpanded ? (
+            /* Expanded Search Bar */
+            <div className="panels-topbar-search-expanded">
+              <Icon name="magnifying-glass" size={16} className="panels-search-icon" />
+              <input
+                type="text"
+                placeholder="Search anything..."
+                className="panels-search-input"
+                autoFocus
+              />
+              <button
+                className="panels-search-close"
+                onClick={() => setSearchExpanded(false)}
+              >
+                <Icon name="xmark" size={18} />
+              </button>
             </div>
-          </div>
-          <div className="panels-topbar-actions">
-            <button className="panels-icon-btn">
-              <Icon name="bell" size={18} />
-            </button>
-          </div>
+          ) : (
+            /* Default Top Bar */
+            <>
+              <div className="panels-topbar-left">
+                <button className="panels-menu-btn" onClick={() => setMobileMenuOpen(true)}>
+                  <Icon name="bars" size={20} />
+                </button>
+                <img src={bamboohrLogo} alt="BambooHR" className="panels-topbar-logo" />
+              </div>
+              <div className="panels-topbar-actions">
+                <button className="panels-icon-btn" onClick={() => setSearchExpanded(true)}>
+                  <Icon name="magnifying-glass" size={18} />
+                </button>
+                <button className="panels-icon-btn">
+                  <Icon name="bell" size={18} />
+                </button>
+              </div>
+            </>
+          )}
         </header>
 
         {/* View Content */}
         <div className="panels-content">
-          {currentView === 'home' && <HomeView user={user} />}
+          {currentView === 'home' && (
+            <div className="panels-view">
+              <HomeContent user={user} />
+            </div>
+          )}
           {currentView === 'files' && (
             <FilesView
               sortBy={sortBy}
@@ -495,7 +529,7 @@ export const PanelsNav: React.FC = () => {
               <div className="panels-page-header-group">
                 <h1 className="panels-page-title">{getCurrentPageTitle()}</h1>
               </div>
-              <Hiring controlledTab={hiringTab} onTabChange={setHiringTab} />
+              <Hiring controlledTab={hiringTab} onTabChange={setHiringTab} hideTabs />
             </div>
           )}
           {currentView === 'my-info' && (
@@ -560,39 +594,6 @@ export const PanelsNav: React.FC = () => {
   );
 };
 
-// Home View Component - No navigation, just content
-const HomeView: React.FC<{ user: typeof user }> = ({ user }) => (
-  <div className="panels-view panels-home-view">
-    {/* Profile Header */}
-    <div className="panels-profile-header">
-      <div className="panels-profile-info">
-        <Avatar src={user.avatar} size="large" />
-        <div className="panels-profile-text">
-          <TextHeadline size="large" color="primary">
-            {`Hi, ${user.name}`}
-          </TextHeadline>
-          <p className="panels-profile-subtitle">
-            {user.title} in {user.department}
-          </p>
-        </div>
-      </div>
-      <Button icon="pen-to-square" variant="standard">
-        Edit
-      </Button>
-    </div>
-
-    {/* Gridlet Dashboard */}
-    <div className="panels-dashboard-grid">
-      <Gridlet title="Timesheet" minHeight={200} />
-      <Gridlet title="What's happening at BambooHR" minHeight={200} className="panels-gridlet-wide" />
-      <Gridlet title="Time off" minHeight={200} />
-      <Gridlet title="Celebrations" minHeight={200} />
-      <Gridlet title="Who's out" minHeight={200} />
-      <Gridlet title="Starting soon" minHeight={200} />
-    </div>
-  </div>
-);
-
 // Files View Component - No folder navigation sidebar on mobile
 const FilesView: React.FC<{
   sortBy: SortOption;
@@ -600,18 +601,8 @@ const FilesView: React.FC<{
   onBackClick?: () => void;
   showBreadcrumb?: boolean;
   selectedCategory?: string;
-}> = ({ sortBy, onSortChange, onBackClick, showBreadcrumb, selectedCategory = 'all' }) => {
-  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
+}> = ({ sortBy, onBackClick, showBreadcrumb, selectedCategory = 'all' }) => {
   const [selectedFiles, setSelectedFiles] = useState<Set<number>>(new Set());
-
-  const sortOptions = [
-    { value: 'name-asc', label: 'Name: A - Z' },
-    { value: 'name-desc', label: 'Name: Z - A' },
-    { value: 'date-recent', label: 'Date: Recent First' },
-    { value: 'date-oldest', label: 'Date: Oldest First' },
-    { value: 'size-largest', label: 'Size: Largest First' },
-    { value: 'size-smallest', label: 'Size: Smallest First' },
-  ];
 
   // Map category IDs to category names in file data
   const getCategoryName = (categoryId: string) => {
@@ -740,7 +731,7 @@ const SettingsView: React.FC<{
   activeSubTab: string;
   onBackClick?: () => void;
   showBreadcrumb?: boolean;
-}> = ({ activeNav, activeSubTab, onBackClick, showBreadcrumb }) => {
+}> = ({ onBackClick, showBreadcrumb }) => {
   return (
     <div className="panels-view panels-settings-view">
       {/* Breadcrumb */}

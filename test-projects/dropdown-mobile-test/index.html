@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Test - Dropdown Experience</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .device-frame {
+      width: 375px;
+      height: 812px;
+      background: #000;
+      border-radius: 44px;
+      padding: 14px;
+      box-shadow:
+        0 50px 100px -20px rgba(0, 0, 0, 0.5),
+        0 30px 60px -30px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 2px #333;
+      position: relative;
+    }
+
+    /* The notch */
+    .device-frame::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 32px;
+      background: #000;
+      border-radius: 0 0 20px 20px;
+      z-index: 20;
+    }
+
+    .device-screen {
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* iOS Status Bar */
+    .status-bar {
+      height: 47px;
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 24px 8px 24px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 15;
+    }
+
+    .status-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      width: 80px;
+    }
+
+    .status-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 80px;
+      justify-content: flex-end;
+    }
+
+    /* Signal bars */
+    .signal-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 1.5px;
+      height: 12px;
+    }
+
+    .signal-bar {
+      width: 3px;
+      background: #000;
+      border-radius: 1px;
+    }
+
+    .signal-bar:nth-child(1) { height: 4px; }
+    .signal-bar:nth-child(2) { height: 6px; }
+    .signal-bar:nth-child(3) { height: 8px; }
+    .signal-bar:nth-child(4) { height: 11px; }
+
+    /* WiFi icon */
+    .wifi-icon {
+      width: 16px;
+      height: 12px;
+      position: relative;
+    }
+
+    .wifi-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Battery */
+    .battery {
+      display: flex;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .battery-body {
+      width: 24px;
+      height: 12px;
+      border: 1.5px solid #000;
+      border-radius: 3px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+    }
+
+    .battery-level {
+      height: 100%;
+      width: 85%;
+      background: #000;
+      border-radius: 1px;
+    }
+
+    .battery-cap {
+      width: 1.5px;
+      height: 5px;
+      background: #000;
+      border-radius: 0 1px 1px 0;
+    }
+
+    .device-screen iframe {
+      width: 100%;
+      flex: 1;
+      border: none;
+    }
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #666;
+      z-index: 5;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e0e0e0;
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .config-note {
+      margin-top: 24px;
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      color: white;
+      font-size: 13px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .config-note code {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Dropdown Navigation Experience</h1>
+    <p>Mobile prototype for user testing</p>
+  </div>
+
+  <div class="device-frame">
+    <div class="device-screen">
+      <!-- iOS Status Bar -->
+      <div class="status-bar">
+        <div class="status-bar-left">
+          <span id="status-time">9:41</span>
+        </div>
+        <div class="status-bar-right">
+          <!-- Signal bars -->
+          <div class="signal-bars">
+            <div class="signal-bar"></div>
+            <div class="signal-bar"></div>
+            <div class="signal-bar"></div>
+            <div class="signal-bar"></div>
+          </div>
+          <!-- WiFi icon -->
+          <div class="wifi-icon">
+            <svg viewBox="0 0 16 12" fill="none">
+              <path d="M8 9.5C8.83 9.5 9.5 10.17 9.5 11C9.5 11.83 8.83 12.5 8 12.5C7.17 12.5 6.5 11.83 6.5 11C6.5 10.17 7.17 9.5 8 9.5Z" fill="black"/>
+              <path d="M4.93 8.07C5.73 7.27 6.81 6.78 8 6.78C9.19 6.78 10.27 7.27 11.07 8.07" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M2.1 5.24C3.64 3.7 5.71 2.78 8 2.78C10.29 2.78 12.36 3.7 13.9 5.24" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M0 2.34C2.11 0.88 4.95 0 8 0C11.05 0 13.89 0.88 16 2.34" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <!-- Battery -->
+          <div class="battery">
+            <div class="battery-body">
+              <div class="battery-level"></div>
+            </div>
+            <div class="battery-cap"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading experience...</p>
+      </div>
+      <iframe
+        id="app-frame"
+        src="https://bamboo-responsive-nav.netlify.app/nav-test/dropdowns"
+        onload="document.getElementById('loading').style.display='none'"
+      ></iframe>
+    </div>
+  </div>
+
+  <div class="config-note">
+    Update the iframe <code>src</code> URL in this file if the app is deployed to a different location.
+  </div>
+
+  <script>
+    // Configuration - Update this URL to match your deployed app
+    const BASE_APP_URL = 'https://bamboo-responsive-nav.netlify.app';
+    const EXPERIENCE_PATH = '/nav-test/dropdowns';
+
+    // Set the iframe source
+    document.getElementById('app-frame').src = BASE_APP_URL + EXPERIENCE_PATH;
+
+    // Update time
+    function updateTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const timeStr = `${hours}:${minutes}`;
+      document.getElementById('status-time').textContent = timeStr;
+    }
+    updateTime();
+    setInterval(updateTime, 60000);
+  </script>
+</body>
+</html>

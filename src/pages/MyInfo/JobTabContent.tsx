@@ -4,7 +4,7 @@ interface JobTabContentProps {
   employeeName: string;
 }
 
-export function JobTabContent({ employeeName }: JobTabContentProps) {
+export function JobTabContent(_props: JobTabContentProps) {
   // Mock data for job information
   const jobData = {
     hireDate: '11/1/2021',

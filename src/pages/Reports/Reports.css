@@ -73,6 +73,34 @@
   margin-bottom: 16px !important;
 }
 
+/* === FAVORITES TILES - Edge to edge scrolling === */
+.reports-page .reports-favorites-scroll {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  margin-left: -10px !important;
+  margin-right: -10px !important;
+  padding-left: 10px !important;
+  padding-right: 0 !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.reports-page .reports-favorites-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.reports-page .reports-favorites-grid {
+  display: flex !important;
+  gap: 12px !important;
+}
+
+.reports-page .reports-favorites-grid .icon-tile {
+  min-width: 160px !important;
+  width: 160px !important;
+  min-height: 110px !important;
+  flex-shrink: 0 !important;
+}
+
 .reports-page .reports-section-header {
   margin-bottom: 12px !important;
 }
@@ -145,7 +173,7 @@
 }
 
 .reports-page .reports-table {
-  min-width: 500px !important;
+  min-width: 420px !important;
 }
 
 .reports-page .reports-table th,
@@ -158,6 +186,12 @@
    TABLET STYLES - 481px and up
    ============================================ */
 @media (min-width: 481px) {
+  .reports-page .reports-favorites-scroll {
+    margin-left: -12px !important;
+    margin-right: -12px !important;
+    padding-left: 12px !important;
+  }
+
   .reports-page .reports-header {
     padding: 12px !important;
   }
@@ -213,6 +247,24 @@
    DESKTOP STYLES - 769px and up
    ============================================ */
 @media (min-width: 769px) {
+  .reports-page .reports-favorites-scroll {
+    overflow-x: visible !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  .reports-page .reports-favorites-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .reports-page .reports-favorites-grid .icon-tile {
+    min-width: unset !important;
+    flex-shrink: unset !important;
+  }
+
   .reports-page .reports-header {
     flex-direction: row !important;
     align-items: center !important;

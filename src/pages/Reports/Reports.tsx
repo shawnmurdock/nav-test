@@ -33,6 +33,213 @@ export function Reports({ controlledCategory, onCategoryChange }: ReportsProps =
     { id: 'custom', label: 'Custom folder', icon: 'file-lines' },
   ];
 
+  // Get the current category label for display
+  const currentCategoryLabel = categories.find(cat => cat.id === selectedCategory)?.label || 'Overview';
+
+  // Render content based on selected category
+  const renderCategoryContent = () => {
+    // Overview and Favorites show the default content
+    if (selectedCategory === 'overview' || selectedCategory === 'favorites') {
+      return (
+        <>
+          {/* Favorites Section */}
+          <div className="reports-section mb-8">
+            <div className="reports-section-header flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path
+                    d="M10 2L12.5 7L18 8L14 12L15 18L10 15L5 18L6 12L2 8L7.5 7L10 2Z"
+                    fill="#2e7918"
+                    stroke="#2e7918"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <h2
+                  className="text-[22px] font-semibold text-[var(--color-primary-strong)]"
+                  style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '30px' }}
+                >
+                  Favorites
+                </h2>
+              </div>
+              <button className="reports-view-all text-[15px] font-medium text-[var(--color-primary-strong)] hover:underline">
+                View All
+              </button>
+            </div>
+
+            <div className="reports-favorites-scroll">
+              <div className="reports-favorites-grid">
+                {favoriteReports.map((report) => (
+                  <IconTile
+                    key={report.id}
+                    icon={report.icon}
+                    title={report.title}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Recently Viewed Section */}
+          <div className="reports-section">
+            <div className="reports-section-header flex items-center gap-2 mb-4">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z"
+                  stroke="#2e7918"
+                  strokeWidth="1.5"
+                />
+                <path d="M10 6V10L13 13" stroke="#2e7918" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              <h2
+                className="text-[22px] font-semibold text-[var(--color-primary-strong)]"
+                style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '30px' }}
+              >
+                Recently Viewed
+              </h2>
+            </div>
+
+            <div className="reports-recent-card bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
+              <div className="reports-table-wrapper">
+              <div className="reports-table-container px-6 py-6">
+                <table className="reports-table w-full">
+                  <thead>
+                    <tr className="bg-[var(--surface-neutral-xx-weak)]">
+                      <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)] rounded-tl-[8px] rounded-bl-[8px]">
+                        Name
+                      </th>
+                      <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)]">
+                        Owner
+                      </th>
+                      <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)] rounded-tr-[8px] rounded-br-[8px]">
+                        Last Viewed
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[var(--border-neutral-x-weak)]">
+                    {recentReports.map((report) => (
+                      <tr key={report.id} className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                        <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
+                          <a
+                            href="#"
+                            className="text-[15px] font-medium text-[#2563eb] hover:underline"
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            {report.name}
+                          </a>
+                          {report.name === 'Age Profile' && (
+                            <Icon name="user-group" size={14} className="text-[var(--icon-neutral-medium)]" />
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-[15px] text-[var(--text-neutral-strong)]">{report.owner}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-[15px] text-[var(--text-neutral-medium)]">{report.lastViewed}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              </div>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    }
+
+    // Other categories show a category-specific view
+    return (
+      <div className="reports-section">
+        <div className="reports-section-header flex items-center gap-2 mb-4">
+          <Icon name={categories.find(c => c.id === selectedCategory)?.icon || 'file-lines'} size={20} className="text-[var(--color-primary-strong)]" />
+          <h2
+            className="text-[22px] font-semibold text-[var(--color-primary-strong)]"
+            style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '30px' }}
+          >
+            {currentCategoryLabel} Reports
+          </h2>
+        </div>
+
+        <div className="reports-recent-card bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
+          <div className="reports-table-wrapper">
+          <div className="reports-table-container px-6 py-6">
+            <table className="reports-table w-full">
+              <thead>
+                <tr className="bg-[var(--surface-neutral-xx-weak)]">
+                  <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)] rounded-tl-[8px] rounded-bl-[8px]">
+                    Report Name
+                  </th>
+                  <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)]">
+                    Owner
+                  </th>
+                  <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)] rounded-tr-[8px] rounded-br-[8px]">
+                    Last Modified
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--border-neutral-x-weak)]">
+                <tr className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
+                      <a href="#" className="text-[15px] font-medium text-[#2563eb] hover:underline" onClick={(e) => e.preventDefault()}>
+                        {currentCategoryLabel} Summary
+                      </a>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-[15px] text-[var(--text-neutral-strong)]">System</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-[15px] text-[var(--text-neutral-medium)]">Today</span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
+                      <a href="#" className="text-[15px] font-medium text-[#2563eb] hover:underline" onClick={(e) => e.preventDefault()}>
+                        {currentCategoryLabel} Details
+                      </a>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-[15px] text-[var(--text-neutral-strong)]">HR Admin</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-[15px] text-[var(--text-neutral-medium)]">Yesterday</span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
+                      <a href="#" className="text-[15px] font-medium text-[#2563eb] hover:underline" onClick={(e) => e.preventDefault()}>
+                        Monthly {currentCategoryLabel} Report
+                      </a>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-[15px] text-[var(--text-neutral-strong)]">System</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-[15px] text-[var(--text-neutral-medium)]">Feb 20, 2026</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="reports-page flex flex-col h-full bg-[var(--surface-neutral-xx-weak)]">
       {/* Header */}
@@ -92,112 +299,8 @@ export function Reports({ controlledCategory, onCategoryChange }: ReportsProps =
 
         {/* Main Content */}
         <div className="reports-main flex-1 pr-10 pl-6 pb-10 overflow-y-auto">
-
-        {/* Favorites Section */}
-        <div className="reports-section mb-8">
-          <div className="reports-section-header flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M10 2L12.5 7L18 8L14 12L15 18L10 15L5 18L6 12L2 8L7.5 7L10 2Z"
-                  fill="#2e7918"
-                  stroke="#2e7918"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <h2
-                className="text-[22px] font-semibold text-[var(--color-primary-strong)]"
-                style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '30px' }}
-              >
-                Favorites
-              </h2>
-            </div>
-            <button className="reports-view-all text-[15px] font-medium text-[var(--color-primary-strong)] hover:underline">
-              View All
-            </button>
-          </div>
-
-          <div className="reports-favorites-grid grid grid-cols-4 gap-4">
-            {favoriteReports.map((report) => (
-              <IconTile
-                key={report.id}
-                icon={report.icon}
-                title={report.title}
-              />
-            ))}
-          </div>
+          {renderCategoryContent()}
         </div>
-
-        {/* Recently Viewed Section */}
-        <div className="reports-section">
-          <div className="reports-section-header flex items-center gap-2 mb-4">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z"
-                stroke="#2e7918"
-                strokeWidth="1.5"
-              />
-              <path d="M10 6V10L13 13" stroke="#2e7918" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-            <h2
-              className="text-[22px] font-semibold text-[var(--color-primary-strong)]"
-              style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '30px' }}
-            >
-              Recently Viewed
-            </h2>
-          </div>
-
-          <div className="reports-recent-card bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
-            <div className="reports-table-wrapper">
-            <div className="reports-table-container px-6 py-6">
-              <table className="reports-table w-full">
-                <thead>
-                  <tr className="bg-[var(--surface-neutral-xx-weak)]">
-                    <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)] rounded-tl-[8px] rounded-bl-[8px]">
-                      Name
-                    </th>
-                    <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)]">
-                      Owner
-                    </th>
-                    <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)] rounded-tr-[8px] rounded-br-[8px]">
-                      Last Viewed
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--border-neutral-x-weak)]">
-                  {recentReports.map((report) => (
-                    <tr key={report.id} className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
-                      <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
-                        <a
-                          href="#"
-                          className="text-[15px] font-medium text-[#2563eb] hover:underline"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          {report.name}
-                        </a>
-                        {report.name === 'Age Profile' && (
-                          <Icon name="user-group" size={14} className="text-[var(--icon-neutral-medium)]" />
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="text-[15px] text-[var(--text-neutral-strong)]">{report.owner}</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="text-[15px] text-[var(--text-neutral-medium)]">{report.lastViewed}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-            </div>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
   );

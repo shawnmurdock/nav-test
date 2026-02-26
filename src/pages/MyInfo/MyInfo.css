@@ -1,6 +1,74 @@
 /* MyInfo Page - Mobile-First Responsive Styles */
 /* Base styles for 320px mobile screens */
 
+/* === TIME OFF TAB - Balance Cards Horizontal Scroll === */
+.myinfo-page .grid-cols-4 {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 12px !important;
+  padding-bottom: 4px;
+}
+
+.myinfo-page .grid-cols-4::-webkit-scrollbar {
+  display: none;
+}
+
+.myinfo-page .grid-cols-4 > div {
+  flex: 0 0 auto !important;
+  min-width: 140px !important;
+  width: auto !important;
+}
+
+/* === ALL TABLES - Horizontal Scroll === */
+.myinfo-page table {
+  min-width: 500px !important;
+}
+
+.myinfo-page .overflow-x-auto {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.myinfo-page .overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+/* === JOB TAB - 2-column grid to 1 column === */
+.myinfo-page .grid-cols-2 {
+  grid-template-columns: 1fr !important;
+  max-width: 100% !important;
+}
+
+/* === SECTION HEADERS - Stack on Mobile === */
+.myinfo-page .flex.items-center.justify-between.mb-6,
+.myinfo-page .flex.items-start.gap-4.mb-6 {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.myinfo-page .flex.items-center.justify-between.mb-6 > .flex.items-center.gap-3 {
+  width: 100%;
+}
+
+/* === TABLE CONTAINERS - Add wrapper scroll === */
+.myinfo-page > div > div > div:has(> table) {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 -12px;
+  padding: 0 12px;
+}
+
+.myinfo-page > div > div > div:has(> table)::-webkit-scrollbar {
+  display: none;
+}
+
 /* === HEADER === */
 .myinfo-page .myinfo-header {
   padding: 12px !important;
@@ -373,10 +441,39 @@
   .myinfo-page table {
     display: table !important;
     overflow-x: visible !important;
+    min-width: unset !important;
   }
 
   /* Show floating header on desktop */
   .myinfo-page .myinfo-floating-header {
     display: flex !important;
+  }
+
+  /* === TIME OFF TAB - Restore grid on desktop === */
+  .myinfo-page .grid-cols-4 {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    flex-wrap: unset !important;
+    overflow-x: visible !important;
+    gap: 24px !important;
+  }
+
+  .myinfo-page .grid-cols-4 > div {
+    flex: unset !important;
+    min-width: unset !important;
+    width: auto !important;
+  }
+
+  /* === JOB TAB - Restore 2-column grid on desktop === */
+  .myinfo-page .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 416px !important;
+  }
+
+  /* === Table containers - remove scroll on desktop === */
+  .myinfo-page > div > div > div:has(> table) {
+    overflow-x: visible !important;
+    margin: 0;
+    padding: 0;
   }
 }

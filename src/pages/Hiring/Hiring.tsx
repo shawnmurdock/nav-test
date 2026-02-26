@@ -11,9 +11,10 @@ export type HiringTab = 'openings' | 'candidates' | 'pools';
 interface HiringProps {
   controlledTab?: HiringTab;
   onTabChange?: (tab: HiringTab) => void;
+  hideTabs?: boolean;
 }
 
-export function Hiring({ controlledTab, onTabChange }: HiringProps = {}) {
+export function Hiring({ controlledTab, onTabChange, hideTabs }: HiringProps = {}) {
   const [internalTab, setInternalTab] = useState<HiringTab>('openings');
 
   // Use controlled mode if props are provided
@@ -44,47 +45,49 @@ export function Hiring({ controlledTab, onTabChange }: HiringProps = {}) {
         <h1>Hiring</h1>
       </div>
 
-      {/* Tabs */}
-      <div className="hiring-tabs-row flex items-center justify-between mb-6 border-b border-[var(--border-neutral-x-weak)]">
-        <div className="hiring-tabs flex items-center gap-6">
-          <button
-            onClick={() => setActiveTab('openings')}
-            className={`pb-3 px-1 text-[15px] font-medium transition-colors ${
-              activeTab === 'openings'
-                ? 'text-[var(--color-primary-strong)] border-b-2 border-[var(--color-primary-strong)]'
-                : 'text-[var(--text-neutral-medium)] hover:text-[var(--text-neutral-strong)]'
-            }`}
-          >
-            Job openings
-          </button>
-          <button
-            onClick={() => setActiveTab('candidates')}
-            className={`pb-3 px-1 text-[15px] font-medium transition-colors ${
-              activeTab === 'candidates'
-                ? 'text-[var(--color-primary-strong)] border-b-2 border-[var(--color-primary-strong)]'
-                : 'text-[var(--text-neutral-medium)] hover:text-[var(--text-neutral-strong)]'
-            }`}
-          >
-            Candidates
-          </button>
-          <button
-            onClick={() => setActiveTab('pools')}
-            className={`pb-3 px-1 text-[15px] font-medium transition-colors ${
-              activeTab === 'pools'
-                ? 'text-[var(--color-primary-strong)] border-b-2 border-[var(--color-primary-strong)]'
-                : 'text-[var(--text-neutral-medium)] hover:text-[var(--text-neutral-strong)]'
-            }`}
-          >
-            Talent pools
-          </button>
-        </div>
+      {/* Tabs - hidden when controlled externally */}
+      {!hideTabs && (
+        <div className="hiring-tabs-row flex items-center justify-between mb-6 border-b border-[var(--border-neutral-x-weak)]">
+          <div className="hiring-tabs flex items-center gap-6">
+            <button
+              onClick={() => setActiveTab('openings')}
+              className={`pb-3 px-1 text-[15px] font-medium transition-colors ${
+                activeTab === 'openings'
+                  ? 'text-[var(--color-primary-strong)] border-b-2 border-[var(--color-primary-strong)]'
+                  : 'text-[var(--text-neutral-medium)] hover:text-[var(--text-neutral-strong)]'
+              }`}
+            >
+              Job openings
+            </button>
+            <button
+              onClick={() => setActiveTab('candidates')}
+              className={`pb-3 px-1 text-[15px] font-medium transition-colors ${
+                activeTab === 'candidates'
+                  ? 'text-[var(--color-primary-strong)] border-b-2 border-[var(--color-primary-strong)]'
+                  : 'text-[var(--text-neutral-medium)] hover:text-[var(--text-neutral-strong)]'
+              }`}
+            >
+              Candidates
+            </button>
+            <button
+              onClick={() => setActiveTab('pools')}
+              className={`pb-3 px-1 text-[15px] font-medium transition-colors ${
+                activeTab === 'pools'
+                  ? 'text-[var(--color-primary-strong)] border-b-2 border-[var(--color-primary-strong)]'
+                  : 'text-[var(--text-neutral-medium)] hover:text-[var(--text-neutral-strong)]'
+              }`}
+            >
+              Talent pools
+            </button>
+          </div>
 
-        <div className="hiring-header-links flex items-center gap-2 text-[14px] text-[var(--text-neutral-medium)] pb-3">
-          <span>View Careers Website</span>
-          <span>·</span>
-          <span>Get Embed Code</span>
+          <div className="hiring-header-links flex items-center gap-2 text-[14px] text-[var(--text-neutral-medium)] pb-3">
+            <span>View Careers Website</span>
+            <span>·</span>
+            <span>Get Embed Code</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Render Candidates Tab Content */}
       {activeTab === 'candidates' && <CandidatesTabContent />}
