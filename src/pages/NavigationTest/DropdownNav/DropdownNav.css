@@ -351,6 +351,8 @@
   flex: 1;
   padding: 32px;
   overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* ========================================
@@ -376,12 +378,15 @@
   padding: 0;
   min-height: 100%;
   max-width: 100%;
+  width: 100%;
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .dropdown-embedded-view > * {
   min-height: 100%;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Ensure tables and wide content scroll horizontally */
@@ -1354,6 +1359,8 @@
   .dropdown-embedded-view-myinfo {
     display: block;
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .dropdown-embedded-view-myinfo .dropdown-mobile-page-select {
@@ -1363,30 +1370,57 @@
     border-bottom: none !important;
   }
 
-  /* Ensure MyInfo page components are full width */
+  /* Ensure MyInfo page components are full width and don't overflow */
   .dropdown-embedded-view-myinfo .myinfo-page {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
     box-sizing: border-box;
   }
 
   .dropdown-embedded-view-myinfo .myinfo-header {
     margin: 0 16px;
+    max-width: calc(100% - 32px);
+    overflow: hidden;
   }
 
   .dropdown-embedded-view-myinfo .myinfo-content {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box;
     padding: 16px !important;
+    overflow-x: hidden !important;
   }
 
   /* Ensure cards and inputs are full width */
   .dropdown-embedded-view-myinfo .myinfo-main {
     width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
   }
 
   .dropdown-embedded-view-myinfo .myinfo-card {
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box;
+    overflow-x: hidden !important;
+  }
+
+  /* Constrain all form elements and inputs */
+  .dropdown-embedded-view-myinfo input,
+  .dropdown-embedded-view-myinfo select,
+  .dropdown-embedded-view-myinfo textarea,
+  .dropdown-embedded-view-myinfo .myinfo-form-grid-4,
+  .dropdown-embedded-view-myinfo .myinfo-form-grid-3 {
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* Ensure section headers don't overflow */
+  .dropdown-embedded-view-myinfo .myinfo-section-header,
+  .dropdown-embedded-view-myinfo .myinfo-card-header {
+    max-width: 100%;
+    overflow: hidden;
   }
 
   /* Hide internal page tabs/navigation when embedded */
@@ -1729,6 +1763,7 @@
   /* My Info specific 360px styles */
   .dropdown-embedded-view-myinfo {
     padding: 0;
+    overflow-x: hidden !important;
   }
 
   .dropdown-embedded-view-myinfo .dropdown-mobile-page-select {
@@ -1739,10 +1774,12 @@
 
   .dropdown-embedded-view-myinfo .myinfo-header {
     margin: 0 12px;
+    max-width: calc(100% - 24px);
   }
 
   .dropdown-embedded-view-myinfo .myinfo-content {
     padding: 12px !important;
+    overflow-x: hidden !important;
   }
 
   /* Force all inputs and cards to be full width */
@@ -1751,6 +1788,13 @@
   .dropdown-embedded-view-myinfo .myinfo-page {
     width: 100% !important;
     max-width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: hidden !important;
+  }
+
+  /* Ensure all child elements respect bounds */
+  .dropdown-embedded-view-myinfo * {
+    max-width: 100%;
     box-sizing: border-box;
   }
 
