@@ -2,6 +2,12 @@
   command = "npm run build"
   publish = "dist"
 
+# Serve test-projects as static files (don't redirect to SPA)
+[[redirects]]
+  from = "/test-projects/*"
+  to = "/test-projects/:splat"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
