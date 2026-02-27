@@ -45,8 +45,8 @@ export function IconButton({
   };
 
   const sizeStyles = {
-    small: 'w-8 h-8',
-    medium: 'w-10 h-10',
+    small: 'h-8 px-3',
+    medium: 'h-10 px-4',
   };
 
   const iconColor = {

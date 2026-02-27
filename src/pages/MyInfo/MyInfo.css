@@ -178,14 +178,12 @@
 
 /* === HEADER === */
 .myinfo-page .myinfo-header {
-  padding: 12px !important;
-  padding-bottom: 0 !important;
+  padding: 16px !important;
+  padding-bottom: 16px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  border-radius: 8px !important;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  border-radius: 16px !important;
 }
 
 /* Avatar - mobile: relative positioning, centered at top */
@@ -193,9 +191,11 @@
   position: relative !important;
   left: auto !important;
   top: auto !important;
-  width: 72px !important;
-  height: 72px !important;
-  margin: 0 auto 8px !important;
+  width: 96px !important;
+  height: 96px !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+  margin: 0 auto 12px !important;
   order: -2 !important;
   z-index: 1;
   border-radius: 12px !important;
@@ -205,11 +205,11 @@
 .myinfo-page .myinfo-header-content {
   position: relative !important;
   padding-left: 0 !important;
-  padding-top: 8px !important;
+  padding-top: 4px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 4px !important;
   width: 100% !important;
   order: -1 !important;
 }
@@ -250,10 +250,11 @@
   padding-left: 0 !important;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin-top: 8px !important;
+  margin-top: 12px !important;
   margin-bottom: 0 !important;
   width: 100% !important;
   order: 1 !important;
+  display: none !important;
 }
 
 .myinfo-page .myinfo-tabs {
@@ -272,8 +273,7 @@
   font-size: 12px !important;
   white-space: nowrap !important;
   flex-shrink: 0 !important;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  border-radius: 6px !important;
 }
 
 /* === CONTENT AREA === */
@@ -316,9 +316,9 @@
 }
 
 .myinfo-page .myinfo-card-header {
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  gap: 8px !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
 .myinfo-page .myinfo-card-title {
@@ -360,8 +360,9 @@
 @media (max-width: 380px) {
   /* Tighter padding for smallest screens */
   .myinfo-page .myinfo-header {
-    padding: 8px !important;
-    padding-bottom: 0 !important;
+    padding: 12px !important;
+    padding-bottom: 12px !important;
+    border-radius: 12px !important;
   }
 
   .myinfo-page .myinfo-content {
@@ -373,11 +374,13 @@
     padding: 10px !important;
   }
 
-  /* Smaller avatar */
+  /* Larger avatar even on small screens */
   .myinfo-page .myinfo-avatar {
-    width: 64px !important;
-    height: 64px !important;
-    margin: 0 auto 6px !important;
+    width: 80px !important;
+    height: 80px !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: cover !important;
+    margin: 0 auto 10px !important;
   }
 
   /* Smaller name */
@@ -471,14 +474,18 @@
    ============================================ */
 @media (min-width: 481px) {
   .myinfo-page .myinfo-header {
-    padding: 16px !important;
-    border-radius: 12px !important;
+    padding: 20px !important;
+    padding-bottom: 20px !important;
+    border-radius: 20px !important;
   }
 
   .myinfo-page .myinfo-avatar {
-    width: 80px !important;
-    height: 80px !important;
-    margin: 0 auto 12px !important;
+    width: 112px !important;
+    height: 112px !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: cover !important;
+    margin: 0 auto 16px !important;
+    border-radius: 16px !important;
   }
 
   .myinfo-page .myinfo-header-content {
@@ -486,16 +493,16 @@
   }
 
   .myinfo-page .myinfo-name {
-    font-size: 20px !important;
-    line-height: 26px !important;
+    font-size: 22px !important;
+    line-height: 28px !important;
   }
 
   .myinfo-page .myinfo-subtitle {
-    font-size: 13px !important;
+    font-size: 14px !important;
   }
 
   .myinfo-page .myinfo-tabs-container {
-    margin-top: 12px !important;
+    margin-top: 16px !important;
   }
 
   .myinfo-page .myinfo-tabs button {
@@ -590,6 +597,7 @@
   }
 
   .myinfo-page .myinfo-tabs-container {
+    display: block !important;
     padding-left: 256px !important;
     margin-top: 0 !important;
     order: unset !important;

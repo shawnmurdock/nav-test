@@ -4,6 +4,10 @@ import { currentEmployee } from '../../data/currentEmployee';
 import { PerformanceTabContent } from './PerformanceTabContent';
 import { JobTabContent } from './JobTabContent';
 import { TimeOffTabContent } from './TimeOffTabContent';
+import { DocumentsTabContent } from './DocumentsTabContent';
+import { TimesheetsTabContent } from './TimesheetsTabContent';
+import { EmergencyTabContent } from './EmergencyTabContent';
+import { TrainingTabContent } from './TrainingTabContent';
 import './MyInfo.css';
 
 export type MyInfoTab = 'personal' | 'job' | 'time-off' | 'documents' | 'timesheets' | 'performance' | 'emergency' | 'training';
@@ -550,6 +554,14 @@ export function MyInfo({ controlledTab, onTabChange, mobileSelect }: MyInfoProps
             <JobTabContent employeeName={employee.preferredName} />
           ) : activeTab === 'time-off' ? (
             <TimeOffTabContent employeeName={employee.preferredName} />
+          ) : activeTab === 'documents' ? (
+            <DocumentsTabContent employeeName={employee.preferredName} />
+          ) : activeTab === 'timesheets' ? (
+            <TimesheetsTabContent employeeName={employee.preferredName} />
+          ) : activeTab === 'emergency' ? (
+            <EmergencyTabContent employeeName={employee.preferredName} />
+          ) : activeTab === 'training' ? (
+            <TrainingTabContent employeeName={employee.preferredName} />
           ) : (
             <>
               {/* Section Header */}
@@ -570,13 +582,13 @@ export function MyInfo({ controlledTab, onTabChange, mobileSelect }: MyInfoProps
 
           {/* Basic Information Card */}
           <div className="myinfo-card bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] p-6 mb-8">
-            <div className="myinfo-card-header flex items-center gap-3 mb-6">
-              <div className="flex items-center justify-center w-10 h-10 bg-[var(--surface-neutral-x-weak)] rounded-[var(--radius-x-small)] shrink-0">
-                <Icon name="address-card" size={16} className="text-[var(--color-primary-strong)]" />
+            <div className="myinfo-card-header-row" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+              <div className="flex items-center justify-center w-9 h-9 bg-[var(--surface-neutral-x-weak)] rounded-[var(--radius-x-small)] shrink-0" style={{ width: '36px', height: '36px', minWidth: '36px', flexShrink: 0 }}>
+                <Icon name="circle-user" size={14} className="text-[var(--color-primary-strong)]" />
               </div>
               <h3
-                className="myinfo-card-title text-[22px] font-semibold text-[var(--color-primary-strong)]"
-                style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '30px' }}
+                className="myinfo-card-title text-base font-semibold text-[var(--color-primary-strong)]"
+                style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '22px', fontSize: '16px' }}
               >
                 Basic Information
               </h3>

@@ -71,7 +71,7 @@ export function JobTabContent(_props: JobTabContentProps) {
         <div className="flex items-center gap-3">
           <Icon name="id-badge" size={24} className="text-[var(--color-primary-strong)]" />
           <h2
-            className="text-[26px] font-semibold text-[var(--color-primary-strong)]"
+            className="myinfo-section-title text-[26px] font-semibold text-[var(--color-primary-strong)]"
             style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '34px' }}
           >
             Job
