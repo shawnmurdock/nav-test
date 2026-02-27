@@ -1,6 +1,19 @@
 /* MyInfo Page - Mobile-First Responsive Styles */
 /* Base styles for 320px mobile screens */
 
+/* === GLOBAL OVERFLOW FIX === */
+.myinfo-page {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.myinfo-page * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 /* === PERFORMANCE TAB - Assessment Block Mobile === */
 /* Stack assessments vertically with Self Assessment first, Manager Assessment below */
 .myinfo-page .flex.gap-8:has(.flex-1 h3) {
