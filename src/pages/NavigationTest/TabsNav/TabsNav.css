@@ -496,9 +496,9 @@
   border-bottom: 1px solid var(--border-neutral-weak, #e0e0e0);
 }
 
-/* Hide divider below tabs for My Info on mobile */
+/* Show divider below tabs for My Info */
 .tabs-myinfo-tabs.tabs-horizontal-container {
-  border-bottom: none !important;
+  border-bottom: 1px solid var(--border-neutral-weak, #e0e0e0);
   margin-bottom: 0 !important;
 }
 
