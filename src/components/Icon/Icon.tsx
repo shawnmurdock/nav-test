@@ -91,6 +91,7 @@ import {
   faSpinner,
   faArrowLeft,
   faRotateLeft,
+  faBriefcase,
 } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -122,6 +123,7 @@ import {
   Inbox,
   Settings,
   CirclePlus,
+  FolderPlus,
 } from 'lucide-react';
 
 export type IconName =
@@ -143,6 +145,7 @@ export type IconName =
   | 'arrow-up-from-bracket'
   | 'table-cells'
   | 'folder'
+  | 'folder-plus'
   | 'chevron-down'
   | 'chevron-right'
   | 'chevron-left'
@@ -235,7 +238,8 @@ export type IconName =
   | 'arrow-left'
   | 'rotate-left'
   | 'chart-simple'
-  | 'calendar-days';
+  | 'calendar-days'
+  | 'briefcase';
 
 interface IconProps {
   name: IconName;
@@ -350,6 +354,7 @@ const faIconMap = {
   'rotate-left': faRotateLeft,
   'chart-simple': faChartSimple,
   'calendar-days': faCalendarDays,
+  'briefcase': faBriefcase,
 } as const;
 
 export function Icon({ name, size = 24, className = '', variant = 'solid', style }: IconProps) {
@@ -430,6 +435,10 @@ export function Icon({ name, size = 24, className = '', variant = 'solid', style
 
   if (name === 'circle-plus-lined') {
     return <CirclePlus size={size} className={className} strokeWidth={1.5} style={style} />;
+  }
+
+  if (name === 'folder-plus') {
+    return <FolderPlus size={size} className={className} strokeWidth={1.5} style={style} />;
   }
 
   // Handle icons that need Lucide for regular variant

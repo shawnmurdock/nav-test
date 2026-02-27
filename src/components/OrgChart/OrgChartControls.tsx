@@ -236,7 +236,7 @@ export function OrgChartControls({
           {onFilterOpen && (
             <button
               onClick={onFilterOpen}
-              className="h-10 px-4 rounded-full bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 flex items-center gap-2 text-sm font-medium transition-colors hover:bg-gray-50 dark:hover:bg-neutral-700 text-gray-900 dark:text-neutral-100"
+              className="h-10 px-4 rounded-full bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 flex items-center gap-2 text-sm font-medium transition-colors hover:bg-gray-50 dark:hover:bg-neutral-700 text-gray-900 dark:text-neutral-100 flex-shrink-0"
             >
               <Icon name="sliders" size={16} />
               <Icon name="caret-down" size={8} />
@@ -247,7 +247,7 @@ export function OrgChartControls({
           {onExportOpen && (
             <button
               onClick={onExportOpen}
-              className="h-10 px-4 rounded-full bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 flex items-center gap-2 text-sm font-medium transition-colors hover:bg-gray-50 dark:hover:bg-neutral-700 text-gray-900 dark:text-neutral-100"
+              className="h-10 px-4 rounded-full bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 flex items-center gap-2 text-sm font-medium transition-colors hover:bg-gray-50 dark:hover:bg-neutral-700 text-gray-900 dark:text-neutral-100 whitespace-nowrap flex-shrink-0"
             >
               <Icon name="file-export" size={16} />
               <span className="font-semibold">Export</span>

@@ -5,10 +5,9 @@
  * Handles route, tab, and sub-tab state with URL synchronization.
  */
 
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import {
   type RouteId,
-  type NavigationState,
   routeConfig,
   getDefaultTab,
   buildBreadcrumbPath,

@@ -3,12 +3,6 @@ import { Icon } from '../../../components';
 import { GlobalHeader } from '../../../components/GlobalHeader';
 import { useBreakpoint, useMazeTracking } from '../../../hooks';
 import { files, fileCategories } from '../../../data/files';
-import {
-  settingsNavItems,
-  accountSubTabs,
-  accountInfo,
-  subscription,
-} from '../../../data/settingsData';
 import avatarLarge from '../../../assets/images/avatar-large.png';
 import avatarSmall from '../../../assets/images/avatar-small.png';
 import bamboohrLogo from '../../../assets/images/bamboohr-logo.svg';
@@ -21,9 +15,20 @@ import type { PeopleViewMode } from '../../People';
 import { Reports } from '../../Reports';
 import type { ReportsCategory } from '../../Reports';
 import { HomeContent } from '../shared/HomeContent';
+import { SettingsContent } from '../shared/SettingsContent';
+import {
+  type RouteId,
+  navItems,
+  hiringTabOptions,
+  peopleViewOptions,
+  reportsCategoryOptions,
+  myInfoTabOptions,
+  settingsTabs,
+  settingsAccountSubTabs as accountSubTabs,
+} from '../shared/navConfig';
 import './TabsNav.css';
 
-type View = 'home' | 'files' | 'settings' | 'hiring' | 'my-info' | 'people' | 'reports';
+type View = RouteId;
 type SortOption = 'name-asc' | 'name-desc' | 'date-recent' | 'date-oldest' | 'size-largest' | 'size-smallest';
 
 // Mock user data
@@ -33,16 +38,6 @@ const user = {
   department: 'Marketing',
   avatar: avatarLarge,
 };
-
-const navItems: { id: string; label: string; icon: 'home' | 'file-lines' | 'wrench' | 'user-group' | 'circle-user' | 'users' | 'chart-line' }[] = [
-  { id: 'home', label: 'Home', icon: 'home' },
-  { id: 'files', label: 'Files', icon: 'file-lines' },
-  { id: 'hiring', label: 'Hiring', icon: 'user-group' },
-  { id: 'my-info', label: 'My Info', icon: 'circle-user' },
-  { id: 'people', label: 'People', icon: 'users' },
-  { id: 'reports', label: 'Reports', icon: 'chart-line' },
-  { id: 'settings', label: 'Settings', icon: 'wrench' },
-];
 
 export const TabsNav: React.FC = () => {
   useMazeTracking();
@@ -63,39 +58,10 @@ export const TabsNav: React.FC = () => {
   // Controlled state for embedded pages (used on mobile)
   const [hiringTab, setHiringTab] = useState<HiringTab>('openings');
   const [peopleView, setPeopleView] = useState<PeopleViewMode>('list');
-  const [reportsCategory, setReportsCategory] = useState<ReportsCategory>('overview');
+  const [reportsCategory, setReportsCategory] = useState<ReportsCategory>('recent');
   const [myInfoTab, setMyInfoTab] = useState<MyInfoTab>('personal');
 
-  // Tab options for each page
-  const hiringTabOptions = [
-    { value: 'openings', label: 'Job openings' },
-    { value: 'candidates', label: 'Candidates' },
-    { value: 'pools', label: 'Talent pools' },
-  ];
-
-  const peopleViewOptions = [
-    { value: 'list', label: 'List' },
-    { value: 'directory', label: 'Directory' },
-    { value: 'orgChart', label: 'Org Chart' },
-  ];
-
-  const reportsCategoryOptions = [
-    { value: 'overview', label: 'Overview' },
-    { value: 'favorites', label: 'Favorites' },
-    { value: 'all', label: 'All' },
-    { value: 'general', label: 'General' },
-    { value: 'compliance', label: 'Compliance' },
-    { value: 'payroll', label: 'Payroll' },
-  ];
-
-  const myInfoTabOptions = [
-    { value: 'personal', label: 'Personal' },
-    { value: 'job', label: 'Job' },
-    { value: 'time-off', label: 'Time off' },
-    { value: 'documents', label: 'Documents' },
-    { value: 'timesheets', label: 'Timesheets' },
-    { value: 'performance', label: 'Performance' },
-  ];
+  // Tab options are now imported from shared/navConfig
 
   return (
     <div className={`tabs-nav ${breakpoint.isLaptopOrAbove ? 'with-global-header' : ''}`}>
@@ -316,8 +282,17 @@ export const TabsNav: React.FC = () => {
           )}
           {currentView === 'reports' && (
             <div className="tabs-embedded-view">
-              <div className="tabs-page-header-group">
+              <div className="tabs-page-header">
                 <h1 className="tabs-page-title">Reports</h1>
+                <div className="tabs-header-actions">
+                  <button className="tabs-btn-primary-outlined">
+                    <Icon name="circle-plus" size={16} />
+                    <span>New Report</span>
+                  </button>
+                  <button className="tabs-btn-icon">
+                    <Icon name="folder-plus" size={18} />
+                  </button>
+                </div>
               </div>
               {/* Mobile Tabs */}
               <div className="tabs-horizontal-container mobile-only">
@@ -427,9 +402,12 @@ const FilesView: React.FC<{
       <div className="tabs-page-header">
         <h1 className="tabs-page-title">Files</h1>
         <div className="tabs-header-actions">
-          <button className="tabs-btn-upload">
+          <button className="tabs-btn-primary-outlined">
             <Icon name="arrow-up-from-bracket" size={16} />
-            <span>Upload file</span>
+            <span>Upload File</span>
+          </button>
+          <button className="tabs-btn-icon">
+            <Icon name="folder-plus" size={18} />
           </button>
         </div>
       </div>
@@ -559,6 +537,9 @@ const SettingsView: React.FC<{
   onNavChange: (nav: string) => void;
   onSubTabChange: (tab: string) => void;
 }> = ({ activeNav, activeSubTab, onNavChange, onSubTabChange }) => {
+  // Get current nav label for title
+  const currentNavLabel = settingsTabs.find(item => item.id === activeNav)?.label || 'Account';
+
   return (
     <div className="tabs-view tabs-settings-view">
       {/* Page Header */}
@@ -570,7 +551,7 @@ const SettingsView: React.FC<{
       {/* Mobile Settings Section Tabs */}
       <div className="tabs-horizontal-container mobile-only">
         <div className="tabs-horizontal">
-          {settingsNavItems.slice(0, 6).map((item) => (
+          {settingsTabs.slice(0, 12).map((item) => (
             <button
               key={item.id}
               onClick={() => onNavChange(item.id)}
@@ -582,57 +563,27 @@ const SettingsView: React.FC<{
         </div>
       </div>
 
-      {/* Mobile Sub-tabs */}
-      <div className="tabs-secondary-container mobile-only">
-        <div className="tabs-secondary">
-          {accountSubTabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => onSubTabChange(tab.id)}
-              className={`tabs-secondary-tab ${activeSubTab === tab.id ? 'active' : ''}`}
-            >
-              {tab.label}
-            </button>
-          ))}
+      {/* Mobile Sub-tabs (only show for Account) */}
+      {activeNav === 'account' && (
+        <div className="tabs-secondary-container mobile-only">
+          <div className="tabs-secondary">
+            {accountSubTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => onSubTabChange(tab.id)}
+                className={`tabs-secondary-tab ${activeSubTab === tab.id ? 'active' : ''}`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Mobile Settings Content */}
       <div className="tabs-settings-mobile-content mobile-only">
         <div className="tabs-settings-form-mobile">
-          <h3 className="tabs-form-section-title">Account Info</h3>
-
-          <div className="tabs-company-header">
-            <h4 className="tabs-company-name">{accountInfo.companyName}</h4>
-            <div className="tabs-company-details">
-              <div className="tabs-company-meta">
-                <Icon name="building" size={16} />
-                <span>{accountInfo.accountNumber}</span>
-              </div>
-              <div className="tabs-company-meta">
-                <Icon name="link" size={16} />
-                <span>{accountInfo.url}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="tabs-subscription">
-            <div className="tabs-subscription-header">
-              <h4 className="tabs-subscription-title">My Subscription</h4>
-              <button className="tabs-btn-manage">Manage</button>
-            </div>
-
-            <div className="tabs-subscription-card">
-              <div className="tabs-subscription-icon">
-                <Icon name="shield" size={24} />
-              </div>
-              <div className="tabs-subscription-info">
-                <h5 className="tabs-subscription-plan">{subscription.plan}</h5>
-                <p className="tabs-subscription-type">{subscription.packageType}</p>
-              </div>
-              <span className="tabs-subscription-employees">{subscription.employees} Employees</span>
-            </div>
-          </div>
+          <SettingsContent activeNav={activeNav} activeSubTab={activeSubTab} />
         </div>
       </div>
 
@@ -641,14 +592,14 @@ const SettingsView: React.FC<{
         {/* Settings Sidebar */}
         <aside className="tabs-settings-sidebar">
           <nav className="tabs-settings-nav">
-            {settingsNavItems.slice(0, 12).map((item) => (
+            {settingsTabs.slice(0, 12).map((item) => (
               <button
                 key={item.id}
                 onClick={() => onNavChange(item.id)}
                 className={`tabs-settings-item ${activeNav === item.id ? 'active' : ''}`}
               >
                 <Icon
-                  name={item.icon}
+                  name={item.icon || 'wrench'}
                   size={18}
                   className={activeNav === item.id ? 'text-white' : ''}
                 />
@@ -661,62 +612,30 @@ const SettingsView: React.FC<{
         {/* Settings Content Card */}
         <div className="tabs-settings-content-area">
           <div className="tabs-settings-card">
-            {/* Account Heading */}
-            <h2 className="tabs-settings-card-title">Account</h2>
+            {/* Dynamic Heading */}
+            <h2 className="tabs-settings-card-title">{currentNavLabel}</h2>
 
             <div className="tabs-settings-inner-layout">
-              {/* Sub-tabs */}
-              <div className="tabs-subtabs">
-                <nav className="tabs-subtabs-nav">
-                  {accountSubTabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => onSubTabChange(tab.id)}
-                      className={`tabs-subtab ${activeSubTab === tab.id ? 'active' : ''}`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </nav>
-              </div>
+              {/* Sub-tabs (only for Account) */}
+              {activeNav === 'account' && (
+                <div className="tabs-subtabs">
+                  <nav className="tabs-subtabs-nav">
+                    {accountSubTabs.map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => onSubTabChange(tab.id)}
+                        className={`tabs-subtab ${activeSubTab === tab.id ? 'active' : ''}`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              )}
 
-              {/* Account Info Content */}
+              {/* Dynamic Content */}
               <div className="tabs-settings-form">
-                <h3 className="tabs-form-section-title">Account Info</h3>
-
-                {/* Company Info */}
-                <div className="tabs-company-header">
-                  <h4 className="tabs-company-name">{accountInfo.companyName}</h4>
-                  <div className="tabs-company-details">
-                    <div className="tabs-company-meta">
-                      <Icon name="building" size={16} />
-                      <span>{accountInfo.accountNumber}</span>
-                    </div>
-                    <div className="tabs-company-meta">
-                      <Icon name="link" size={16} />
-                      <span>{accountInfo.url}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Subscription */}
-                <div className="tabs-subscription">
-                  <div className="tabs-subscription-header">
-                    <h4 className="tabs-subscription-title">My Subscription</h4>
-                    <button className="tabs-btn-manage">Manage Subscription</button>
-                  </div>
-
-                  <div className="tabs-subscription-card">
-                    <div className="tabs-subscription-icon">
-                      <Icon name="shield" size={24} />
-                    </div>
-                    <div className="tabs-subscription-info">
-                      <h5 className="tabs-subscription-plan">{subscription.plan}</h5>
-                      <p className="tabs-subscription-type">{subscription.packageType}</p>
-                    </div>
-                    <span className="tabs-subscription-employees">{subscription.employees} Employees</span>
-                  </div>
-                </div>
+                <SettingsContent activeNav={activeNav} activeSubTab={activeSubTab} />
               </div>
             </div>
           </div>

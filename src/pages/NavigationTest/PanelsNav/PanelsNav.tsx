@@ -19,6 +19,7 @@ import type { PeopleViewMode } from '../../People';
 import { Reports } from '../../Reports';
 import type { ReportsCategory } from '../../Reports';
 import { HomeContent } from '../shared/HomeContent';
+import { SettingsContent } from '../shared/SettingsContent';
 import './PanelsNav.css';
 
 type View = 'home' | 'files' | 'settings' | 'hiring' | 'my-info' | 'people' | 'reports';
@@ -33,29 +34,15 @@ const user = {
   avatar: avatarLarge,
 };
 
-// Main navigation items
-const mainNavItems: { id: string; label: string; icon: 'home' | 'file-lines' | 'wrench' | 'user-group' | 'circle-user' | 'users' | 'chart-line' }[] = [
-  { id: 'home', label: 'Home', icon: 'home' },
-  { id: 'files', label: 'Files', icon: 'file-lines' },
-  { id: 'hiring', label: 'Hiring', icon: 'user-group' },
+// Main navigation items - order: Home, My Info, People, Hiring, Reports, Files, Settings
+const mainNavItems: { id: string; label: string; icon: 'house' | 'file-lines' | 'gear' | 'user-group' | 'circle-user' | 'id-badge' | 'chart-pie-simple' }[] = [
+  { id: 'home', label: 'Home', icon: 'house' },
   { id: 'my-info', label: 'My Info', icon: 'circle-user' },
-  { id: 'people', label: 'People', icon: 'users' },
-  { id: 'reports', label: 'Reports', icon: 'chart-line' },
-  { id: 'settings', label: 'Settings', icon: 'wrench' },
-];
-
-// Home sub-items
-const homeSubItems = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'analytics', label: 'Analytics' },
-  { id: 'reports', label: 'Reports' },
-  { id: 'team', label: 'Team' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'tasks', label: 'Tasks' },
-  { id: 'calendar', label: 'Calendar' },
-  { id: 'messages', label: 'Messages' },
-  { id: 'inventory', label: 'Inventory' },
-  { id: 'finance', label: 'Finance' },
+  { id: 'people', label: 'People', icon: 'user-group' },
+  { id: 'hiring', label: 'Hiring', icon: 'id-badge' },
+  { id: 'reports', label: 'Reports', icon: 'chart-pie-simple' },
+  { id: 'files', label: 'Files', icon: 'file-lines' },
+  { id: 'settings', label: 'Settings', icon: 'gear' },
 ];
 
 // Files sub-items - derived from fileCategories data
@@ -73,11 +60,26 @@ const securitySubItems = [
   { id: 'active-sessions', label: 'Active Sessions' },
 ];
 
-// Hiring sub-items
-const hiringSubItems = [
-  { id: 'openings', label: 'Job Openings' },
-  { id: 'candidates', label: 'Candidates' },
-  { id: 'pools', label: 'Talent Pools' },
+// People sub-items
+const peopleSubItems = [
+  { id: 'list', label: 'List' },
+  { id: 'directory', label: 'Directory' },
+  { id: 'orgChart', label: 'Org Chart' },
+];
+
+// Reports sub-items
+const reportsSubItems = [
+  { id: 'recent', label: 'Recent' },
+  { id: 'general', label: 'General' },
+  { id: 'compliance', label: 'Compliance' },
+  { id: 'payroll', label: 'Payroll' },
+  { id: 'compensation', label: 'Compensation' },
+  { id: 'time-attendance', label: 'Time & Attendance' },
+  { id: 'benefits', label: 'Benefits' },
+  { id: 'training', label: 'Training' },
+  { id: 'performance', label: 'Performance & Culture' },
+  { id: 'hiring', label: 'Hiring' },
+  { id: 'custom', label: 'Custom Folder' },
 ];
 
 // My Info sub-items
@@ -92,28 +94,11 @@ const myInfoSubItems = [
   { id: 'training', label: 'Training' },
 ];
 
-// People sub-items
-const peopleSubItems = [
-  { id: 'list', label: 'List' },
-  { id: 'directory', label: 'Directory' },
-  { id: 'orgChart', label: 'Org Chart' },
-];
-
-// Reports sub-items
-const reportsSubItems = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'favorites', label: 'Favorites' },
-  { id: 'all', label: 'All' },
-  { id: 'general', label: 'General' },
-  { id: 'compliance', label: 'Compliance' },
-  { id: 'payroll', label: 'Payroll' },
-  { id: 'compensation', label: 'Compensation' },
-  { id: 'time-attendance', label: 'Time & Attendance' },
-  { id: 'benefits', label: 'Benefits' },
-  { id: 'training', label: 'Training' },
-  { id: 'performance', label: 'Performance & Culture' },
-  { id: 'hiring', label: 'Hiring' },
-  { id: 'custom', label: 'Custom Folder' },
+// Hiring sub-items
+const hiringSubItems = [
+  { id: 'openings', label: 'New Job Openings' },
+  { id: 'candidates', label: 'Candidates' },
+  { id: 'pools', label: 'Talent Pools' },
 ];
 
 export const PanelsNav: React.FC = () => {
@@ -139,7 +124,7 @@ export const PanelsNav: React.FC = () => {
   const [hiringTab, setHiringTab] = useState<HiringTab>('openings');
   const [myInfoTab, setMyInfoTab] = useState<MyInfoTab>('personal');
   const [peopleView, setPeopleView] = useState<PeopleViewMode>('list');
-  const [reportsCategory, setReportsCategory] = useState<ReportsCategory>('overview');
+  const [reportsCategory, setReportsCategory] = useState<ReportsCategory>('recent');
   const [filesCategory, setFilesCategory] = useState<string>('all');
 
   // Navigation history for breadcrumbs
@@ -148,12 +133,11 @@ export const PanelsNav: React.FC = () => {
   // Get sub-items based on active section
   const getSubItems = (section: string) => {
     switch (section) {
-      case 'home': return homeSubItems;
       case 'files': return filesSubItems;
-      case 'hiring': return hiringSubItems;
       case 'my-info': return myInfoSubItems;
       case 'people': return peopleSubItems;
       case 'reports': return reportsSubItems;
+      case 'hiring': return hiringSubItems;
       case 'settings': return settingsNavItems.slice(0, 12).map(item => ({ id: item.id, label: item.label }));
       default: return [];
     }
@@ -168,6 +152,16 @@ export const PanelsNav: React.FC = () => {
 
   // Handle main nav item click
   const handleMainNavClick = (itemId: string) => {
+    const subItems = getSubItems(itemId);
+    if (subItems.length === 0) {
+      // No sub-items, navigate directly (e.g., Home)
+      setCurrentView(itemId as View);
+      setCurrentSubView('');
+      setMobileMenuOpen(false);
+      setPanelLevel('main');
+      setActiveSection('');
+      return;
+    }
     setActiveSection(itemId);
     setPanelLevel('section');
   };
@@ -196,6 +190,14 @@ export const PanelsNav: React.FC = () => {
         setReportsCategory(itemId as ReportsCategory);
       } else if (activeSection === 'files') {
         setFilesCategory(itemId);
+      } else if (activeSection === 'settings') {
+        setActiveNav(itemId);
+        // Set default sub-tab for account, otherwise clear it
+        if (itemId === 'account') {
+          setActiveSubTab('account-info');
+        } else {
+          setActiveSubTab('');
+        }
       }
 
       setCurrentView(activeSection as View);
@@ -254,23 +256,44 @@ export const PanelsNav: React.FC = () => {
     return '';
   };
 
-  // Get current page title for content area
-  const getCurrentPageTitle = () => {
-    const mainItem = mainNavItems.find(i => i.id === currentView);
-    if (!mainItem) return '';
-
-    // If there's a sub-view, get that label
-    if (currentSubView) {
-      const subItems = getSubItems(currentView);
-      const subItem = subItems.find(i => i.id === currentSubView);
-      if (subItem) return subItem.label;
+  // Handle opening the mobile menu - opens to the current section if applicable
+  const handleOpenMenu = () => {
+    // If we're on a section that has sub-items, open directly to that section panel
+    const sectionsWithSubItems = ['files', 'my-info', 'people', 'reports', 'hiring', 'settings'];
+    if (sectionsWithSubItems.includes(currentView)) {
+      setPanelLevel('section');
+      setActiveSection(currentView);
+    } else {
+      setPanelLevel('main');
+      setActiveSection('');
     }
-
-    return mainItem.label;
+    setMobileMenuOpen(true);
   };
 
-  // Handle breadcrumb back click - goes back to main page of current section
+  // Handle breadcrumb back click - goes back through navigation hierarchy
   const handleBreadcrumbBack = () => {
+    // Settings has multi-level navigation: sub-tab → nav section → main
+    if (currentView === 'settings') {
+      // If we have a sub-tab, go back to the nav section (clear sub-tab)
+      if (activeSubTab) {
+        setActiveSubTab('');
+        setCurrentSubView(activeNav);
+        return;
+      }
+      // If we have a nav section, go back to main settings (default: account)
+      if (activeNav && activeNav !== 'account') {
+        setActiveNav('account');
+        setActiveSubTab('');
+        setCurrentSubView('');
+        setNavHistory([]);
+        return;
+      }
+      // Already at account with no sub-tab, clear everything
+      setCurrentSubView('');
+      setNavHistory([]);
+      return;
+    }
+
     // Reset to the default sub-view for the current section
     switch (currentView) {
       case 'files':
@@ -286,11 +309,7 @@ export const PanelsNav: React.FC = () => {
         setPeopleView('list');
         break;
       case 'reports':
-        setReportsCategory('overview');
-        break;
-      case 'settings':
-        setActiveNav('account');
-        setActiveSubTab('account-info');
+        setReportsCategory('recent');
         break;
     }
 
@@ -376,12 +395,7 @@ export const PanelsNav: React.FC = () => {
             ) : (
               <span className="panels-panel-title">{getPanelTitle()}</span>
             )}
-            <button className="panels-close-btn" onClick={() => {
-              setMobileMenuOpen(false);
-              setPanelLevel('main');
-              setActiveSection('');
-              setActiveSubsection('');
-            }}>
+            <button className="panels-close-btn" onClick={() => setMobileMenuOpen(false)}>
               <Icon name="xmark" size={20} />
             </button>
           </div>
@@ -391,17 +405,22 @@ export const PanelsNav: React.FC = () => {
             {/* Main Level - Show main nav items */}
             {panelLevel === 'main' && (
               <nav className="panels-panel-nav">
-                {mainNavItems.map(item => (
-                  <button
-                    key={item.id}
-                    onClick={() => handleMainNavClick(item.id)}
-                    className={`panels-panel-item ${currentView === item.id ? 'active' : ''}`}
-                  >
-                    <Icon name={item.icon} size={20} />
-                    <span>{item.label}</span>
-                    <Icon name="chevron-right" size={16} className="panels-panel-arrow" />
-                  </button>
-                ))}
+                {mainNavItems.map(item => {
+                  const hasSubItems = getSubItems(item.id).length > 0;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleMainNavClick(item.id)}
+                      className={`panels-panel-item ${currentView === item.id ? 'active' : ''}`}
+                    >
+                      <Icon name={item.icon} size={20} />
+                      <span>{item.label}</span>
+                      {hasSubItems && (
+                        <Icon name="chevron-right" size={16} className="panels-panel-arrow" />
+                      )}
+                    </button>
+                  );
+                })}
               </nav>
             )}
 
@@ -483,7 +502,7 @@ export const PanelsNav: React.FC = () => {
             /* Default Top Bar */
             <>
               <div className="panels-topbar-left">
-                <button className="panels-menu-btn" onClick={() => setMobileMenuOpen(true)}>
+                <button className="panels-menu-btn" onClick={handleOpenMenu}>
                   <Icon name="bars" size={20} />
                 </button>
                 <img src={bamboohrLogo} alt="BambooHR" className="panels-topbar-logo" />
@@ -518,64 +537,75 @@ export const PanelsNav: React.FC = () => {
           )}
           {currentView === 'hiring' && (
             <div className="panels-embedded-view">
-              {currentSubView && (
-                <div className="panels-breadcrumb">
-                  <button className="panels-breadcrumb-back" onClick={handleBreadcrumbBack}>
-                    <Icon name="chevron-left" size={14} />
-                    <span>Back</span>
-                  </button>
-                </div>
-              )}
               <div className="panels-page-header-group">
-                <h1 className="panels-page-title">{getCurrentPageTitle()}</h1>
+                <h1 className="panels-page-title">Hiring</h1>
               </div>
               <Hiring controlledTab={hiringTab} onTabChange={setHiringTab} hideTabs />
             </div>
           )}
           {currentView === 'my-info' && (
             <div className="panels-embedded-view">
-              {currentSubView && (
+              {myInfoTab !== 'personal' && (
                 <div className="panels-breadcrumb">
-                  <button className="panels-breadcrumb-back" onClick={handleBreadcrumbBack}>
+                  <button className="panels-breadcrumb-back" onClick={() => {
+                    setMyInfoTab('personal');
+                    setCurrentSubView('personal');
+                  }}>
                     <Icon name="chevron-left" size={14} />
                     <span>Back</span>
                   </button>
                 </div>
               )}
-              <div className="panels-page-header-group">
-                <h1 className="panels-page-title">{getCurrentPageTitle()}</h1>
-              </div>
               <MyInfo controlledTab={myInfoTab} onTabChange={setMyInfoTab} />
             </div>
           )}
           {currentView === 'people' && (
             <div className="panels-embedded-view">
-              {currentSubView && (
+              {peopleView !== 'list' && (
                 <div className="panels-breadcrumb">
-                  <button className="panels-breadcrumb-back" onClick={handleBreadcrumbBack}>
+                  <button className="panels-breadcrumb-back" onClick={() => {
+                    setPeopleView('list');
+                    setCurrentSubView('list');
+                  }}>
                     <Icon name="chevron-left" size={14} />
                     <span>Back</span>
                   </button>
                 </div>
               )}
               <div className="panels-page-header-group">
-                <h1 className="panels-page-title">{getCurrentPageTitle()}</h1>
+                <h1 className="panels-page-title">People</h1>
               </div>
               <People controlledView={peopleView} onViewChange={setPeopleView} />
             </div>
           )}
           {currentView === 'reports' && (
             <div className="panels-embedded-view">
-              {currentSubView && (
+              {reportsCategory !== 'recent' && (
                 <div className="panels-breadcrumb">
-                  <button className="panels-breadcrumb-back" onClick={handleBreadcrumbBack}>
+                  <button className="panels-breadcrumb-back" onClick={() => {
+                    setReportsCategory('recent');
+                    setCurrentSubView('recent');
+                  }}>
                     <Icon name="chevron-left" size={14} />
                     <span>Back</span>
                   </button>
                 </div>
               )}
-              <div className="panels-page-header-group">
-                <h1 className="panels-page-title">{getCurrentPageTitle()}</h1>
+              <div className="panels-page-header">
+                <h1 className="panels-page-title">
+                  {reportsCategory === 'recent'
+                    ? 'Reports'
+                    : `${reportsSubItems.find(item => item.id === reportsCategory)?.label || 'Reports'} Report`}
+                </h1>
+                <div className="panels-header-actions">
+                  <button className="panels-btn-primary-outlined">
+                    <Icon name="circle-plus" size={16} />
+                    New Report
+                  </button>
+                  <button className="panels-btn-icon">
+                    <Icon name="folder-plus" size={18} />
+                  </button>
+                </div>
               </div>
               <Reports controlledCategory={reportsCategory} onCategoryChange={setReportsCategory} />
             </div>
@@ -585,7 +615,7 @@ export const PanelsNav: React.FC = () => {
               activeNav={activeNav}
               activeSubTab={activeSubTab}
               onBackClick={handleBreadcrumbBack}
-              showBreadcrumb={!!currentSubView}
+              showBreadcrumb={(!!currentSubView && currentSubView !== 'account-info') || (!!activeSubTab && activeSubTab !== 'account-info') || (!!activeNav && activeNav !== 'account')}
             />
           )}
         </div>
@@ -641,8 +671,9 @@ const FilesView: React.FC<{
 
   // Get display title based on selected category
   const getCategoryTitle = () => {
+    if (selectedCategory === 'all') return 'Files';
     const category = fileCategories.find(c => c.id === selectedCategory);
-    return category?.label || 'All files';
+    return category?.label || 'Files';
   };
 
   const getFileIcon = (type: string) => {
@@ -683,8 +714,12 @@ const FilesView: React.FC<{
           <p className="panels-page-subtitle">{sortedFiles.length} {sortedFiles.length === 1 ? 'item' : 'items'}</p>
         </div>
         <div className="panels-header-actions">
-          <button className="panels-btn-upload-primary">
+          <button className="panels-btn-primary-outlined">
+            <Icon name="arrow-up-from-bracket" size={16} />
             Upload File
+          </button>
+          <button className="panels-btn-icon">
+            <Icon name="folder-plus" size={18} />
           </button>
         </div>
       </div>
@@ -731,7 +766,28 @@ const SettingsView: React.FC<{
   activeSubTab: string;
   onBackClick?: () => void;
   showBreadcrumb?: boolean;
-}> = ({ onBackClick, showBreadcrumb }) => {
+}> = ({ activeNav, activeSubTab, onBackClick, showBreadcrumb }) => {
+  // Get settings tab label for display
+  const getSettingsTitle = () => {
+    const navItem = settingsNavItems.find(item => item.id === activeNav);
+    if (!navItem) return 'Settings';
+
+    // Account section always shows just "Account"
+    if (activeNav === 'account') {
+      return 'Account';
+    }
+
+    // For other sections with sub-tabs, show "Section - SubTab" format
+    if (activeSubTab) {
+      if (activeNav === 'security') {
+        const subTab = securitySubItems.find(tab => tab.id === activeSubTab);
+        if (subTab) return `${navItem.label} - ${subTab.label}`;
+      }
+    }
+
+    return navItem.label;
+  };
+
   return (
     <div className="panels-view panels-settings-view">
       {/* Breadcrumb */}
@@ -746,50 +802,15 @@ const SettingsView: React.FC<{
 
       {/* Page Header */}
       <div className="panels-settings-header-mobile">
-        <h1 className="panels-page-title">Security - Two-Factor Auth</h1>
-        <p className="panels-settings-description">
-          Manage your security settings and configuration preferences.
-        </p>
+        <h1 className="panels-page-title">{getSettingsTitle()}</h1>
       </div>
 
-      {/* Settings Content - No sidebar on mobile */}
-      <div className="panels-settings-content-mobile">
-        {/* General Information */}
-        <div className="panels-settings-section">
-          <h2 className="panels-settings-section-title">General Information</h2>
-          <div className="panels-settings-form-row">
-            <div className="panels-settings-field">
-              <label className="panels-settings-label">Display Name</label>
-              <input type="text" className="panels-settings-input" value="John Doe" readOnly />
-            </div>
-            <div className="panels-settings-field">
-              <label className="panels-settings-label">Email Address</label>
-              <input type="text" className="panels-settings-input" value="john@example.c" readOnly />
-            </div>
-          </div>
-        </div>
-
-        {/* Preferences */}
-        <div className="panels-settings-section">
-          <h2 className="panels-settings-section-title">Preferences</h2>
-          <div className="panels-settings-toggle-list">
-            <div className="panels-settings-toggle-item">
-              <div className="panels-settings-toggle-info">
-                <span className="panels-settings-toggle-label">Enable Feature 1</span>
-                <span className="panels-settings-toggle-desc">Receive automatic updates for this specific module.</span>
-              </div>
-              <div className="panels-settings-toggle">
-                <input type="checkbox" defaultChecked />
-              </div>
-            </div>
-            <div className="panels-settings-toggle-item">
-              <div className="panels-settings-toggle-info">
-                <span className="panels-settings-toggle-label">Enable Feature 2</span>
-                <span className="panels-settings-toggle-desc">Receive automatic updates for this specific module.</span>
-              </div>
-              <div className="panels-settings-toggle">
-                <input type="checkbox" defaultChecked />
-              </div>
+      {/* Settings Content - Card wrapper like Dropdown */}
+      <div className="panels-settings-content-area">
+        <div className="panels-settings-card">
+          <div className="panels-settings-inner-layout">
+            <div className="panels-settings-form">
+              <SettingsContent activeNav={activeNav} activeSubTab={activeSubTab} />
             </div>
           </div>
         </div>

@@ -73,17 +73,21 @@
 
 /* === EMPLOYEE LIST === */
 .people-page .people-employee-list {
-  margin: 0 -12px !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .people-page .people-group-card {
-  border-radius: 0 !important;
-  border-left: none !important;
-  border-right: none !important;
+  border-radius: var(--radius-large, 12px) !important;
+  border: 1px solid var(--border-neutral-x-weak) !important;
+  padding: 20px !important;
+  overflow: hidden;
 }
 
 .people-page .people-group-header {
-  padding: 12px !important;
+  padding: 0 0 12px 0 !important;
 }
 
 .people-page .people-group-header h2 {
@@ -95,10 +99,56 @@
   font-size: 14px !important;
 }
 
+/* === EMPLOYEE CARD - Mobile Responsive === */
+.people-page .grid-cols-2 {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+/* Employee card layout - stack on mobile */
+.people-page .flex.items-start.gap-6.p-6 {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  padding: 12px 0 !important;
+  gap: 12px !important;
+}
+
+/* Employee dividers - extend to card edges */
+.people-page .divide-y > * + * {
+  border-top-width: 1px;
+  margin-top: 0;
+  padding-top: 12px;
+}
+
+/* Avatar - smaller on mobile */
+.people-page .w-\[88px\].h-\[88px\] {
+  width: 64px !important;
+  height: 64px !important;
+}
+
+/* Ensure text doesn't overflow */
+.people-page .flex-1 {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+.people-page .flex.items-center.gap-2 span {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
 /* === ORG CHART === */
 .people-page .people-org-chart {
   height: calc(100vh - 180px) !important;
-  margin: 0 -12px !important;
+  margin: 0 !important;
+}
+
+/* Style the Card inside org chart with rounded corners and clipping */
+.people-page .people-org-chart .rounded-2xl {
+  border-radius: var(--radius-large, 12px) !important;
+  border: 1px solid var(--border-neutral-x-weak) !important;
+  overflow: hidden !important;
 }
 
 /* Org Chart Controls - Mobile Horizontal Scroll */
@@ -259,15 +309,17 @@
 
   .people-page .people-employee-list {
     margin: 0 !important;
+    gap: 24px;
   }
 
   .people-page .people-group-card {
-    border-radius: var(--radius-small) !important;
+    border-radius: var(--radius-large, 12px) !important;
     border: 1px solid var(--border-neutral-x-weak) !important;
+    padding: 20px !important;
   }
 
   .people-page .people-group-header {
-    padding: 16px 24px !important;
+    padding: 0 0 16px 0 !important;
   }
 
   .people-page .people-group-header h2 {
@@ -289,5 +341,32 @@
     overflow-x: visible !important;
     margin: 0 !important;
     padding: 0 0 16px !important;
+  }
+
+  /* === EMPLOYEE CARD - Desktop Restore === */
+  .people-page .grid-cols-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    flex-direction: unset !important;
+    gap: 12px 48px !important;
+  }
+
+  /* Employee card layout - horizontal on desktop */
+  .people-page .flex.items-start.gap-6.p-6 {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    padding: 16px 0 !important;
+    gap: 24px !important;
+  }
+
+  /* Employee dividers on desktop */
+  .people-page .divide-y > * + * {
+    padding-top: 16px;
+  }
+
+  /* Avatar - full size on desktop */
+  .people-page .w-\[88px\].h-\[88px\] {
+    width: 88px !important;
+    height: 88px !important;
   }
 }

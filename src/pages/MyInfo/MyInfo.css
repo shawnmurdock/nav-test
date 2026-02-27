@@ -1,6 +1,81 @@
 /* MyInfo Page - Mobile-First Responsive Styles */
 /* Base styles for 320px mobile screens */
 
+/* === PERFORMANCE TAB - Assessment Block Mobile === */
+/* Stack assessments vertically with Self Assessment first, Manager Assessment below */
+.myinfo-page .flex.gap-8:has(.flex-1 h3) {
+  flex-direction: column !important;
+  gap: 24px !important;
+}
+
+/* Hide vertical divider on mobile */
+.myinfo-page .flex.gap-8 > .w-px {
+  display: none !important;
+}
+
+/* Reorder: Self Assessment first (order 1), Manager Assessment second (order 2) */
+.myinfo-page .flex.gap-8 > .flex-1:first-child {
+  order: 1 !important;
+}
+
+.myinfo-page .flex.gap-8 > .flex-1:last-child {
+  order: 2 !important;
+}
+
+/* Add horizontal divider between assessments on mobile */
+.myinfo-page .flex.gap-8 > .flex-1:last-child::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--border-neutral-weak);
+  margin-bottom: 24px;
+}
+
+/* Assessment date dropdown - truncate text on mobile */
+.myinfo-page [class*="w-[371px]"] {
+  width: 100% !important;
+  max-width: 200px !important;
+}
+
+.myinfo-page [class*="w-[371px]"] button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Assessment top bar - stack on mobile */
+.myinfo-page .flex.items-center.justify-between.mb-6:has([class*="w-[371px]"]) {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+}
+
+/* === PERFORMANCE TAB - Feedback Search Field Mobile === */
+/* Make search input flexible on mobile */
+.myinfo-page [class*="w-[395px]"] {
+  width: auto !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Feedback request form - ensure proper flex behavior */
+.myinfo-page .flex.items-center.gap-2:has([class*="w-[395px]"]) {
+  width: 100% !important;
+}
+
+/* Ensure button doesn't shrink */
+.myinfo-page .flex.items-center.gap-2:has([class*="w-[395px]"]) button {
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* === HIDE DIVIDERS BELOW HEADER/TABS/DROPDOWN ON MOBILE === */
+/* Use attribute selector to match Tailwind classes with special characters */
+.myinfo-page div[class*="h-px"][class*="my-4"] {
+  display: none !important;
+}
+
 /* === TIME OFF TAB - Balance Cards Horizontal Scroll === */
 .myinfo-page .grid-cols-4 {
   display: flex !important;
@@ -174,6 +249,14 @@
   flex-direction: column !important;
   padding: 8px !important;
   gap: 16px !important;
+  border-top: none !important;
+}
+
+/* Remove any divider lines between header/tabs and content on mobile */
+.myinfo-page .myinfo-section-header,
+.myinfo-page .myinfo-main {
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 /* Hide sidebar on mobile */
@@ -475,5 +558,52 @@
     overflow-x: visible !important;
     margin: 0;
     padding: 0;
+  }
+
+  /* === PERFORMANCE TAB - Restore side-by-side layout on desktop === */
+  .myinfo-page .flex.gap-8:has(.flex-1 h3) {
+    flex-direction: row !important;
+    gap: 32px !important;
+  }
+
+  /* Show vertical divider on desktop */
+  .myinfo-page .flex.gap-8 > .w-px {
+    display: block !important;
+  }
+
+  /* Reset order on desktop */
+  .myinfo-page .flex.gap-8 > .flex-1:first-child,
+  .myinfo-page .flex.gap-8 > .flex-1:last-child {
+    order: unset !important;
+  }
+
+  /* Hide mobile divider on desktop */
+  .myinfo-page .flex.gap-8 > .flex-1:last-child::before {
+    display: none !important;
+  }
+
+  /* Assessment date dropdown - full width on desktop */
+  .myinfo-page [class*="w-[371px]"] {
+    width: 371px !important;
+    max-width: 371px !important;
+  }
+
+  /* Assessment top bar - horizontal on desktop */
+  .myinfo-page .flex.items-center.justify-between.mb-6:has([class*="w-[371px]"]) {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0 !important;
+  }
+
+  /* === PERFORMANCE TAB - Feedback Search Field Desktop === */
+  /* Restore fixed width on desktop */
+  .myinfo-page [class*="w-[395px]"] {
+    width: 395px !important;
+    flex: none !important;
+  }
+
+  /* Show dividers on desktop */
+  .myinfo-page div[class*="h-px"][class*="my-4"] {
+    display: block !important;
   }
 }

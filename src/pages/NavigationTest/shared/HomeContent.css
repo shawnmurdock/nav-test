@@ -33,6 +33,70 @@
   margin: 0;
 }
 
+/* Header Actions */
+.home-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* New... Dropdown */
+.home-new-dropdown {
+  position: relative;
+}
+
+.home-new-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid var(--border-neutral-medium);
+  border-radius: 20px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-neutral-strong);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.home-new-button:hover {
+  background-color: var(--surface-neutral-weak);
+}
+
+.home-new-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  min-width: 160px;
+  background: white;
+  border: 1px solid var(--border-neutral-weak);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.home-new-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--text-link);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.home-new-dropdown-item:hover {
+  background-color: var(--surface-neutral-weak);
+}
+
 /* Dashboard Grid */
 .home-dashboard-grid {
   display: grid;
@@ -78,25 +142,166 @@
   color: var(--color-primary-strong);
 }
 
-.home-time-off-actions {
+/* Time Off Card - New Styles */
+.home-time-off-gridlet {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.home-my-stuff-gridlet {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.home-whats-happening-gridlet {
+  grid-row: 1;
+  grid-column: 2 / span 2;
+}
+
+.home-direct-reports-gridlet {
+  grid-row: 2;
+  grid-column: 2 / span 2;
+}
+
+.home-time-off-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 0;
+}
+
+.home-time-off-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.home-time-off-type-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-neutral-strong);
+}
+
+.home-time-off-icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  position: relative;
+  padding: 8px 0;
+}
+
+.home-time-off-center {
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 100%;
-  justify-content: center;
 }
 
-.home-time-off-history-btn {
+.home-time-off-type-icon {
+  color: var(--color-primary-strong);
+}
+
+.home-time-off-hours {
+  display: flex;
+  align-items: baseline;
+}
+
+.home-time-off-hours-number {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--color-primary-strong);
+}
+
+.home-time-off-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary-strong);
+}
+
+.home-time-off-nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-neutral-medium);
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--border-neutral-weak);
-  border-radius: var(--radius-small);
-  background: white;
   cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--text-neutral-strong);
+}
+
+.home-time-off-nav-btn:hover {
+  background-color: var(--surface-neutral-weak);
+}
+
+.home-time-off-prev-btn {
+  position: absolute;
+  left: 0;
+  border-color: var(--border-neutral-weak);
   color: var(--text-neutral-medium);
+}
+
+.home-time-off-next-btn {
+  position: absolute;
+  right: 0;
+  border-color: var(--color-primary-strong);
+  color: var(--color-primary-strong);
+}
+
+.home-time-off-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.home-time-off-request-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: white;
+  border: 1px solid var(--color-primary-strong);
+  border-radius: 24px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary-strong);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.home-time-off-request-btn:hover {
+  background-color: var(--surface-primary-weak);
+}
+
+.home-time-off-calc-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--color-primary-strong);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary-strong);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.home-time-off-calc-btn:hover {
+  background-color: var(--surface-primary-weak);
 }
 
 /* What's Happening */
@@ -850,6 +1055,20 @@
   .home-direct-reports-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  /* Reset specific grid positioning for tablet - use natural flow */
+  .home-time-off-gridlet,
+  .home-my-stuff-gridlet,
+  .home-whats-happening-gridlet,
+  .home-direct-reports-gridlet {
+    grid-row: auto;
+    grid-column: auto;
+  }
+
+  .home-whats-happening-gridlet,
+  .home-direct-reports-gridlet {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 768px) {
@@ -887,6 +1106,15 @@
   .home-tor-table th,
   .home-tor-table td {
     padding: 8px 4px;
+  }
+
+  /* Reset grid positioning for mobile - use natural DOM order */
+  .home-time-off-gridlet,
+  .home-my-stuff-gridlet,
+  .home-whats-happening-gridlet,
+  .home-direct-reports-gridlet {
+    grid-row: auto;
+    grid-column: auto;
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Icon, Avatar, Button, TextHeadline, Gridlet } from '../../../components';
 import { employees } from '../../../data/employees';
 import './HomeContent.css';
@@ -71,8 +71,42 @@ const directReports = employees.slice(1, 10).map(emp => ({
 export const HomeContent: React.FC<HomeContentProps> = ({ user }) => {
   const [timeOffExpanded, setTimeOffExpanded] = useState(false);
   const [activeTimeOffTab, setActiveTimeOffTab] = useState<'urgent' | 'other'>('urgent');
+  const [newDropdownOpen, setNewDropdownOpen] = useState(false);
+  const [timeOffTypeIndex, setTimeOffTypeIndex] = useState(0);
+  const newDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Time off types for the carousel
+  const timeOffTypes = [
+    { type: 'Bereavement', hours: 0, unit: 'days', label: 'used (YTD)', icon: 'briefcase' as const },
+    { type: 'COVID-19 Related A...', hours: 0, unit: 'hours', label: 'used (YTD)', icon: 'clock' as const },
+    { type: 'Comp/In Lieu Time', hours: 0, unit: 'hours', label: 'used (YTD)', icon: 'briefcase' as const },
+    { type: 'FMLA', hours: 0, unit: 'hours', label: 'used (YTD)', icon: 'users' as const },
+    { type: 'Sick', hours: 24, unit: 'hours', label: 'available', icon: 'clipboard' as const },
+    { type: 'Vacation', hours: 144, unit: 'hours', label: 'available', icon: 'spa' as const },
+  ];
+
+  const currentTimeOffType = timeOffTypes[timeOffTypeIndex];
+
+  const handleNextTimeOffType = () => {
+    setTimeOffTypeIndex((prev) => (prev + 1) % timeOffTypes.length);
+  };
+
+  const handlePrevTimeOffType = () => {
+    setTimeOffTypeIndex((prev) => (prev - 1 + timeOffTypes.length) % timeOffTypes.length);
+  };
 
   const urgentCount = timeOffRequests.filter(r => r.urgent).length;
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (newDropdownRef.current && !newDropdownRef.current.contains(event.target as Node)) {
+        setNewDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className="home-content">
@@ -89,37 +123,75 @@ export const HomeContent: React.FC<HomeContentProps> = ({ user }) => {
             </p>
           </div>
         </div>
-        <Button icon="pen-to-square" variant="standard">
-          Edit
-        </Button>
+        <div className="home-header-actions">
+          {/* New... Dropdown Button */}
+          <div className="home-new-dropdown" ref={newDropdownRef}>
+            <button
+              className="home-new-button"
+              onClick={() => setNewDropdownOpen(!newDropdownOpen)}
+            >
+              <Icon name="circle-plus" size={16} />
+              <span>New...</span>
+              <Icon name="caret-down" size={10} />
+            </button>
+            {newDropdownOpen && (
+              <div className="home-new-dropdown-menu">
+                <button className="home-new-dropdown-item" onClick={() => setNewDropdownOpen(false)}>
+                  New Employee
+                </button>
+                <button className="home-new-dropdown-item" onClick={() => setNewDropdownOpen(false)}>
+                  New Report
+                </button>
+              </div>
+            )}
+          </div>
+          {/* Edit Button */}
+          <Button icon="table-cells" variant="standard">
+            Edit
+          </Button>
+        </div>
       </div>
 
       {/* Dashboard Grid */}
       <div className="home-dashboard-grid">
         {/* Row 1 */}
-        {/* What's Happening Card - Wide */}
-        <Gridlet title="What's Happening" icon="bell" className="home-gridlet-wide" minHeight={200}>
-          <div className="home-whats-happening-content">
-            {whatsHappening.map(item => (
-              <div key={item.id} className="home-happening-item">
-                <Icon name={item.pastDue ? 'circle-info' : 'check-circle'} size={16} className={item.pastDue ? 'home-happening-icon-warning' : 'home-happening-icon-info'} />
-                <div className="home-happening-text">
-                  <span className="home-happening-title">{item.text}</span>
-                  {item.subtext && <span className="home-happening-subtext">{item.subtext}</span>}
-                  {item.dueDate && (
-                    <span className={`home-happening-date ${item.pastDue ? 'past-due' : ''}`}>
-                      Please complete by {item.dueDate}. {item.pastDue && <span className="home-past-due-badge">PAST DUE</span>}
-                    </span>
-                  )}
+        {/* Time Off Card */}
+        <Gridlet title="Time Off" icon="calendar" minHeight={200} className="home-time-off-gridlet">
+          <div className="home-time-off-card-content">
+            <div className="home-time-off-display">
+              <span className="home-time-off-type-label">{currentTimeOffType.type}</span>
+              <div className="home-time-off-icon-row">
+                {timeOffTypeIndex > 0 && (
+                  <button className="home-time-off-nav-btn home-time-off-prev-btn" onClick={handlePrevTimeOffType}>
+                    <Icon name="chevron-left" size={14} />
+                  </button>
+                )}
+                <div className="home-time-off-center">
+                  <Icon name={currentTimeOffType.icon} size={32} className="home-time-off-type-icon" />
+                  <span className="home-time-off-hours">
+                    <span className="home-time-off-hours-number">{currentTimeOffType.hours}</span>
+                  </span>
                 </div>
+                <button className="home-time-off-nav-btn home-time-off-next-btn" onClick={handleNextTimeOffType}>
+                  <Icon name="chevron-right" size={14} />
+                </button>
               </div>
-            ))}
+              <span className="home-time-off-label">{currentTimeOffType.unit} {currentTimeOffType.label}</span>
+            </div>
+            <div className="home-time-off-actions">
+              <button className="home-time-off-request-btn">
+                <Icon name="calendar" size={16} variant="regular" />
+                <span>Request Time Off</span>
+              </button>
+              <button className="home-time-off-calc-btn">
+                <Icon name="table-cells" size={18} />
+              </button>
+            </div>
           </div>
         </Gridlet>
 
-        {/* Row 2 */}
-        {/* My Stuff Card */}
-        <Gridlet title="My Stuff" icon="clipboard" minHeight={180}>
+        {/* My Stuff Card - Moved before What's Happening for mobile order */}
+        <Gridlet title="My Stuff" icon="clipboard" minHeight={180} className="home-my-stuff-gridlet">
           <div className="home-my-stuff-content">
             {myStuff.map(item => (
               <div key={item.id} className="home-stuff-item">
@@ -139,8 +211,28 @@ export const HomeContent: React.FC<HomeContentProps> = ({ user }) => {
           </div>
         </Gridlet>
 
+        {/* What's Happening Card - Wide */}
+        <Gridlet title="What's Happening" icon="bell" className="home-gridlet-wide home-whats-happening-gridlet" minHeight={200}>
+          <div className="home-whats-happening-content">
+            {whatsHappening.map(item => (
+              <div key={item.id} className="home-happening-item">
+                <Icon name={item.pastDue ? 'circle-info' : 'check-circle'} size={16} className={item.pastDue ? 'home-happening-icon-warning' : 'home-happening-icon-info'} />
+                <div className="home-happening-text">
+                  <span className="home-happening-title">{item.text}</span>
+                  {item.subtext && <span className="home-happening-subtext">{item.subtext}</span>}
+                  {item.dueDate && (
+                    <span className={`home-happening-date ${item.pastDue ? 'past-due' : ''}`}>
+                      Please complete by {item.dueDate}. {item.pastDue && <span className="home-past-due-badge">PAST DUE</span>}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Gridlet>
+
         {/* My Direct Reports Card - Wide */}
-        <Gridlet title="My Direct Reports" icon="users" className="home-gridlet-wide" minHeight={280}>
+        <Gridlet title="My Direct Reports" icon="users" className="home-gridlet-wide home-direct-reports-gridlet" minHeight={280}>
           <div className="home-direct-reports-content">
             <div className="home-direct-reports-tabs">
               <button className="home-dr-tab">Headcount</button>

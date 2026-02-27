@@ -354,6 +354,19 @@
 }
 
 /* ========================================
+   BREADCRUMB STYLES
+   ======================================== */
+
+.tabs-breadcrumb-wrapper {
+  padding: 16px 24px 0;
+  background: var(--surface-neutral-xx-weak, #f5f5f5);
+}
+
+.tabs-breadcrumb {
+  max-width: 1200px;
+}
+
+/* ========================================
    VIEW STYLES
    ======================================== */
 
@@ -365,10 +378,34 @@
 .tabs-embedded-view {
   padding: 0;
   min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .tabs-embedded-view > * {
   min-height: 100%;
+  max-width: 100%;
+}
+
+/* Ensure tables and wide content scroll horizontally */
+.tabs-embedded-view table,
+.tabs-embedded-view .people-page,
+.tabs-embedded-view .myinfo-page,
+.tabs-embedded-view .hiring-page,
+.tabs-embedded-view .reports-page {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Contain all child content within bounds */
+.tabs-embedded-view .people-group-card,
+.tabs-embedded-view .myinfo-card,
+.tabs-embedded-view .myinfo-content,
+.tabs-embedded-view [class*="-card"],
+.tabs-embedded-view [class*="-table"],
+.tabs-embedded-view [class*="-grid"] {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .tabs-page-header {
@@ -457,6 +494,12 @@
 .tabs-horizontal-container {
   margin-bottom: 24px;
   border-bottom: 1px solid var(--border-neutral-weak, #e0e0e0);
+}
+
+/* Hide divider below tabs for My Info on mobile */
+.tabs-myinfo-tabs.tabs-horizontal-container {
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
 }
 
 .tabs-horizontal {
@@ -636,24 +679,47 @@
   gap: 8px;
 }
 
-/* Upload Button */
-.tabs-btn-upload {
+/* Primary outlined button - green border and text */
+.tabs-btn-primary-outlined {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: var(--color-primary-strong, #2e7918);
-  color: white;
-  border: none;
-  border-radius: var(--radius-small, 6px);
-  font-size: 14px;
+  height: 40px;
+  padding: 0 20px;
+  background: var(--surface-neutral-white, #ffffff);
+  border: 1px solid var(--color-primary-strong, #2e7918);
+  border-radius: var(--radius-full, 9999px);
+  font-size: 15px;
   font-weight: 500;
+  color: var(--color-primary-strong, #2e7918);
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
+  white-space: nowrap;
 }
 
-.tabs-btn-upload:hover {
-  background: var(--color-primary-x-strong, #245f13);
+.tabs-btn-primary-outlined:hover {
+  background: var(--surface-primary-weak, #f0f7ee);
+}
+
+/* Icon-only rounded button - gray border */
+.tabs-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: var(--surface-neutral-white, #ffffff);
+  border: 1px solid var(--border-neutral-medium, #d1d5db);
+  border-radius: var(--radius-full, 9999px);
+  color: var(--icon-neutral-medium, #6b7280);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tabs-btn-icon:hover {
+  background: var(--surface-neutral-xx-weak, #f9fafb);
+  border-color: var(--border-neutral-strong, #9ca3af);
 }
 
 /* Sort Dropdown */
@@ -1281,6 +1347,7 @@
     order: 2;
     margin-top: 16px;
     margin-bottom: 16px;
+    border-bottom: none !important;
   }
 
   .tabs-embedded-view-myinfo .myinfo-header {
@@ -1376,11 +1443,6 @@
     flex-direction: column;
   }
 
-  .tabs-btn-upload {
-    width: 100%;
-    justify-content: center;
-  }
-
   .tabs-company-details {
     flex-direction: column;
     gap: 8px;
@@ -1439,11 +1501,6 @@
 
   .tabs-settings-form-mobile {
     padding: 12px;
-  }
-
-  .tabs-btn-upload {
-    padding: 8px 12px;
-    font-size: 13px;
   }
 
   .tabs-profile-info {

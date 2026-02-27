@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Icon, IconTile } from '../../components';
-import { favoriteReports, recentReports } from '../../data/analytics';
+import { favoriteReports, recentReports, reportsByCategory } from '../../data/analytics';
 import './Reports.css';
 
-export type ReportsCategory = 'overview' | 'favorites' | 'all' | 'general' | 'compliance' | 'payroll' | 'compensation' | 'time-attendance' | 'benefits' | 'training' | 'performance' | 'hiring' | 'custom';
+export type ReportsCategory = 'recent' | 'general' | 'compliance' | 'payroll' | 'compensation' | 'time-attendance' | 'benefits' | 'training' | 'performance' | 'hiring' | 'custom';
 
 interface ReportsProps {
   controlledCategory?: ReportsCategory;
@@ -11,35 +11,43 @@ interface ReportsProps {
 }
 
 export function Reports({ controlledCategory, onCategoryChange }: ReportsProps = {}) {
-  const [internalCategory, setInternalCategory] = useState<ReportsCategory>('overview');
+  const [internalCategory, setInternalCategory] = useState<ReportsCategory>('recent');
+  const [folderMenuOpen, setFolderMenuOpen] = useState<string | null>(null);
+  const folderMenuRef = useRef<HTMLDivElement>(null);
 
   // Use controlled mode if props are provided
   const selectedCategory = controlledCategory ?? internalCategory;
   const setSelectedCategory = onCategoryChange ?? setInternalCategory;
 
-  const categories: { id: ReportsCategory; label: string; icon: 'chart-pie-simple' | 'face-smile' | 'file-lines' | 'circle-question' | 'circle-dollar' | 'user-group' }[] = [
-    { id: 'overview', label: 'Overview', icon: 'chart-pie-simple' },
-    { id: 'favorites', label: 'Favorites', icon: 'face-smile' },
-    { id: 'all', label: 'All', icon: 'file-lines' },
+  // Close folder menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (folderMenuRef.current && !folderMenuRef.current.contains(event.target as Node)) {
+        setFolderMenuOpen(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const categories: { id: ReportsCategory; label: string; icon: 'chart-pie-simple' | 'clock' | 'file-lines' | 'circle-question' | 'circle-dollar' | 'user-group' }[] = [
+    { id: 'recent', label: 'Recent', icon: 'clock' },
     { id: 'general', label: 'General', icon: 'file-lines' },
     { id: 'compliance', label: 'Compliance', icon: 'circle-question' },
     { id: 'payroll', label: 'Payroll', icon: 'circle-dollar' },
     { id: 'compensation', label: 'Compensation', icon: 'circle-dollar' },
     { id: 'time-attendance', label: 'Time & Attendance', icon: 'chart-pie-simple' },
-    { id: 'benefits', label: 'Benefits', icon: 'face-smile' },
+    { id: 'benefits', label: 'Benefits', icon: 'file-lines' },
     { id: 'training', label: 'Training', icon: 'file-lines' },
     { id: 'performance', label: 'Performance & Culture', icon: 'chart-pie-simple' },
     { id: 'hiring', label: 'Hiring', icon: 'user-group' },
     { id: 'custom', label: 'Custom folder', icon: 'file-lines' },
   ];
 
-  // Get the current category label for display
-  const currentCategoryLabel = categories.find(cat => cat.id === selectedCategory)?.label || 'Overview';
-
   // Render content based on selected category
   const renderCategoryContent = () => {
-    // Overview and Favorites show the default content
-    if (selectedCategory === 'overview' || selectedCategory === 'favorites') {
+    // Recent shows the favorites and recently viewed content
+    if (selectedCategory === 'recent') {
       return (
         <>
           {/* Favorites Section */}
@@ -152,19 +160,12 @@ export function Reports({ controlledCategory, onCategoryChange }: ReportsProps =
       );
     }
 
-    // Other categories show a category-specific view
+    // Get reports for this category
+    const categoryReports = reportsByCategory[selectedCategory] || [];
+
+    // Other categories show a category-specific view with real data
     return (
       <div className="reports-section">
-        <div className="reports-section-header flex items-center gap-2 mb-4">
-          <Icon name={categories.find(c => c.id === selectedCategory)?.icon || 'file-lines'} size={20} className="text-[var(--color-primary-strong)]" />
-          <h2
-            className="text-[22px] font-semibold text-[var(--color-primary-strong)]"
-            style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '30px' }}
-          >
-            {currentCategoryLabel} Reports
-          </h2>
-        </div>
-
         <div className="reports-recent-card bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
           <div className="reports-table-wrapper">
           <div className="reports-table-container px-6 py-6">
@@ -175,62 +176,51 @@ export function Reports({ controlledCategory, onCategoryChange }: ReportsProps =
                     Report Name
                   </th>
                   <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)]">
+                    Description
+                  </th>
+                  <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)]">
                     Owner
                   </th>
-                  <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)] rounded-tr-[8px] rounded-br-[8px]">
+                  <th className="px-6 py-4 text-left text-[15px] font-semibold text-[var(--text-neutral-x-strong)]">
                     Last Modified
+                  </th>
+                  <th className="px-6 py-4 text-right text-[15px] font-semibold text-[var(--text-neutral-x-strong)] rounded-tr-[8px] rounded-br-[8px]">
+                    Run Count
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border-neutral-x-weak)]">
-                <tr className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
-                      <a href="#" className="text-[15px] font-medium text-[#2563eb] hover:underline" onClick={(e) => e.preventDefault()}>
-                        {currentCategoryLabel} Summary
-                      </a>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-[15px] text-[var(--text-neutral-strong)]">System</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-[15px] text-[var(--text-neutral-medium)]">Today</span>
-                  </td>
-                </tr>
-                <tr className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
-                      <a href="#" className="text-[15px] font-medium text-[#2563eb] hover:underline" onClick={(e) => e.preventDefault()}>
-                        {currentCategoryLabel} Details
-                      </a>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-[15px] text-[var(--text-neutral-strong)]">HR Admin</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-[15px] text-[var(--text-neutral-medium)]">Yesterday</span>
-                  </td>
-                </tr>
-                <tr className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
-                      <a href="#" className="text-[15px] font-medium text-[#2563eb] hover:underline" onClick={(e) => e.preventDefault()}>
-                        Monthly {currentCategoryLabel} Report
-                      </a>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-[15px] text-[var(--text-neutral-strong)]">System</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-[15px] text-[var(--text-neutral-medium)]">Feb 20, 2026</span>
-                  </td>
-                </tr>
+                {categoryReports.map((report) => (
+                  <tr key={report.id} className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <Icon name="chart-pie-simple" size={16} className="text-[#2563eb]" />
+                        <a href="#" className="text-[15px] font-medium text-[#2563eb] hover:underline" onClick={(e) => e.preventDefault()}>
+                          {report.name}
+                        </a>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-[14px] text-[var(--text-neutral-medium)]">{report.description}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-[15px] text-[var(--text-neutral-strong)]">{report.owner}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-[15px] text-[var(--text-neutral-medium)]">{report.lastModified}</span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <span className="text-[15px] text-[var(--text-neutral-medium)]">{report.runCount}</span>
+                    </td>
+                  </tr>
+                ))}
+                {categoryReports.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-8 text-center text-[var(--text-neutral-medium)]">
+                      No reports found in this category.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -245,7 +235,7 @@ export function Reports({ controlledCategory, onCategoryChange }: ReportsProps =
       {/* Header */}
       <div className="reports-header flex items-center justify-between pr-10 pt-10 pb-6 pl-8">
         <h1>Reports</h1>
-        <div className="reports-header-actions flex items-center gap-4">
+        <div className="reports-header-actions flex items-center gap-3">
           {/* Search */}
           <div className="reports-search flex items-center gap-2 h-10 px-4 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)]">
             <Icon name="magnifying-glass" size={16} className="text-[var(--icon-neutral-strong)]" />
@@ -255,19 +245,15 @@ export function Reports({ controlledCategory, onCategoryChange }: ReportsProps =
               className="w-[200px] bg-transparent text-[14px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-weak)] outline-none"
             />
           </div>
-          {/* New Button */}
-          <button className="reports-new-button flex items-center gap-2 h-10 px-5 bg-[var(--color-primary-strong)] text-white rounded-[var(--radius-full)] text-[15px] font-medium hover:bg-[#267015] transition-colors">
-            <span className="text-[18px] leading-none">+</span>
-            <span>New</span>
-            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" className="ml-1">
-              <path
-                d="M1 1.5L6 6.5L11 1.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          {/* New folder button */}
+          <button className="reports-new-folder-button flex items-center gap-2 h-10 px-5 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)] text-[15px] font-medium text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+            <Icon name="circle-plus" size={16} />
+            <span>New folder</span>
+          </button>
+          {/* New report button */}
+          <button className="reports-new-button flex items-center gap-2 h-10 px-5 bg-[var(--color-primary-strong)] text-white rounded-[var(--radius-full)] text-[15px] font-semibold hover:bg-[#267015] transition-colors">
+            <Icon name="chart-pie-simple" size={16} />
+            <span>New report</span>
           </button>
         </div>
       </div>
@@ -277,23 +263,75 @@ export function Reports({ controlledCategory, onCategoryChange }: ReportsProps =
         {/* Sidebar Navigation */}
         <div className="reports-sidebar w-[280px] pl-8 overflow-y-auto flex-shrink-0">
           <nav className="space-y-1">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`
-                  w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-[15px] font-medium transition-colors
-                  ${
-                    selectedCategory === category.id
-                      ? 'bg-[var(--color-primary-strong)] text-white'
-                      : 'text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)]'
-                  }
-                `}
-              >
-                <Icon name={category.icon} size={16} className={selectedCategory === category.id ? 'text-white' : ''} />
-                <span>{category.label}</span>
-              </button>
-            ))}
+            {categories.map((category) => {
+              // Show overflow menu only for "custom" or category folders (not overview/favorites/all)
+              const showOverflowMenu = !['overview', 'favorites', 'all'].includes(category.id);
+              return (
+                <div
+                  key={category.id}
+                  className="relative group"
+                >
+                  <button
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`
+                      w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-[15px] font-medium transition-colors
+                      ${
+                        selectedCategory === category.id
+                          ? 'bg-[var(--color-primary-strong)] text-white'
+                          : 'text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)]'
+                      }
+                    `}
+                  >
+                    <Icon name={category.icon} size={16} className={selectedCategory === category.id ? 'text-white' : ''} />
+                    <span className="flex-1 text-left">{category.label}</span>
+                    {/* Overflow menu button */}
+                    {showOverflowMenu && (
+                      <span
+                        role="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFolderMenuOpen(folderMenuOpen === category.id ? null : category.id);
+                        }}
+                        className={`
+                          reports-folder-menu-trigger opacity-0 group-hover:opacity-100 flex items-center justify-center w-6 h-6 rounded transition-opacity
+                          ${selectedCategory === category.id ? 'hover:bg-white/20' : 'hover:bg-[var(--surface-neutral-x-weak)]'}
+                        `}
+                      >
+                        <Icon name="ellipsis" size={14} className={selectedCategory === category.id ? 'text-white' : 'text-[var(--text-neutral-medium)]'} />
+                      </span>
+                    )}
+                  </button>
+                  {/* Overflow dropdown menu */}
+                  {folderMenuOpen === category.id && (
+                    <div
+                      ref={folderMenuRef}
+                      className="reports-folder-overflow-menu absolute left-full top-0 ml-2 w-[160px] bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-x-weak)] rounded-lg shadow-lg z-20 py-2"
+                    >
+                      <button
+                        onClick={() => {
+                          setFolderMenuOpen(null);
+                          // Rename action placeholder
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-2 text-left text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                      >
+                        <Icon name="pen" size={14} />
+                        <span>Rename</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setFolderMenuOpen(null);
+                          // Delete action placeholder
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-2 text-left text-[15px] text-[var(--color-danger-strong, #dc2626)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                      >
+                        <Icon name="trash-can" size={14} />
+                        <span>Delete</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </nav>
         </div>
 

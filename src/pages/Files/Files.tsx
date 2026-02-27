@@ -1,6 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { Icon } from '../../components';
 import { files, fileCategories } from '../../data/files';
+import './Files.css';
 
 type SortOption = 'name-asc' | 'name-desc' | 'date-recent' | 'date-oldest' | 'size-largest' | 'size-smallest';
 
@@ -9,6 +10,19 @@ export function Files() {
   const [selectedFiles, setSelectedFiles] = useState<Set<number>>(new Set());
   const [sortBy, setSortBy] = useState<SortOption>('size-largest');
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
+  const [folderMenuOpen, setFolderMenuOpen] = useState<string | null>(null);
+  const folderMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close folder menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (folderMenuRef.current && !folderMenuRef.current.contains(event.target as Node)) {
+        setFolderMenuOpen(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const sortOptions = [
     { value: 'name-asc', label: 'Name: A - Z' },
@@ -75,66 +89,118 @@ export function Files() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[var(--surface-neutral-xx-weak)]">
+    <div className="files-page flex flex-col h-full bg-[var(--surface-neutral-xx-weak)]">
       {/* Header */}
-      <div className="flex items-center justify-between pr-10 pt-10 pb-6 pl-8">
+      <div className="files-header flex items-center justify-between pr-10 pt-10 pb-6 pl-8">
         <h1>Files</h1>
-        <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 h-10 px-5 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)] text-[15px] font-medium text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+        <div className="files-header-actions flex items-center gap-3">
+          <button className="files-new-folder-button flex items-center gap-2 h-10 px-5 bg-[var(--color-primary-strong)] text-white rounded-[var(--radius-full)] text-[15px] font-semibold hover:bg-[#267015] transition-colors">
+            <Icon name="circle-plus" size={16} />
+            <span>New folder</span>
+          </button>
+          <button className="files-upload-button flex items-center gap-2 h-10 px-5 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)] text-[15px] font-medium text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
             <Icon name="arrow-up-from-bracket" size={16} />
             <span>Upload file</span>
           </button>
-          <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+          <button className="files-view-toggle inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
             <Icon name="table-cells" size={16} />
           </button>
         </div>
       </div>
 
       {/* Content Area with Sidebar and Main Content */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="files-content flex flex-1 overflow-hidden">
         {/* Sidebar Navigation */}
-        <div className="w-[280px] pl-8 overflow-y-auto flex-shrink-0">
+        <div className="files-sidebar w-[280px] pl-8 overflow-y-auto flex-shrink-0">
           <nav className="space-y-1">
             {fileCategories.map((category) => (
-              <button
+              <div
                 key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`
-                  w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-[15px] font-medium transition-colors
-                  ${
-                    selectedCategory === category.id
-                      ? 'bg-[var(--color-primary-strong)] text-white'
-                      : 'text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)]'
-                  }
-                `}
+                className="relative group"
               >
-                <Icon name="folder" size={16} className={selectedCategory === category.id ? 'text-white' : ''} />
-                <span className="flex-1 text-left">{category.label}</span>
-                {category.count > 0 && (
-                  <span className={selectedCategory === category.id ? 'text-white' : 'text-[var(--text-neutral-medium)]'}>
-                    ({category.count})
-                  </span>
+                <button
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`
+                    w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-[15px] font-medium transition-colors
+                    ${
+                      selectedCategory === category.id
+                        ? 'bg-[var(--color-primary-strong)] text-white'
+                        : 'text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)]'
+                    }
+                  `}
+                >
+                  <Icon name="folder" size={16} className={selectedCategory === category.id ? 'text-white' : ''} />
+                  <span className="flex-1 text-left">{category.label}</span>
+                  {category.count > 0 && (
+                    <span className={`mr-2 ${selectedCategory === category.id ? 'text-white' : 'text-[var(--text-neutral-medium)]'}`}>
+                      ({category.count})
+                    </span>
+                  )}
+                  {/* Overflow menu button - only show for non-"all" categories */}
+                  {category.id !== 'all' && (
+                    <span
+                      role="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setFolderMenuOpen(folderMenuOpen === category.id ? null : category.id);
+                      }}
+                      className={`
+                        files-folder-menu-trigger opacity-0 group-hover:opacity-100 flex items-center justify-center w-6 h-6 rounded transition-opacity
+                        ${selectedCategory === category.id ? 'hover:bg-white/20' : 'hover:bg-[var(--surface-neutral-x-weak)]'}
+                      `}
+                    >
+                      <Icon name="ellipsis" size={14} className={selectedCategory === category.id ? 'text-white' : 'text-[var(--text-neutral-medium)]'} />
+                    </span>
+                  )}
+                </button>
+                {/* Overflow dropdown menu */}
+                {folderMenuOpen === category.id && (
+                  <div
+                    ref={folderMenuRef}
+                    className="files-folder-overflow-menu absolute left-full top-0 ml-2 w-[160px] bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-x-weak)] rounded-lg shadow-lg z-20 py-2"
+                  >
+                    <button
+                      onClick={() => {
+                        setFolderMenuOpen(null);
+                        // Rename action placeholder
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-left text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                    >
+                      <Icon name="pen" size={14} />
+                      <span>Rename</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setFolderMenuOpen(null);
+                        // Delete action placeholder
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-left text-[15px] text-[var(--color-danger-strong, #dc2626)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                    >
+                      <Icon name="trash-can" size={14} />
+                      <span>Delete</span>
+                    </button>
+                  </div>
                 )}
-              </button>
+              </div>
             ))}
           </nav>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 pr-10 pl-6 pb-10 overflow-y-auto">
+        <div className="files-main flex-1 pr-10 pl-6 pb-10 overflow-y-auto">
           {/* File List Card */}
-          <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
+          <div className="files-list-card bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
             {/* Header Row */}
-            <div className="flex items-center justify-between px-6 py-4">
+            <div className="files-list-header flex items-center justify-between px-6 py-4">
               <h2
                 className="text-[22px] font-semibold text-[var(--color-primary-strong)]"
                 style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '30px' }}
               >
                 All Files
               </h2>
-              <div className="flex items-center gap-3">
+              <div className="files-list-actions flex items-center gap-3">
                 {/* Sort Dropdown */}
-                <div className="relative">
+                <div className="files-sort-dropdown relative">
                   <button
                     onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
                     className="flex items-center gap-2 h-10 px-4 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)] text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
@@ -173,20 +239,23 @@ export function Files() {
                   )}
                 </div>
 
-                {/* Download Button */}
-                <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
-                  <Icon name="arrow-down-to-line" size={16} />
-                </button>
+                {/* Action Buttons */}
+                <div className="files-action-buttons flex items-center gap-3">
+                  {/* Download Button */}
+                  <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                    <Icon name="arrow-down-to-line" size={16} />
+                  </button>
 
-                {/* Delete Button */}
-                <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
-                  <Icon name="trash-can" size={16} />
-                </button>
+                  {/* Delete Button */}
+                  <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                    <Icon name="trash-can" size={16} />
+                  </button>
+                </div>
               </div>
             </div>
 
             {/* Select All Row */}
-            <div className="px-6 py-4">
+            <div className="files-select-all px-6 py-4">
               <button
                 onClick={toggleSelectAll}
                 className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-neutral-strong)] hover:text-[var(--color-primary-strong)] transition-colors"
@@ -212,7 +281,7 @@ export function Files() {
                 return (
                   <div key={file.id}>
                     <div
-                      className={`flex items-center gap-4 px-6 py-4 transition-colors ${
+                      className={`files-row flex items-center gap-4 px-6 py-4 transition-colors ${
                         isSelected ? 'bg-[var(--surface-selected-weak)]' : 'hover:bg-[var(--surface-neutral-xx-weak)]'
                       }`}
                     >
@@ -228,7 +297,7 @@ export function Files() {
                       <Icon name={icon.name} size={20} style={{ color: icon.color }} />
 
                       {/* File Info */}
-                      <div className="flex-1 min-w-0">
+                      <div className="files-row-info flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <a
                             href="#"
@@ -238,11 +307,13 @@ export function Files() {
                             {file.name}
                           </a>
                         </div>
-                        <div className="flex items-center gap-2 mt-1 text-[14px] text-[var(--text-neutral-medium)]">
+                        <div className="files-row-meta flex items-center gap-2 mt-1 text-[14px] text-[var(--text-neutral-medium)]">
                           <Icon name="folder" size={12} variant="regular" />
                           <span>Added {file.addedDate} by {file.addedBy} ({file.size})</span>
-                          <Icon name="folder" size={14} variant="regular" />
-                          <span>{file.category}</span>
+                          <span className="files-meta-category flex items-center gap-2">
+                            <Icon name="folder" size={14} variant="regular" />
+                            <span>{file.category}</span>
+                          </span>
                         </div>
                       </div>
                     </div>

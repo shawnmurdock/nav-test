@@ -3,12 +3,6 @@ import { Icon, MobilePageSelect } from '../../../components';
 import { GlobalHeader } from '../../../components/GlobalHeader';
 import { useBreakpoint, useMazeTracking } from '../../../hooks';
 import { files, fileCategories } from '../../../data/files';
-import {
-  settingsNavItems,
-  accountSubTabs,
-  accountInfo,
-  subscription,
-} from '../../../data/settingsData';
 import avatarLarge from '../../../assets/images/avatar-large.png';
 import avatarSmall from '../../../assets/images/avatar-small.png';
 import bamboohrLogo from '../../../assets/images/bamboohr-logo.svg';
@@ -21,9 +15,21 @@ import type { PeopleViewMode } from '../../People';
 import { Reports } from '../../Reports';
 import type { ReportsCategory } from '../../Reports';
 import { HomeContent } from '../shared/HomeContent';
+import { SettingsContent } from '../shared/SettingsContent';
+import {
+  type RouteId,
+  navItems,
+  hiringTabOptions,
+  peopleViewOptions,
+  reportsCategoryOptions,
+  myInfoTabOptions,
+  settingsNavOptions,
+  settingsAccountSubTabs,
+  settingsTabs,
+} from '../shared/navConfig';
 import './DropdownNav.css';
 
-type View = 'home' | 'files' | 'settings' | 'hiring' | 'my-info' | 'people' | 'reports';
+type View = RouteId;
 type SortOption = 'name-asc' | 'name-desc' | 'date-recent' | 'date-oldest' | 'size-largest' | 'size-smallest';
 
 // Mock user data
@@ -33,16 +39,6 @@ const user = {
   department: 'Marketing',
   avatar: avatarLarge,
 };
-
-const navItems: { id: string; label: string; icon: 'home' | 'file-lines' | 'wrench' | 'user-group' | 'circle-user' | 'users' | 'chart-line' }[] = [
-  { id: 'home', label: 'Home', icon: 'home' },
-  { id: 'files', label: 'Files', icon: 'file-lines' },
-  { id: 'hiring', label: 'Hiring', icon: 'user-group' },
-  { id: 'my-info', label: 'My Info', icon: 'circle-user' },
-  { id: 'people', label: 'People', icon: 'users' },
-  { id: 'reports', label: 'Reports', icon: 'chart-line' },
-  { id: 'settings', label: 'Settings', icon: 'wrench' },
-];
 
 export const DropdownNav: React.FC = () => {
   useMazeTracking();
@@ -64,48 +60,10 @@ export const DropdownNav: React.FC = () => {
   // Controlled state for embedded pages (used on mobile)
   const [hiringTab, setHiringTab] = useState<HiringTab>('openings');
   const [peopleView, setPeopleView] = useState<PeopleViewMode>('list');
-  const [reportsCategory, setReportsCategory] = useState<ReportsCategory>('overview');
+  const [reportsCategory, setReportsCategory] = useState<ReportsCategory>('recent');
   const [myInfoTab, setMyInfoTab] = useState<MyInfoTab>('personal');
 
-  // Mobile select options for each page
-  const hiringTabOptions = [
-    { value: 'openings', label: 'Job openings' },
-    { value: 'candidates', label: 'Candidates' },
-    { value: 'pools', label: 'Talent pools' },
-  ];
-
-  const peopleViewOptions = [
-    { value: 'list', label: 'List' },
-    { value: 'directory', label: 'Directory' },
-    { value: 'orgChart', label: 'Org Chart' },
-  ];
-
-  const reportsCategoryOptions = [
-    { value: 'overview', label: 'Overview' },
-    { value: 'favorites', label: 'Favorites' },
-    { value: 'all', label: 'All' },
-    { value: 'general', label: 'General' },
-    { value: 'compliance', label: 'Compliance' },
-    { value: 'payroll', label: 'Payroll' },
-    { value: 'compensation', label: 'Compensation' },
-    { value: 'time-attendance', label: 'Time & Attendance' },
-    { value: 'benefits', label: 'Benefits' },
-    { value: 'training', label: 'Training' },
-    { value: 'performance', label: 'Performance & Culture' },
-    { value: 'hiring', label: 'Hiring' },
-    { value: 'custom', label: 'Custom folder' },
-  ];
-
-  const myInfoTabOptions = [
-    { value: 'personal', label: 'Personal' },
-    { value: 'job', label: 'Job' },
-    { value: 'time-off', label: 'Time off' },
-    { value: 'documents', label: 'Documents' },
-    { value: 'timesheets', label: 'Timesheets' },
-    { value: 'performance', label: 'Performance' },
-    { value: 'emergency', label: 'Emergency' },
-    { value: 'training', label: 'Training' },
-  ];
+  // Tab options are now imported from shared/navConfig
 
   return (
     <div className={`dropdown-nav ${breakpoint.isLaptopOrAbove ? 'with-global-header' : ''}`}>
@@ -302,7 +260,18 @@ export const DropdownNav: React.FC = () => {
           )}
           {currentView === 'reports' && (
             <div className="dropdown-embedded-view">
-              <h1 className="dropdown-embedded-page-title">Reports</h1>
+              <div className="dropdown-reports-header-mobile">
+                <h1 className="dropdown-embedded-page-title">Reports</h1>
+                <div className="dropdown-header-actions-mobile">
+                  <button className="dropdown-btn-primary-outlined">
+                    <Icon name="circle-plus" size={16} />
+                    <span>New Report</span>
+                  </button>
+                  <button className="dropdown-btn-icon">
+                    <Icon name="folder-plus" size={18} />
+                  </button>
+                </div>
+              </div>
               <div className="dropdown-mobile-page-select">
                 <MobilePageSelect
                   options={reportsCategoryOptions}
@@ -407,7 +376,18 @@ const FilesView: React.FC<{
   return (
     <div className="dropdown-view dropdown-files-view dropdown-embedded-view">
       {/* Page Header */}
-      <h1 className="dropdown-embedded-page-title">Files</h1>
+      <div className="dropdown-files-header-mobile">
+        <h1 className="dropdown-embedded-page-title">Files</h1>
+        <div className="dropdown-header-actions-mobile">
+          <button className="dropdown-btn-primary-outlined">
+            <Icon name="arrow-up-from-bracket" size={16} />
+            <span>Upload File</span>
+          </button>
+          <button className="dropdown-btn-icon">
+            <Icon name="folder-plus" size={18} />
+          </button>
+        </div>
+      </div>
 
       {/* Mobile Category Select */}
       <div className="dropdown-mobile-page-select">
@@ -422,9 +402,12 @@ const FilesView: React.FC<{
       <div className="dropdown-page-header dropdown-desktop-only">
         <h1 className="dropdown-page-title">Files</h1>
         <div className="dropdown-header-actions">
-          <button className="dropdown-btn-upload">
+          <button className="dropdown-btn-primary-outlined">
             <Icon name="arrow-up-from-bracket" size={16} />
-            <span>Upload file</span>
+            <span>Upload File</span>
+          </button>
+          <button className="dropdown-btn-icon">
+            <Icon name="folder-plus" size={18} />
           </button>
         </div>
       </div>
@@ -544,86 +527,17 @@ const SettingsView: React.FC<{
   onNavChange,
   onSubTabChange,
 }) => {
-  // Options for MobilePageSelect
-  const settingsNavOptions = settingsNavItems.slice(0, 12).map(item => ({
-    value: item.id,
-    label: item.label,
-  }));
+  // Get settings tabs from shared config (limited to first 12)
+  const settingsNavOptionsLocal = settingsNavOptions.slice(0, 12);
 
-  const subTabOptions = accountSubTabs.map(tab => ({
+  // Get sub-tab options from shared config
+  const subTabOptions = settingsAccountSubTabs.map(tab => ({
     value: tab.id,
     label: tab.label,
   }));
 
-  // Get current nav item label
-  const currentNavLabel = settingsNavItems.find(item => item.id === activeNav)?.label || 'Account';
-  const currentSubTabLabel = accountSubTabs.find(tab => tab.id === activeSubTab)?.label || 'Account Info';
-
-  // Render content based on activeNav and activeSubTab
-  const renderSettingsContent = () => {
-    // Account section with sub-tabs
-    if (activeNav === 'account') {
-      if (activeSubTab === 'account-info') {
-        return (
-          <>
-            <h3 className="dropdown-form-section-title">Account Info</h3>
-            <div className="dropdown-company-header">
-              <h4 className="dropdown-company-name">{accountInfo.companyName}</h4>
-              <div className="dropdown-company-details">
-                <div className="dropdown-company-meta">
-                  <Icon name="building" size={16} />
-                  <span>{accountInfo.accountNumber}</span>
-                </div>
-                <div className="dropdown-company-meta">
-                  <Icon name="link" size={16} />
-                  <span>{accountInfo.url}</span>
-                </div>
-              </div>
-            </div>
-            <div className="dropdown-subscription">
-              <div className="dropdown-subscription-header">
-                <h4 className="dropdown-subscription-title">My Subscription</h4>
-                <button className="dropdown-btn-manage">Manage Subscription</button>
-              </div>
-              <div className="dropdown-subscription-card">
-                <div className="dropdown-subscription-icon">
-                  <Icon name="shield" size={24} />
-                </div>
-                <div className="dropdown-subscription-info">
-                  <h5 className="dropdown-subscription-plan">{subscription.plan}</h5>
-                  <p className="dropdown-subscription-type">{subscription.packageType}</p>
-                </div>
-                <span className="dropdown-subscription-employees">{subscription.employees} Employees</span>
-              </div>
-            </div>
-          </>
-        );
-      }
-      // Other account sub-tabs
-      return (
-        <>
-          <h3 className="dropdown-form-section-title">{currentSubTabLabel}</h3>
-          <div className="dropdown-company-header">
-            <p style={{ color: 'var(--text-neutral-medium)', fontSize: '15px', marginTop: '8px' }}>
-              Configure your {currentSubTabLabel.toLowerCase()} settings here.
-            </p>
-          </div>
-        </>
-      );
-    }
-
-    // Other settings sections
-    return (
-      <>
-        <h3 className="dropdown-form-section-title">{currentNavLabel} Settings</h3>
-        <div className="dropdown-company-header">
-          <p style={{ color: 'var(--text-neutral-medium)', fontSize: '15px', marginTop: '8px' }}>
-            Configure your {currentNavLabel.toLowerCase()} preferences and options.
-          </p>
-        </div>
-      </>
-    );
-  };
+  // Get current nav item label from shared config
+  const currentNavLabel = settingsTabs.find(item => item.id === activeNav)?.label || 'Account';
 
   return (
     <div className="dropdown-view dropdown-settings-view dropdown-embedded-view">
@@ -633,7 +547,7 @@ const SettingsView: React.FC<{
       {/* Mobile Select - Settings Section */}
       <div className="dropdown-mobile-page-select">
         <MobilePageSelect
-          options={settingsNavOptions}
+          options={settingsNavOptionsLocal}
           value={activeNav}
           onChange={onNavChange}
         />
@@ -660,14 +574,14 @@ const SettingsView: React.FC<{
         {/* Settings Sidebar - Desktop */}
         <aside className="dropdown-settings-sidebar">
           <nav className="dropdown-settings-nav">
-            {settingsNavItems.slice(0, 12).map((item) => (
+            {settingsTabs.slice(0, 12).map((item) => (
               <button
                 key={item.id}
                 onClick={() => onNavChange(item.id)}
                 className={`dropdown-settings-item ${activeNav === item.id ? 'active' : ''}`}
               >
                 <Icon
-                  name={item.icon}
+                  name={item.icon || 'wrench'}
                   size={18}
                   className={activeNav === item.id ? 'text-white' : ''}
                 />
@@ -688,7 +602,7 @@ const SettingsView: React.FC<{
               {activeNav === 'account' && (
                 <div className="dropdown-subtabs">
                   <nav className="dropdown-subtabs-nav">
-                    {accountSubTabs.map((tab) => (
+                    {settingsAccountSubTabs.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => onSubTabChange(tab.id)}
@@ -703,7 +617,7 @@ const SettingsView: React.FC<{
 
               {/* Dynamic Content */}
               <div className="dropdown-settings-form">
-                {renderSettingsContent()}
+                <SettingsContent activeNav={activeNav} activeSubTab={activeSubTab} />
               </div>
             </div>
           </div>
