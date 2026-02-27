@@ -84,6 +84,53 @@
 }
 
 /* ============================================
+   360px SPECIFIC OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 380px) {
+  .hiring-page {
+    padding: 8px !important;
+  }
+
+  .hiring-page h1 {
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+
+  .hiring-page .hiring-tabs {
+    gap: 10px !important;
+  }
+
+  .hiring-page .hiring-tabs button {
+    font-size: 12px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .hiring-page .hiring-actions-bar {
+    padding: 8px !important;
+    gap: 10px !important;
+  }
+
+  .hiring-page .hiring-filter-text {
+    font-size: 11px !important;
+  }
+
+  .hiring-page .hiring-table-wrapper {
+    margin: 0 -8px !important;
+    padding: 0 8px !important;
+  }
+
+  .hiring-page .hiring-table {
+    min-width: 320px !important;
+  }
+
+  .hiring-page .hiring-table th,
+  .hiring-page .hiring-table td {
+    padding: 8px 6px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* ============================================
    TABLET STYLES - 481px and up
    ============================================ */
 @media (min-width: 481px) {

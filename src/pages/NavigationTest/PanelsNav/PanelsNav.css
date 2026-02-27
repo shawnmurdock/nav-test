@@ -1591,59 +1591,173 @@
 }
 
 /* ========================================
-   RESPONSIVE - Small Mobile (360px)
+   RESPONSIVE - Small Mobile (360px and below)
    ======================================== */
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
   .panels-view {
-    padding: 16px 12px;
+    padding: 12px 8px;
+  }
+
+  .panels-embedded-view {
+    padding: 12px 8px;
   }
 
   .panels-page-title {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 26px;
   }
 
   .panels-topbar {
-    padding: 10px 12px;
+    padding: 8px;
   }
 
-  .panels-fullscreen-panel-header {
-    padding: 14px 12px;
+  .panels-topbar-left {
+    gap: 8px;
   }
 
-  .panels-panel-nav-item {
-    padding: 14px 12px;
-    font-size: 15px;
+  .panels-topbar-logo {
+    height: 16px;
   }
 
-  .panels-panel-nav-item-icon {
-    width: 18px;
-    height: 18px;
+  .panels-icon-btn,
+  .panels-menu-btn {
+    width: 36px;
+    height: 36px;
   }
 
-  .panels-file-row {
-    padding: 10px 12px;
+  .panels-fullscreen-panel-header,
+  .panels-panel-header {
+    padding: 12px 8px;
+    min-height: 48px;
   }
 
-  .panels-settings-card {
-    padding: 16px;
+  .panels-panel-title {
+    font-size: 16px;
   }
 
-  .panels-btn-upload {
-    padding: 8px 12px;
-    font-size: 13px;
-  }
-
-  .panels-profile-info {
+  .panels-panel-item {
+    padding: 12px 12px;
+    font-size: 14px;
     gap: 12px;
   }
 
-  .panels-section-title {
+  .panels-panel-footer {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .panels-panel-user-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .panels-panel-user-name {
     font-size: 14px;
   }
 
-  .panels-page-description {
+  .panels-panel-user-email {
+    font-size: 12px;
+  }
+
+  .panels-file-row,
+  .panels-file-row-mobile {
+    padding: 10px 8px;
+    gap: 10px;
+  }
+
+  .panels-file-name,
+  .panels-file-name-mobile {
+    font-size: 13px;
+  }
+
+  .panels-file-meta,
+  .panels-file-size-mobile {
+    font-size: 12px;
+  }
+
+  .panels-settings-card {
+    padding: 12px;
+  }
+
+  .panels-settings-section {
+    padding: 16px;
+  }
+
+  .panels-settings-section-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .panels-settings-toggle-item {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .panels-settings-toggle-label {
     font-size: 14px;
+  }
+
+  .panels-settings-toggle-desc {
+    font-size: 12px;
+  }
+
+  .panels-btn-upload,
+  .panels-btn-primary-outlined {
+    padding: 6px 10px;
+    font-size: 12px;
+    height: 32px;
+  }
+
+  .panels-btn-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .panels-profile-info {
+    gap: 10px;
+  }
+
+  .panels-section-title {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .panels-page-subtitle,
+  .panels-page-description {
+    font-size: 13px;
+  }
+
+  .panels-header-actions {
+    gap: 8px;
+  }
+
+  .panels-files-card-header {
+    padding: 12px;
+  }
+
+  .panels-breadcrumb-wrapper {
+    padding: 12px 8px 0;
+  }
+
+  /* Dashboard grid - single column with smaller gap */
+  .panels-dashboard-grid {
+    gap: 12px;
+  }
+
+  /* Tables */
+  .panels-settings-card table th,
+  .panels-settings-card table td,
+  .panels-view table th,
+  .panels-view table td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  /* Reports favorites scroll - tighter offset */
+  .panels-embedded-view .reports-page .reports-favorites-scroll {
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+    padding-left: 8px !important;
   }
 }

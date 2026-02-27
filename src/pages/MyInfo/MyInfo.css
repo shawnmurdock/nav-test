@@ -123,7 +123,7 @@
 
 /* === ALL TABLES - Horizontal Scroll === */
 .myinfo-page table {
-  min-width: 500px !important;
+  min-width: 320px !important;
   display: block !important;
   overflow-x: auto !important;
   -webkit-overflow-scrolling: touch;
@@ -352,6 +352,118 @@
 /* Hide floating header on mobile */
 .myinfo-page .myinfo-floating-header {
   display: none !important;
+}
+
+/* ============================================
+   360px SPECIFIC OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 380px) {
+  /* Tighter padding for smallest screens */
+  .myinfo-page .myinfo-header {
+    padding: 8px !important;
+    padding-bottom: 0 !important;
+  }
+
+  .myinfo-page .myinfo-content {
+    padding: 6px !important;
+    gap: 12px !important;
+  }
+
+  .myinfo-page .myinfo-card {
+    padding: 10px !important;
+  }
+
+  /* Smaller avatar */
+  .myinfo-page .myinfo-avatar {
+    width: 64px !important;
+    height: 64px !important;
+    margin: 0 auto 6px !important;
+  }
+
+  /* Smaller name */
+  .myinfo-page .myinfo-name {
+    font-size: 16px !important;
+    line-height: 22px !important;
+  }
+
+  .myinfo-page .myinfo-subtitle {
+    font-size: 11px !important;
+  }
+
+  /* Smaller tabs */
+  .myinfo-page .myinfo-tabs button {
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+  }
+
+  /* Smaller section titles */
+  .myinfo-page .myinfo-section-title {
+    font-size: 16px !important;
+  }
+
+  .myinfo-page .myinfo-card-title {
+    font-size: 14px !important;
+  }
+
+  /* Smaller card header icons */
+  .myinfo-page .myinfo-card-header > div:first-child {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  /* Time Off balance cards - narrower */
+  .myinfo-page .grid-cols-4 > div {
+    min-width: 120px !important;
+  }
+
+  /* Table with minimum width that fits 360px with scroll */
+  .myinfo-page table {
+    min-width: 280px !important;
+  }
+
+  /* Smaller form gaps */
+  .myinfo-page .myinfo-form-grid-4,
+  .myinfo-page .myinfo-form-grid-3 {
+    gap: 8px !important;
+  }
+
+  /* Card sections with tighter spacing */
+  .myinfo-page .mb-6 {
+    margin-bottom: 12px !important;
+  }
+
+  .myinfo-page .mb-8 {
+    margin-bottom: 16px !important;
+  }
+
+  /* Section header flex adjustments */
+  .myinfo-page .flex.items-start.gap-4.mb-6 {
+    gap: 8px !important;
+  }
+
+  .myinfo-page .flex.items-start.gap-4.mb-6 > div:first-child {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+  }
+
+  /* Table cells - smaller padding */
+  .myinfo-page table th,
+  .myinfo-page table td {
+    padding: 8px 6px !important;
+    font-size: 12px !important;
+  }
+
+  /* Performance tab assessment blocks */
+  .myinfo-page .flex.gap-8:has(.flex-1 h3) {
+    gap: 16px !important;
+  }
+
+  /* Star ratings - smaller */
+  .myinfo-page .flex.gap-1:has(svg) svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
 }
 
 /* ============================================

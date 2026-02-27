@@ -1134,31 +1134,137 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
   .home-content {
-    padding: 12px;
+    padding: 8px;
   }
 
   .home-profile-info {
-    gap: 12px;
+    gap: 10px;
+  }
+
+  .home-profile-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .home-profile-name {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .home-profile-title,
+  .home-profile-subtitle {
+    font-size: 12px;
   }
 
   .home-dashboard-grid {
-    gap: 12px;
+    gap: 10px;
   }
 
+  /* Direct reports - horizontal scroll instead of cramped 2-column */
   .home-direct-reports-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 10px;
+    padding-bottom: 4px;
   }
 
+  .home-direct-reports-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-direct-reports-grid > * {
+    flex: 0 0 auto;
+    width: 120px;
+    min-width: 120px;
+  }
+
+  .home-direct-report-card {
+    padding: 10px;
+  }
+
+  .home-direct-report-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .home-direct-report-name {
+    font-size: 12px;
+  }
+
+  .home-direct-report-title {
+    font-size: 10px;
+  }
+
+  /* Gridlet cards */
+  .home-gridlet {
+    padding: 12px;
+  }
+
+  .home-gridlet-title {
+    font-size: 14px;
+  }
+
+  .home-gridlet-value {
+    font-size: 20px;
+  }
+
+  /* Time off table */
   .home-tor-table th,
   .home-tor-table td {
     padding: 6px 2px;
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .home-tor-date-range-text {
-    font-size: 11px;
+    font-size: 10px;
+  }
+
+  .home-tor-collapsed {
+    gap: 16px;
+  }
+
+  /* Section titles */
+  .home-section-title {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  /* My stuff list */
+  .home-my-stuff-item {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .home-my-stuff-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .home-my-stuff-text {
+    font-size: 13px;
+  }
+
+  /* Whats happening */
+  .home-happening-item {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .home-happening-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .home-happening-text {
+    font-size: 12px;
+  }
+
+  .home-happening-date {
+    font-size: 10px;
   }
 }

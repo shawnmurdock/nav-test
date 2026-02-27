@@ -1674,27 +1674,37 @@
 }
 
 /* ========================================
-   RESPONSIVE - Small Mobile (360px)
+   RESPONSIVE - Small Mobile (360px and below)
    ======================================== */
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
   .dropdown-content {
-    padding: 16px 12px;
+    padding: 12px 8px;
   }
 
   .dropdown-page-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 8px;
   }
 
   .dropdown-page-title {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 26px;
   }
 
   .dropdown-topbar {
-    padding: 10px 12px;
+    padding: 8px;
+  }
+
+  .dropdown-topbar-logo {
+    height: 16px;
+  }
+
+  .dropdown-icon-btn,
+  .dropdown-menu-btn {
+    width: 36px;
+    height: 36px;
   }
 
   .dropdown-mobile-menu {
@@ -1702,67 +1712,77 @@
   }
 
   .dropdown-selector {
-    padding: 12px 14px;
-    font-size: 14px;
+    padding: 10px 12px;
+    font-size: 13px;
   }
 
   .dropdown-selector-arrow {
     flex-shrink: 0;
-    min-width: 16px;
+    min-width: 14px;
     text-align: center;
   }
 
   .dropdown-stacked-selectors {
-    gap: 6px;
+    gap: 4px;
   }
 
   .dropdown-file-row {
-    padding: 10px 12px;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .dropdown-file-name {
+    font-size: 13px;
+  }
+
+  .dropdown-file-meta {
+    font-size: 11px;
   }
 
   .dropdown-settings-card {
-    padding: 12px;
+    padding: 10px;
   }
 
   .dropdown-settings-layout {
-    padding: 0 12px;
+    padding: 0 8px;
   }
 
   .dropdown-profile-info {
-    gap: 12px;
+    gap: 10px;
   }
 
   .dropdown-section-title {
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 22px;
   }
 
   .dropdown-selector-item {
-    padding: 10px 14px;
-    font-size: 13px;
+    padding: 10px 12px;
+    font-size: 12px;
   }
 
   /* Mobile page select full width on small screens */
   .dropdown-mobile-page-select {
-    padding: 0 12px;
+    padding: 0 8px;
   }
 
   .dropdown-embedded-page-title {
-    padding: 16px 12px 12px;
-    font-size: 24px;
-    line-height: 32px;
+    padding: 12px 8px 8px;
+    font-size: 20px;
+    line-height: 26px;
   }
 
   /* Update embedded page padding for smaller screens */
   .dropdown-embedded-view .hiring-page,
   .dropdown-embedded-view .people-page,
   .dropdown-embedded-view .reports-page {
-    padding: 0 12px !important;
+    padding: 0 8px !important;
   }
 
   /* People page org chart alignment for smaller screens */
   .dropdown-embedded-view .people-page .org-chart-controls {
     margin: 0 !important;
-    padding: 0 0 12px !important;
+    padding: 0 0 8px !important;
   }
 
   .dropdown-embedded-view .people-page .people-org-chart {
@@ -1776,18 +1796,18 @@
   }
 
   .dropdown-embedded-view-myinfo .dropdown-mobile-page-select {
-    padding: 0 12px;
-    margin-top: 12px;
-    margin-bottom: 12px;
+    padding: 0 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
 
   .dropdown-embedded-view-myinfo .myinfo-header {
-    margin: 0 12px;
-    max-width: calc(100% - 24px);
+    margin: 0 8px;
+    max-width: calc(100% - 16px);
   }
 
   .dropdown-embedded-view-myinfo .myinfo-content {
-    padding: 12px !important;
+    padding: 8px !important;
     overflow-x: hidden !important;
   }
 
@@ -1809,13 +1829,51 @@
 
   /* Files header at 360px */
   .dropdown-files-header-mobile .dropdown-embedded-page-title {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 26px;
   }
 
   /* Reports header at 360px */
   .dropdown-reports-header-mobile .dropdown-embedded-page-title {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  /* Table cells */
+  .dropdown-content table th,
+  .dropdown-content table td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  /* Button sizes */
+  .dropdown-btn-upload,
+  .dropdown-btn-primary-outlined {
+    padding: 6px 10px;
+    font-size: 12px;
+    height: 32px;
+  }
+
+  /* Settings sections */
+  .dropdown-settings-section {
+    padding: 12px;
+  }
+
+  .dropdown-settings-section-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .dropdown-settings-toggle-item {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .dropdown-settings-toggle-label {
+    font-size: 13px;
+  }
+
+  .dropdown-settings-toggle-desc {
+    font-size: 11px;
   }
 }

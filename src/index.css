@@ -313,6 +313,143 @@ h1 {
   }
 }
 
+/* =============================================================================
+   GLOBAL 360PX OPTIMIZATIONS
+   For small mobile devices (360px width and below)
+   ============================================================================= */
+
+@media (max-width: 380px) {
+  /* Reduce base font size slightly */
+  body {
+    font-size: 13px;
+  }
+
+  /* Smaller H1 headings */
+  h1 {
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+
+  /* Smaller H2 headings */
+  h2 {
+    font-size: 18px !important;
+    line-height: 24px !important;
+  }
+
+  /* Smaller H3 headings */
+  h3 {
+    font-size: 16px !important;
+    line-height: 22px !important;
+  }
+
+  /* Reduce padding on cards globally */
+  [class*="-card"],
+  [class*="Card"] {
+    padding: 10px !important;
+  }
+
+  /* Reduce spacing on sections */
+  [class*="-section"],
+  [class*="Section"] {
+    padding: 12px !important;
+  }
+
+  /* Table cell optimization */
+  table th,
+  table td {
+    padding: 6px 4px !important;
+    font-size: 11px !important;
+  }
+
+  /* Reduce button sizes */
+  button {
+    font-size: 12px;
+  }
+
+  /* Smaller icons in buttons */
+  button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Form inputs */
+  input,
+  select,
+  textarea {
+    font-size: 14px !important;
+    padding: 8px 10px !important;
+  }
+
+  /* Labels */
+  label {
+    font-size: 12px !important;
+  }
+
+  /* Reduce gaps in flex/grid layouts */
+  .gap-4 {
+    gap: 10px !important;
+  }
+
+  .gap-6 {
+    gap: 12px !important;
+  }
+
+  .gap-8 {
+    gap: 16px !important;
+  }
+
+  /* Reduce padding utilities */
+  .p-4 {
+    padding: 10px !important;
+  }
+
+  .p-6 {
+    padding: 12px !important;
+  }
+
+  .p-8 {
+    padding: 16px !important;
+  }
+
+  .px-4 {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .px-6 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .py-4 {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* Margin utilities */
+  .mb-6 {
+    margin-bottom: 12px !important;
+  }
+
+  .mb-8 {
+    margin-bottom: 16px !important;
+  }
+
+  /* Avatar sizes */
+  [class*="avatar"],
+  [class*="Avatar"] {
+    max-width: 48px;
+    max-height: 48px;
+  }
+
+  /* Icon button sizes */
+  [class*="icon-btn"],
+  [class*="IconBtn"] {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
 /* ================================
    Tailwind Theme Extensions
    ================================ */
