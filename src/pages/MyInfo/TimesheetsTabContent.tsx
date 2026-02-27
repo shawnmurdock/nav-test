@@ -91,8 +91,8 @@ export function TimesheetsTabContent({ employeeName: _employeeName }: Timesheets
       {/* Current Pay Period Summary */}
       <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] p-6 mb-8">
         <div className="flex items-center gap-3 mb-6">
-          <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-[var(--radius-x-small)] shrink-0">
-            <Icon name="calendar" size={16} className="text-blue-700" />
+          <div className="flex items-center justify-center w-10 h-10 bg-[var(--surface-neutral-x-weak)] rounded-[var(--radius-x-small)] shrink-0">
+            <Icon name="calendar" size={16} className="text-[var(--color-primary-strong)]" />
           </div>
           <div className="flex-1">
             <h3

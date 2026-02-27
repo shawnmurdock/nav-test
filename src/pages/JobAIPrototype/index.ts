@@ -1,1 +1,0 @@
-export { JobAIPrototype } from './JobAIPrototype';

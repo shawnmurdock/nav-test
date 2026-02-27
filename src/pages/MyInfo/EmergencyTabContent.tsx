@@ -85,8 +85,8 @@ export function EmergencyTabContent({ employeeName: _employeeName }: EmergencyTa
       {/* Primary Emergency Contact */}
       <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] p-6 mb-8">
         <div className="myinfo-card-header-row" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-          <div className="flex items-center justify-center w-9 h-9 bg-red-100 rounded-[var(--radius-x-small)] shrink-0" style={{ width: '36px', height: '36px', minWidth: '36px', flexShrink: 0 }}>
-            <Icon name="phone" size={14} className="text-red-600" />
+          <div className="flex items-center justify-center w-9 h-9 bg-[var(--surface-neutral-x-weak)] rounded-[var(--radius-x-small)] shrink-0" style={{ width: '36px', height: '36px', minWidth: '36px', flexShrink: 0 }}>
+            <Icon name="phone" size={14} className="text-[var(--color-primary-strong)]" />
           </div>
           <h3
             className="myinfo-card-title text-base font-semibold text-[var(--color-primary-strong)]"

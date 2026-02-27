@@ -179,7 +179,7 @@ export function DocumentsTabContent({ employeeName: _employeeName }: DocumentsTa
                 <tr key={doc.id} className="hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <Icon name="file" size={16} className="text-red-500 shrink-0" />
+                      <Icon name="file" size={16} className="text-[var(--color-primary-strong)] shrink-0" />
                       <span className="text-[13px] md:text-[15px] text-blue-600 hover:underline cursor-pointer whitespace-nowrap">
                         {doc.name}
                       </span>

@@ -1854,6 +1854,11 @@
     height: 32px;
   }
 
+  .dropdown-btn-icon {
+    width: 32px;
+    height: 32px;
+  }
+
   /* Settings sections */
   .dropdown-settings-section {
     padding: 12px;

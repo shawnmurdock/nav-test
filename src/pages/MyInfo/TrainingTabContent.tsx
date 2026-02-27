@@ -138,8 +138,8 @@ export function TrainingTabContent({ employeeName: _employeeName }: TrainingTabC
       {/* Learning Path Progress */}
       <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] p-6 mb-8">
         <div className="flex items-center gap-3 mb-6">
-          <div className="flex items-center justify-center w-10 h-10 bg-purple-100 rounded-[var(--radius-x-small)] shrink-0">
-            <Icon name="file-lines" size={16} className="text-purple-700" />
+          <div className="flex items-center justify-center w-10 h-10 bg-[var(--surface-neutral-x-weak)] rounded-[var(--radius-x-small)] shrink-0">
+            <Icon name="file-lines" size={16} className="text-[var(--color-primary-strong)]" />
           </div>
           <div className="flex-1">
             <h3
@@ -184,7 +184,7 @@ export function TrainingTabContent({ employeeName: _employeeName }: TrainingTabC
         <div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div
-              className="bg-purple-600 h-3 rounded-full"
+              className="bg-[var(--color-primary-strong)] h-3 rounded-full"
               style={{ width: `${trainingData.learningPath.progress}%` }}
             />
           </div>
@@ -194,8 +194,8 @@ export function TrainingTabContent({ employeeName: _employeeName }: TrainingTabC
       {/* Required Training */}
       <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] p-8 mb-8">
         <div className="flex items-start gap-4 mb-6">
-          <div className="flex items-center justify-center w-10 h-10 bg-orange-100 rounded-[var(--radius-x-small)] shrink-0">
-            <Icon name="bell" size={16} className="text-orange-600" />
+          <div className="flex items-center justify-center w-10 h-10 bg-[var(--surface-neutral-x-weak)] rounded-[var(--radius-x-small)] shrink-0">
+            <Icon name="bell" size={16} className="text-[var(--color-primary-strong)]" />
           </div>
           <h3
             className="text-[24px] font-semibold text-[var(--color-primary-strong)]"
@@ -209,13 +209,9 @@ export function TrainingTabContent({ employeeName: _employeeName }: TrainingTabC
           {trainingData.requiredTraining.map((training) => (
             <div
               key={training.id}
-              className="flex items-center justify-between p-4 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-x-weak)] rounded-[var(--radius-x-small)]"
+              className="flex flex-col md:flex-row md:items-center md:justify-between p-4 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-x-weak)] rounded-[var(--radius-x-small)] gap-3"
             >
-              <div className="flex items-center gap-4 flex-1">
-                <div className="flex items-center justify-center w-10 h-10 bg-white rounded-full shrink-0">
-                  <Icon name="file" size={16} className="text-[var(--text-neutral-medium)]" />
-                </div>
-                <div className="flex-1">
+              <div className="flex-1">
                   <p className="text-[15px] font-medium text-[var(--text-neutral-strong)]">
                     {training.name}
                   </p>
@@ -226,16 +222,20 @@ export function TrainingTabContent({ employeeName: _employeeName }: TrainingTabC
                     <div className="mt-2 w-48">
                       <div className="w-full bg-gray-200 rounded-full h-1.5">
                         <div
-                          className="bg-blue-600 h-1.5 rounded-full"
+                          className="bg-[var(--color-primary-strong)] h-1.5 rounded-full"
                           style={{ width: `${training.progress}%` }}
                         />
                       </div>
                     </div>
                   )}
+                  <div className="mt-2 md:hidden">
+                    <span className={`inline-flex px-2 py-1 text-[13px] font-medium rounded ${getStatusBadgeClass(training.status)}`}>
+                      {training.status}
+                    </span>
+                  </div>
                 </div>
-              </div>
               <div className="flex items-center gap-3">
-                <span className={`inline-flex px-2 py-1 text-[13px] font-medium rounded ${getStatusBadgeClass(training.status)}`}>
+                <span className={`hidden md:inline-flex px-2 py-1 text-[13px] font-medium rounded ${getStatusBadgeClass(training.status)}`}>
                   {training.status}
                 </span>
                 <Button variant="standard" size="small">
@@ -250,8 +250,8 @@ export function TrainingTabContent({ employeeName: _employeeName }: TrainingTabC
       {/* Completed Training */}
       <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] p-8 mb-8">
         <div className="flex items-start gap-4 mb-6">
-          <div className="flex items-center justify-center w-10 h-10 bg-green-100 rounded-[var(--radius-x-small)] shrink-0">
-            <Icon name="check" size={16} className="text-green-600" />
+          <div className="flex items-center justify-center w-10 h-10 bg-[var(--surface-neutral-x-weak)] rounded-[var(--radius-x-small)] shrink-0">
+            <Icon name="check" size={16} className="text-[var(--color-primary-strong)]" />
           </div>
           <h3
             className="text-[24px] font-semibold text-[var(--color-primary-strong)]"

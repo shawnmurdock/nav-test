@@ -152,15 +152,28 @@
   max-width: 100% !important;
 }
 
-/* === SECTION HEADERS - Stack on Mobile === */
-.myinfo-page .flex.items-center.justify-between.mb-6,
+/* === SECTION HEADERS - Keep buttons inline on Mobile === */
+.myinfo-page .flex.items-center.justify-between.mb-6 {
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+
 .myinfo-page .flex.items-start.gap-4.mb-6 {
   flex-wrap: wrap;
   gap: 12px;
 }
 
+/* Section title container should not force wrap */
 .myinfo-page .flex.items-center.justify-between.mb-6 > .flex.items-center.gap-3 {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Ensure section title icons maintain proper size */
+.myinfo-page .flex.items-center.justify-between.mb-6 > .flex.items-center.gap-3 > svg {
+  flex-shrink: 0;
+  width: 24px !important;
+  height: 24px !important;
 }
 
 /* === TABLE CONTAINERS - Add wrapper scroll === */

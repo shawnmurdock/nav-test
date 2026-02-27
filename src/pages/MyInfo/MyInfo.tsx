@@ -565,9 +565,9 @@ export function MyInfo({ controlledTab, onTabChange, mobileSelect }: MyInfoProps
           ) : (
             <>
               {/* Section Header */}
-              <div className="myinfo-section-header flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <Icon name="address-card" size={24} className="text-[var(--color-primary-strong)]" />
+                  <Icon name="circle-user" size={24} className="text-[var(--color-primary-strong)]" />
                   <h2
                     className="myinfo-section-title text-[26px] font-semibold text-[var(--color-primary-strong)]"
                     style={{ fontFamily: 'Fields, system-ui, sans-serif', lineHeight: '34px' }}
