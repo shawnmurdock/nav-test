@@ -1,4 +1,4 @@
-import { Icon, Button, TextInput, Checkbox } from '../../components';
+import { Icon, Button, IconButton, TextInput, Checkbox } from '../../components';
 
 interface JobTabContentProps {
   employeeName: string;
@@ -148,9 +148,10 @@ export function JobTabContent(_props: JobTabContentProps) {
             >
               Employment Status
             </h3>
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
+            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -204,9 +205,10 @@ export function JobTabContent(_props: JobTabContentProps) {
             >
               Job Information
             </h3>
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
+            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -284,9 +286,10 @@ export function JobTabContent(_props: JobTabContentProps) {
             >
               Compensation
             </h3>
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
+            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -387,9 +390,10 @@ export function JobTabContent(_props: JobTabContentProps) {
             >
               Bonus
             </h3>
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
+            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -446,9 +450,10 @@ export function JobTabContent(_props: JobTabContentProps) {
             >
               Commission
             </h3>
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
+            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -499,9 +504,10 @@ export function JobTabContent(_props: JobTabContentProps) {
             >
               Equity
             </h3>
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
+            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 

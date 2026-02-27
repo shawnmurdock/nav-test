@@ -14,6 +14,16 @@
   box-sizing: border-box;
 }
 
+/* === MOBILE/DESKTOP BUTTON VISIBILITY === */
+/* On mobile, show icon button, hide full button */
+.myinfo-page .btn-desktop-only {
+  display: none !important;
+}
+
+.myinfo-page .btn-mobile-only {
+  display: inline-flex !important;
+}
+
 /* === PERFORMANCE TAB - Assessment Block Mobile === */
 /* Stack assessments vertically with Self Assessment first, Manager Assessment below */
 .myinfo-page .flex.gap-8:has(.flex-1 h3) {
@@ -398,6 +408,15 @@
    DESKTOP STYLES - 769px and up
    ============================================ */
 @media (min-width: 769px) {
+  /* On desktop, show full button, hide icon button */
+  .myinfo-page .btn-desktop-only {
+    display: inline-flex !important;
+  }
+
+  .myinfo-page .btn-mobile-only {
+    display: none !important;
+  }
+
   .myinfo-page .myinfo-header {
     padding: unset !important;
     padding-bottom: 0 !important;

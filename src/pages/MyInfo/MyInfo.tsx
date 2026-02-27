@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Icon, Button, TextInput } from '../../components';
+import { Icon, Button, IconButton, TextInput } from '../../components';
 import { currentEmployee } from '../../data/currentEmployee';
 import { PerformanceTabContent } from './PerformanceTabContent';
 import { JobTabContent } from './JobTabContent';
@@ -708,9 +708,10 @@ export function MyInfo({ controlledTab, onTabChange, mobileSelect }: MyInfoProps
                 >
                   Visa Information
                 </h3>
-                <Button variant="outlined" size="small">
+                <Button variant="outlined" size="small" className="btn-desktop-only">
                   Add Entry
                 </Button>
+                <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
               </div>
             </div>
 

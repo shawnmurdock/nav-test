@@ -3,6 +3,7 @@ export { GlobalNav } from './GlobalNav';
 export { GlobalHeader } from './GlobalHeader';
 export { Avatar } from './Avatar';
 export { Button } from './Button';
+export { IconButton } from './IconButton';
 export { TextHeadline } from './TextHeadline';
 export { Gridlet } from './Gridlet';
 export { EmployeeCard } from './EmployeeCard';

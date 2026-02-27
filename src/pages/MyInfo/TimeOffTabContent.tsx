@@ -1,4 +1,4 @@
-import { Icon, Button } from '../../components';
+import { Icon, Button, IconButton } from '../../components';
 
 interface TimeOffTabContentProps {
   employeeName: string;
@@ -112,9 +112,10 @@ export function TimeOffTabContent({ employeeName: _employeeName }: TimeOffTabCon
             Time Off
           </h2>
         </div>
-        <Button variant="standard" icon="circle-plus" iconPosition="left">
+        <Button variant="standard" icon="circle-plus" iconPosition="left" className="btn-desktop-only">
           Request Time Off
         </Button>
+        <IconButton icon="circle-plus" variant="outlined" size="small" label="Request Time Off" className="btn-mobile-only" />
       </div>
 
       {/* Time Off Balances */}
