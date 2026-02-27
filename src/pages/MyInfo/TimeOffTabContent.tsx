@@ -115,7 +115,7 @@ export function TimeOffTabContent({ employeeName: _employeeName }: TimeOffTabCon
         <Button variant="standard" icon="circle-plus" iconPosition="left" className="btn-desktop-only">
           Request Time Off
         </Button>
-        <IconButton icon="circle-plus" variant="outlined" size="small" label="Request Time Off" className="btn-mobile-only" />
+        <IconButton icon="plus" variant="outlined" size="small" label="Request Time Off" className="btn-mobile-only" />
       </div>
 
       {/* Time Off Balances */}

@@ -92,6 +92,7 @@ import {
   faArrowLeft,
   faRotateLeft,
   faBriefcase,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -210,6 +211,7 @@ export type IconName =
   | 'users'
   | 'circle-plus'
   | 'circle-plus-lined'
+  | 'plus'
   | 'bullseye'
   | 'bullhorn'
   | 'clipboard'
@@ -325,6 +327,7 @@ const faIconMap = {
   'eye-slash': faEyeSlash,
   'users': faUsers,
   'circle-plus': faCirclePlus,
+  'plus': faPlus,
   'bullseye': faBullseye,
   'bullhorn': faBullhorn,
   'clipboard': faClipboard,

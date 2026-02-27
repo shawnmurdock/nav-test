@@ -151,7 +151,7 @@ export function JobTabContent(_props: JobTabContentProps) {
             <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
-            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
+            <IconButton icon="plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -208,7 +208,7 @@ export function JobTabContent(_props: JobTabContentProps) {
             <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
-            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
+            <IconButton icon="plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -289,7 +289,7 @@ export function JobTabContent(_props: JobTabContentProps) {
             <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
-            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
+            <IconButton icon="plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -393,7 +393,7 @@ export function JobTabContent(_props: JobTabContentProps) {
             <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
-            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
+            <IconButton icon="plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -453,7 +453,7 @@ export function JobTabContent(_props: JobTabContentProps) {
             <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
-            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
+            <IconButton icon="plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
@@ -507,7 +507,7 @@ export function JobTabContent(_props: JobTabContentProps) {
             <Button variant="outlined" size="small" className="btn-desktop-only">
               Add Entry
             </Button>
-            <IconButton icon="circle-plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
+            <IconButton icon="plus" variant="outlined" size="small" label="Add Entry" className="btn-mobile-only" />
           </div>
         </div>
 
