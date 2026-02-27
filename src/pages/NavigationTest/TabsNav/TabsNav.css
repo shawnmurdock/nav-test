@@ -1450,7 +1450,8 @@
 
 @media (max-width: 480px) {
   .tabs-page-header {
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
   }
 
   .tabs-company-details {
