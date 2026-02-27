@@ -113,6 +113,8 @@
   border: 1px solid var(--border-neutral-x-weak);
   border-radius: 8px;
   padding: 20px;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .settings-card-header {
@@ -199,9 +201,17 @@
   text-decoration: underline;
 }
 
+/* Table Container - enables horizontal scroll within cards */
+.settings-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Tables */
 .settings-table {
   width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
 }
 
@@ -536,4 +546,68 @@
   padding: 24px;
   text-align: center;
   color: var(--text-neutral-medium);
+}
+
+/* =============================================================================
+   MOBILE OVERFLOW FIXES
+   ============================================================================= */
+
+@media (max-width: 768px) {
+  .settings-content-section {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .settings-card {
+    padding: 12px;
+    overflow: hidden;
+  }
+
+  .settings-table-container {
+    margin: 0 -12px;
+    padding: 0 12px;
+    width: calc(100% + 24px);
+  }
+
+  .settings-table {
+    min-width: 450px;
+  }
+
+  .settings-table th,
+  .settings-table td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .settings-url {
+    max-width: 120px;
+  }
+
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-billing-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-subscription-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .settings-app-card {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .settings-app-info {
+    flex-direction: column;
+  }
+
+  .settings-app-status {
+    align-items: center;
+  }
 }

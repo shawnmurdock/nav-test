@@ -114,6 +114,9 @@
 /* === ALL TABLES - Horizontal Scroll === */
 .myinfo-page table {
   min-width: 500px !important;
+  display: block !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .myinfo-page .overflow-x-auto {
@@ -125,6 +128,12 @@
 
 .myinfo-page .overflow-x-auto::-webkit-scrollbar {
   display: none;
+}
+
+/* Ensure table parent containers allow scroll */
+.myinfo-page .myinfo-card {
+  overflow: hidden !important;
+  max-width: 100% !important;
 }
 
 /* === JOB TAB - 2-column grid to 1 column === */

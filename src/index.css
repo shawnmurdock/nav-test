@@ -285,6 +285,34 @@ h1 {
   display: none;
 }
 
+/* =============================================================================
+   GLOBAL TABLE AND CARD OVERFLOW FIXES FOR MOBILE
+   ============================================================================= */
+
+/* Ensure cards contain their content */
+@media (max-width: 768px) {
+  /* All cards should hide overflow */
+  [class*="-card"],
+  [class*="Card"] {
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  /* Tables should scroll within their containers */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Content sections should not overflow */
+  [class*="-content"],
+  [class*="Content"] {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+
 /* ================================
    Tailwind Theme Extensions
    ================================ */

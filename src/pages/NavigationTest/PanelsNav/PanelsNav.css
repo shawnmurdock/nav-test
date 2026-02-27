@@ -820,6 +820,16 @@
   background: var(--surface-neutral-white);
   border-radius: var(--radius-medium);
   padding: 32px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* Allow tables to scroll within settings cards */
+.panels-settings-card table,
+.panels-settings-content-area table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .panels-settings-card-title {
@@ -1523,6 +1533,22 @@
 
   .panels-settings-card {
     padding: 20px;
+    overflow: hidden;
+  }
+
+  /* Mobile table overflow - scroll within cards */
+  .panels-settings-card table,
+  .panels-view table,
+  .settings-table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100% !important;
+  }
+
+  .settings-content-section {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   /* Mobile Files View - Hide sidebar */

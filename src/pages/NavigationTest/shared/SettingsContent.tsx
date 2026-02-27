@@ -174,26 +174,28 @@ const BillingContent: React.FC = () => (
 
     <div className="settings-card">
       <h4 className="settings-card-title">Billing History</h4>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Invoice</th>
-            <th>Amount</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {billingHistory.map((item) => (
-            <tr key={item.id}>
-              <td>{item.date}</td>
-              <td className="settings-link">{item.invoice}</td>
-              <td>${item.amount.toLocaleString()}</td>
-              <td><span className="settings-badge settings-badge-success">{item.status}</span></td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Invoice</th>
+              <th>Amount</th>
+              <th>Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {billingHistory.map((item) => (
+              <tr key={item.id}>
+                <td>{item.date}</td>
+                <td className="settings-link">{item.invoice}</td>
+                <td>${item.amount.toLocaleString()}</td>
+                <td><span className="settings-badge settings-badge-success">{item.status}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
@@ -310,34 +312,36 @@ const ApiAccessContent: React.FC = () => (
         <h4 className="settings-card-title">API Keys</h4>
         <button className="settings-btn-primary">Generate New Key</button>
       </div>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Created</th>
-            <th>Last Used</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {apiKeys.map((key) => (
-            <tr key={key.id}>
-              <td>{key.name}</td>
-              <td>{key.created}</td>
-              <td>{key.lastUsed}</td>
-              <td>
-                <span className={`settings-badge ${key.status === 'active' ? 'settings-badge-success' : 'settings-badge-neutral'}`}>
-                  {key.status}
-                </span>
-              </td>
-              <td>
-                <button className="settings-btn-text">Revoke</button>
-              </td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Created</th>
+              <th>Last Used</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {apiKeys.map((key) => (
+              <tr key={key.id}>
+                <td>{key.name}</td>
+                <td>{key.created}</td>
+                <td>{key.lastUsed}</td>
+                <td>
+                  <span className={`settings-badge ${key.status === 'active' ? 'settings-badge-success' : 'settings-badge-neutral'}`}>
+                    {key.status}
+                  </span>
+                </td>
+                <td>
+                  <button className="settings-btn-text">Revoke</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
@@ -352,28 +356,30 @@ const WebhooksContent: React.FC = () => (
         <button className="settings-btn-primary">Add Webhook</button>
       </div>
       {webhooks.length > 0 ? (
-        <table className="settings-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>URL</th>
-              <th>Events</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {webhooks.map((webhook) => (
-              <tr key={webhook.id}>
-                <td>{webhook.name}</td>
-                <td className="settings-url">{webhook.url}</td>
-                <td>{webhook.events.join(', ')}</td>
-                <td>
-                  <span className="settings-badge settings-badge-success">{webhook.status}</span>
-                </td>
+        <div className="settings-table-container">
+          <table className="settings-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Events</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {webhooks.map((webhook) => (
+                <tr key={webhook.id}>
+                  <td>{webhook.name}</td>
+                  <td className="settings-url">{webhook.url}</td>
+                  <td>{webhook.events.join(', ')}</td>
+                  <td>
+                    <span className="settings-badge settings-badge-success">{webhook.status}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <div className="settings-empty-state">
           <p>No webhooks configured yet.</p>
@@ -396,28 +402,30 @@ const AccessLevelsContent: React.FC = () => (
         <h4 className="settings-card-title">User Roles</h4>
         <button className="settings-btn-primary">Create Role</button>
       </div>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Role Name</th>
-            <th>Users</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {accessLevels.map((level) => (
-            <tr key={level.id}>
-              <td className="settings-text-bold">{level.name}</td>
-              <td>{level.users}</td>
-              <td className="settings-text-muted">{level.description}</td>
-              <td>
-                <button className="settings-btn-text">Edit</button>
-              </td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Role Name</th>
+              <th>Users</th>
+              <th>Description</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {accessLevels.map((level) => (
+              <tr key={level.id}>
+                <td className="settings-text-bold">{level.name}</td>
+                <td>{level.users}</td>
+                <td className="settings-text-muted">{level.description}</td>
+                <td>
+                  <button className="settings-btn-text">Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
@@ -431,28 +439,30 @@ const EmployeeFieldsContent: React.FC = () => (
         <h4 className="settings-card-title">Field Categories</h4>
         <button className="settings-btn-primary">Add Custom Field</button>
       </div>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Total Fields</th>
-            <th>Required</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employeeFieldCategories.map((category) => (
-            <tr key={category.id}>
-              <td className="settings-text-bold">{category.name}</td>
-              <td>{category.fields}</td>
-              <td>{category.required}</td>
-              <td>
-                <button className="settings-btn-text">Manage</button>
-              </td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Total Fields</th>
+              <th>Required</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {employeeFieldCategories.map((category) => (
+              <tr key={category.id}>
+                <td className="settings-text-bold">{category.name}</td>
+                <td>{category.fields}</td>
+                <td>{category.required}</td>
+                <td>
+                  <button className="settings-btn-text">Manage</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
@@ -466,32 +476,34 @@ const ApprovalsContent: React.FC = () => (
         <h4 className="settings-card-title">Approval Workflows</h4>
         <button className="settings-btn-primary">Create Workflow</button>
       </div>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Workflow</th>
-            <th>Approvers</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {approvalWorkflows.map((workflow) => (
-            <tr key={workflow.id}>
-              <td className="settings-text-bold">{workflow.name}</td>
-              <td>{workflow.approvers}</td>
-              <td>
-                <span className={`settings-badge ${workflow.status === 'active' ? 'settings-badge-success' : 'settings-badge-neutral'}`}>
-                  {workflow.status}
-                </span>
-              </td>
-              <td>
-                <button className="settings-btn-text">Edit</button>
-              </td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Workflow</th>
+              <th>Approvers</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {approvalWorkflows.map((workflow) => (
+              <tr key={workflow.id}>
+                <td className="settings-text-bold">{workflow.name}</td>
+                <td>{workflow.approvers}</td>
+                <td>
+                  <span className={`settings-badge ${workflow.status === 'active' ? 'settings-badge-success' : 'settings-badge-neutral'}`}>
+                    {workflow.status}
+                  </span>
+                </td>
+                <td>
+                  <button className="settings-btn-text">Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
@@ -597,30 +609,32 @@ const BenefitsContent: React.FC = () => (
         <h4 className="settings-card-title">Benefit Plans</h4>
         <button className="settings-btn-primary">Add Plan</button>
       </div>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Plan Name</th>
-            <th>Provider</th>
-            <th>Enrolled</th>
-            <th>Eligible</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {benefitPlans.map((plan) => (
-            <tr key={plan.id}>
-              <td className="settings-text-bold">{plan.name}</td>
-              <td>{plan.provider}</td>
-              <td>{plan.enrolled}</td>
-              <td>{plan.eligible}</td>
-              <td>
-                <button className="settings-btn-text">Edit</button>
-              </td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Plan Name</th>
+              <th>Provider</th>
+              <th>Enrolled</th>
+              <th>Eligible</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {benefitPlans.map((plan) => (
+              <tr key={plan.id}>
+                <td className="settings-text-bold">{plan.name}</td>
+                <td>{plan.provider}</td>
+                <td>{plan.enrolled}</td>
+                <td>{plan.eligible}</td>
+                <td>
+                  <button className="settings-btn-text">Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
@@ -718,26 +732,28 @@ const CompensationContent: React.FC = () => (
         <h4 className="settings-card-title">Pay Grades</h4>
         <button className="settings-btn-primary">Add Grade</button>
       </div>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Grade</th>
-            <th>Min Salary</th>
-            <th>Max Salary</th>
-            <th>Employees</th>
-          </tr>
-        </thead>
-        <tbody>
-          {payGrades.map((grade) => (
-            <tr key={grade.id}>
-              <td className="settings-text-bold">{grade.name}</td>
-              <td>${grade.minSalary.toLocaleString()}</td>
-              <td>${grade.maxSalary.toLocaleString()}</td>
-              <td>{grade.employees}</td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Grade</th>
+              <th>Min Salary</th>
+              <th>Max Salary</th>
+              <th>Employees</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {payGrades.map((grade) => (
+              <tr key={grade.id}>
+                <td className="settings-text-bold">{grade.name}</td>
+                <td>${grade.minSalary.toLocaleString()}</td>
+                <td>${grade.maxSalary.toLocaleString()}</td>
+                <td>{grade.employees}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
@@ -751,26 +767,28 @@ const EmailAlertsContent: React.FC = () => (
         <h4 className="settings-card-title">Notification Settings</h4>
         <button className="settings-btn-primary">Create Alert</button>
       </div>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Alert Name</th>
-            <th>Recipients</th>
-            <th>Enabled</th>
-          </tr>
-        </thead>
-        <tbody>
-          {emailAlerts.map((alert) => (
-            <tr key={alert.id}>
-              <td className="settings-text-bold">{alert.name}</td>
-              <td>{alert.recipients}</td>
-              <td>
-                <input type="checkbox" defaultChecked={alert.enabled} className="settings-toggle" />
-              </td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Alert Name</th>
+              <th>Recipients</th>
+              <th>Enabled</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {emailAlerts.map((alert) => (
+              <tr key={alert.id}>
+                <td className="settings-text-bold">{alert.name}</td>
+                <td>{alert.recipients}</td>
+                <td>
+                  <input type="checkbox" defaultChecked={alert.enabled} className="settings-toggle" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
@@ -840,30 +858,32 @@ const TimeOffContent: React.FC = () => (
         <h4 className="settings-card-title">Time Off Policies</h4>
         <button className="settings-btn-primary">Add Policy</button>
       </div>
-      <table className="settings-table">
-        <thead>
-          <tr>
-            <th>Policy Name</th>
-            <th>Accrual Rate</th>
-            <th>Max Balance</th>
-            <th>Employees</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {timeOffPolicies.map((policy) => (
-            <tr key={policy.id}>
-              <td className="settings-text-bold">{policy.name}</td>
-              <td>{policy.accrualRate}</td>
-              <td>{policy.maxBalance} days</td>
-              <td>{policy.employees}</td>
-              <td>
-                <button className="settings-btn-text">Edit</button>
-              </td>
+      <div className="settings-table-container">
+        <table className="settings-table">
+          <thead>
+            <tr>
+              <th>Policy Name</th>
+              <th>Accrual Rate</th>
+              <th>Max Balance</th>
+              <th>Employees</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {timeOffPolicies.map((policy) => (
+              <tr key={policy.id}>
+                <td className="settings-text-bold">{policy.name}</td>
+                <td>{policy.accrualRate}</td>
+                <td>{policy.maxBalance} days</td>
+                <td>{policy.employees}</td>
+                <td>
+                  <button className="settings-btn-text">Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );

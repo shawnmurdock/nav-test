@@ -1403,7 +1403,16 @@
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box;
-    overflow-x: hidden !important;
+    overflow: hidden !important;
+  }
+
+  /* Allow tables within cards to scroll horizontally */
+  .dropdown-embedded-view-myinfo .myinfo-card table,
+  .dropdown-embedded-view-myinfo table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100% !important;
   }
 
   /* Constrain all form elements and inputs */
