@@ -18,17 +18,33 @@ export function EmployeeTableRow({ employee }: EmployeeTableRowProps) {
             borderRadius: '16px',
             overflow: 'hidden',
             boxShadow: 'var(--shadow-100)',
+            backgroundColor: employee.avatar ? 'transparent' : 'var(--surface-neutral-x-weak, #e5e7eb)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          <img
-            src={employee.avatar}
-            alt={employee.name}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
-          />
+          {employee.avatar ? (
+            <img
+              src={employee.avatar}
+              alt={employee.name}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          ) : (
+            <span
+              style={{
+                fontSize: '20px',
+                fontWeight: 600,
+                color: 'var(--text-neutral-medium, #6b7280)',
+              }}
+            >
+              {employee.isTBH ? 'TBH' : (employee.firstName?.[0] || '') + (employee.lastName?.[0] || '')}
+            </span>
+          )}
         </div>
       </td>
 
