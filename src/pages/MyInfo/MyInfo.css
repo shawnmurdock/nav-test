@@ -121,6 +121,15 @@
   width: auto !important;
 }
 
+/* === TRAINING TAB - Learning Path Cards Horizontal Scroll === */
+.myinfo-page .learning-path-cards {
+  -webkit-overflow-scrolling: touch;
+}
+
+.myinfo-page .learning-path-cards::-webkit-scrollbar {
+  display: none;
+}
+
 /* === ALL TABLES - Horizontal Scroll === */
 .myinfo-page table {
   min-width: 320px !important;
@@ -719,6 +728,18 @@
     flex: unset !important;
     min-width: unset !important;
     width: auto !important;
+  }
+
+  /* === TRAINING TAB - Restore grid on desktop === */
+  .myinfo-page .learning-path-cards {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    overflow-x: visible !important;
+    gap: 24px !important;
+  }
+
+  .myinfo-page .learning-path-cards > div {
+    min-width: unset !important;
   }
 
   /* === JOB TAB - Restore 2-column grid on desktop === */

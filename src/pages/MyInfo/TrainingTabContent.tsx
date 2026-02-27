@@ -154,20 +154,20 @@ export function TrainingTabContent({ employeeName: _employeeName }: TrainingTabC
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-6 mb-6">
-          <div className="bg-[var(--surface-neutral-xx-weak)] rounded-[var(--radius-small)] p-4 text-center">
+        <div className="learning-path-cards flex gap-4 mb-6 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="bg-[var(--surface-neutral-xx-weak)] rounded-[var(--radius-small)] p-4 text-center flex-shrink-0 min-w-[140px]">
             <p className="text-[32px] font-bold text-[var(--color-primary-strong)]">
               {trainingData.learningPath.progress}%
             </p>
             <p className="text-[14px] text-[var(--text-neutral-medium)]">Complete</p>
           </div>
-          <div className="bg-[var(--surface-neutral-xx-weak)] rounded-[var(--radius-small)] p-4 text-center">
+          <div className="bg-[var(--surface-neutral-xx-weak)] rounded-[var(--radius-small)] p-4 text-center flex-shrink-0 min-w-[140px]">
             <p className="text-[32px] font-bold text-[var(--text-neutral-strong)]">
               {trainingData.learningPath.completedCourses}/{trainingData.learningPath.totalCourses}
             </p>
             <p className="text-[14px] text-[var(--text-neutral-medium)]">Courses</p>
           </div>
-          <div className="bg-[var(--surface-neutral-xx-weak)] rounded-[var(--radius-small)] p-4">
+          <div className="bg-[var(--surface-neutral-xx-weak)] rounded-[var(--radius-small)] p-4 flex-shrink-0 min-w-[160px]">
             <p className="text-[14px] font-medium text-[var(--text-neutral-strong)] mb-1">
               Next Up
             </p>
